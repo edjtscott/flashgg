@@ -203,7 +203,9 @@ namespace flashgg {
                   int ptBinNum = floor( fakePt / 2.  ) + 1;
                   float numer = hCorrectPt->GetBinContent( ptBinNum );
                   float denom = hWrongPt->GetBinContent( ptBinNum );
-                  fakePtReweight = numer / denom;
+                  if( denom > 0 ) {
+                      fakePtReweight = numer / denom;
+                  }
                 }
                 fakePhoton.setWeight( "fakePtReweight", fakePtReweight );
 
