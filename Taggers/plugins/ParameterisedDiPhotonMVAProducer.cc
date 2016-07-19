@@ -90,6 +90,7 @@ namespace flashgg {
         TH1F* hSigmarvChecksLowEE;
         TH1F* hSigmarvChecksHighEE;
 
+        edm::FileInPath templateFilePath_;
         TH1F* hFakeVtxprob;
     };
 
@@ -99,7 +100,9 @@ namespace flashgg {
         genJetToken_( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) )
     {
         //TFile *template_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/templates_v2.root");
-        TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
+        //TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v2.root");
+        TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         hSigmarvChecksLowEB  = (TH1F*)template_file->Get("hSigmarvChecksLowEB");
         hSigmarvChecksHighEB = (TH1F*)template_file->Get("hSigmarvChecksHighEB");
@@ -233,6 +236,7 @@ namespace flashgg {
             
             // new version - no superclusters. No such thing as x, y, z for a photon - hmmmmm 
             // does px, py, pz work instead? I think so... 
+            // NO NOT EVEN DIMENSIONALLY CONSISTENT
             Photon1Dir.SetXYZ( g1->px() - vtx->position().x(), g1->py() - vtx->position().y(),
                                g1->pz() - vtx->position().z() );
             Photon2Dir.SetXYZ( g2->px() - vtx->position().x(), g2->py() - vtx->position().y(),
