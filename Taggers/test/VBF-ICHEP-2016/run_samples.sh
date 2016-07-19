@@ -2,15 +2,13 @@
 
 export SOURCE=${CMSSW_BASE}/flashgg/Taggers/test/VBFProduction
 today=`date +%F`
-#outdir=/vols/cms/es811/VbfParamTests/qcd-param-third-${today}
-outdir=/vols/cms/es811/VbfParamTests/gjet-${today}
+outdir=/vols/cms/es811/VbfParamTests/working-merge-testing-original-${today}
 
-#fggRunJobs.py --load qcd_samples.json -d ${outdir} \
-fggRunJobs.py --load gjet_sample_ed.json -d ${outdir} \
+fggRunJobs.py --load samples.json -d ${outdir} \
 	      -x cmsRun standard_vbf_dumper_cfg.py maxEvents=-1 runOnZee=False QCDParam=False \
-	      -q hepmedium.q --no-use-tarball useAAA=1 targetLumi=1.00e+3 \
-	      lumiMask=/home/hep/szenz/fromscratch26/CMSSW_8_0_8_patch1/src/flashgg/MetaData/work/jsons/Cert_271036-274421_13TeV_PromptReco_Collisions16_JSON.txt \
-	      -n 100 puTarget=2.18e+03,2.4e+04,7e+04,1.98e+05,3.61e+05,6.19e+05,1.29e+06,9e+06,2.33e+07,3.11e+07,4.09e+07,5.77e+07,8.37e+07,1.16e+08,1.51e+08,1.84e+08,2.06e+08,2.11e+08,2.01e+08,1.82e+08,1.56e+08,1.28e+08,9.8e+07,7.05e+07,4.72e+07,2.94e+07,1.71e+07,9.23e+06,4.68e+06,2.24e+06,1.02e+06,4.36e+05,1.78e+05,6.87e+04,2.51e+04,8.62e+03,2.79e+03,851,244,66.2,17.1,4.25,1.04,0.257,0.0658,0.0178,0.00504,0.00146,0.000424,0.000121
+	      -q hepmedium.q --no-use-tarball useAAA=0 atIC=1 targetLumi=1.00e+3 \
+	      lumiMask=/home/hep/es811/VBFStudies/ParamStuff/Pass4/CMSSW_8_0_8_patch1/src/flashgg/MetaData/work/jsons/Cert_271036-275783_13TeV_PromptReco_Collisions16_JSON.txt \
+	      -n 100 puTarget=2.22e+03,7.42e+04,3.64e+05,7.57e+05,1.15e+06,1.62e+06,2.58e+06,1.23e+07,3.69e+07,7.59e+07,1.33e+08,1.88e+08,2.49e+08,3.3e+08,4.2e+08,4.97e+08,5.46e+08,5.6e+08,5.43e+08,5.02e+08,4.43e+08,3.7e+08,2.91e+08,2.12e+08,1.43e+08,8.98e+07,5.26e+07,2.9e+07,1.52e+07,7.61e+06,3.69e+06,1.74e+06,7.97e+05,3.54e+05,1.53e+05,6.52e+04,2.9e+04,1.47e+04,9.3e+03,7.29e+03,6.5e+03,6.15e+03,5.95e+03,5.8e+03,5.65e+03,5.49e+03,5.3e+03,5.09e+03,4.84e+03,4.58e+03
 
 
 

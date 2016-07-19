@@ -158,7 +158,8 @@ process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
                                 #"/store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_0_0-25ns/2_0_0/VBFHToGG_M-120_13TeV_powheg_pythia8/RunIISpring16DR80X-2_0_0-25ns-2_0_0-v0-RunIISpring16MiniAODv1-PUSpring16RAWAODSIM_80X_mcRun2_asymptotic_2016_v3-v1/160524_093617/0000/myMicroAODOutputFile_1.root"
                                  #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_0_0-25ns/2_0_0/DYToEE_NNPDF30_13TeV-powheg-pythia8/RunIISpring16DR80X-2_0_0-25ns-2_0_0-v0-RunIISpring16MiniAODv1-PUSpring16_80X_mcRun2_asymptotic_2016_v3-v1/160524_084452/0000/myMicroAODOutputFile_110.root"
-                                 "root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIIFall15DR76-1_3_0-25ns_ext1/1_3_1/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIIFall15DR76-1_3_0-25ns_ext1-1_3_1-v0-RunIIFall15MiniAODv2-PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/160127_023814/0000/myMicroAODOutputFile_1.root"
+                                 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIIFall15DR76-1_3_0-25ns_ext1/1_3_1/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIIFall15DR76-1_3_0-25ns_ext1-1_3_1-v0-RunIIFall15MiniAODv2-PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/160127_023814/0000/myMicroAODOutputFile_1.root"
+                                 "/store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_23.root"
                              )
 )
 
@@ -206,7 +207,18 @@ new_variables = [
     "dijet_jet1_RMS   := leading_rms",
     "dijet_jet2_RMS   := subLeading_rms",
     "dijet_jet1_QGL   := leading_QGL",
-    "dijet_jet2_QGL   := subLeading_QGL"
+    #"dijet_jet2_QGL   := subLeading_QGL"
+    "dijet_jet2_QGL   := subLeading_QGL",
+    "dipho_leadPt     := diPhoton.leadingPhoton.pt()",
+    "dipho_subPt      := diPhoton.subLeadingPhoton.pt()",
+    "dipho_leadIDMVA  := diPhoton.leadPhotonId()",
+    "dipho_subIDMVA   := diPhoton.subLeadPhotonId()",
+    "dipho_vtxprob    := diPhotonMVA.vtxprob",
+    "dipho_CosPhi     := diPhotonMVA.CosPhi",
+    "dipho_sigmarv    := diPhotonMVA.sigmarv",
+    "dipho_sigmawv    := diPhotonMVA.sigmawv",
+    "dipho_leadEta    := diPhotonMVA.leadeta",
+    "dipho_subEta     := diPhotonMVA.subleadeta"
 ]
 
 matching_photon = [

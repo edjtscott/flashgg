@@ -1,13 +1,17 @@
 {
-    "cmdLine"  : "campaign=RunIISpring16DR80X-2_0_0-25ns", 
+    "cmdLine"  : "campaign=RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2_Workspaces", 
     "processes": {
-        "gjet"   : ["/GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8" , 
-		    "/GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8"],
-	"ghh_125": ["/GluGluHToGG_M-125_13TeV_powheg_pythia8"  ],
-        "vbf_125": ["/VBFHToGG_M-125_13TeV_powheg_pythia8"     ], 
+        "Data"   : ["/DoubleEG/ferrif-RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-Run2016B-PromptReco-v1-6afd65c310508d0f49bd277bc7a8e5b1/USER",
+                    "/DoubleEG/ferrif-RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-Run2016B-PromptReco-v2-6afd65c310508d0f49bd277bc7a8e5b1/USER",
+                    "/DoubleEG/ferrif-RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-Run2016C-PromptReco-v2-9a092465adbfb13c40886e07b86f6d23/USER"],
+        "gjet"   : ["/GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8",
+                    "/GJet_Pt-20toInf_DoubleEMEnriched_MGG-40to80_TuneCUETP8M1_13TeV_Pythia8",
+                    "/GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8"],
+	"ghh_125": ["/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/ferrif-RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16RAWAODSIM_reHLT_80X_mcRun2_asymptotic_v14-v1-9d6acec11aa5264fedffe5a321afb429/USER"],
+        "vbf_125": ["/VBFHToGG_M125_13TeV_amcatnlo_pythia8"],
         "dipho"  : ["/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa"], 
-        "qcd"    : [ "/QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8" , 
-		     "/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8", 
-		     "/QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCUETP8M1_13TeV_Pythia8" ]
+        "qcd"    : ["/QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8",
+                    "/QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCUETP8M1_13TeV_Pythia8",
+                    "/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8"]
     }
 }

@@ -119,6 +119,7 @@ namespace flashgg {
 
         Handle<View<flashgg::Photon> > photons;
         evt.getByToken( photonToken_, photons );
+        //cout << "size of input photons for fake photon producer = " << photons->size() << endl;
 
         // Begin Prompt-Fake parameterisation----------------------------------------------------------------
         Handle<View<reco::GenJet> > genJets;
@@ -136,6 +137,7 @@ namespace flashgg {
             if( promptPhoton->pt() < 20 ) continue;
             goodPromptPhotons->push_back( *promptPhoton );
         }
+        //cout << "size of good prompt photons in fake photon producer = " << goodPromptPhotons->size() << endl;
 
         if( goodPromptPhotons->size() == 1 ) {
             for( uint genJetIndex = 0; genJetIndex < genJets->size(); genJetIndex++ ) {
@@ -213,6 +215,7 @@ namespace flashgg {
             }
         }
 
+        //cout << "size of fake photon collection = " << fakePhotonCollection->size() << endl;
         evt.put( fakePhotonCollection );
         // End Prompt-Fake parameterisation------------------------------------------------------------------
 
