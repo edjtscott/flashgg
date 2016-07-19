@@ -16,6 +16,7 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
                                                                  cms.PSet(TagName = cms.InputTag('flashggUntagged'))
 ###                                                                 cms.PSet(TagName = cms.InputTag('flashggSigmaMoMpToMTag'))
                                                                 ),
+#OLD WORKING VERSION HAS BOTH TTH TAGS AND THE UNTAGGED COMMENTED OUT #Ed
                                   MassCutUpper=cms.double(180.),
                                   MassCutLower=cms.double(100),
                                   MinAcceptableObjectWeight = cms.double(0.35),

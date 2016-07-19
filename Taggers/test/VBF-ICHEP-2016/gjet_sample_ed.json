@@ -1,0 +1,7 @@
+{
+    "cmdLine"  : "campaign=RunIISpring16DR80X-2_0_0-25ns", 
+    "processes": {
+        "gjet"    : [ "/GJet_Pt-20toInf_DoubleEMEnriched_MGG-40to80_TuneCUETP8M1_13TeV_Pythia8" ]
+
+    }
+}

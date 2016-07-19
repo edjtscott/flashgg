@@ -89,6 +89,7 @@ namespace flashgg {
         _pujid_wp_pt_bin_2  ( iConfig.getParameter<std::vector<double> > ( "pujidWpPtBin2" ) ),
         _pujid_wp_pt_bin_3  ( iConfig.getParameter<std::vector<double> > ( "pujidWpPtBin3" ) )
     {
+        cout << "Inside constructor of VBF MVA producer" << endl; // Ed
         vbfMVAweightfile_ = iConfig.getParameter<edm::FileInPath>( "vbfMVAweightfile" );
         
         dijet_leadEta_    = -999.;
@@ -137,6 +138,7 @@ namespace flashgg {
     
     void VBFMVAProducer::produce( Event &evt, const EventSetup & )
     {
+        //cout << "Inside VBF MVA produce method" << endl;
         Handle<View<flashgg::DiPhotonCandidate> > diPhotons;
         evt.getByToken( diPhotonToken_, diPhotons );
         
@@ -422,6 +424,7 @@ namespace flashgg {
             vbf_results->push_back( mvares );
         }
         evt.put( vbf_results );
+        //cout << "Exiting VBF MVA produce method" << endl;
     }
 }
 
