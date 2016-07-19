@@ -90,7 +90,7 @@ namespace flashgg {
         TH1F* hSigmarvChecksLowEE;
         TH1F* hSigmarvChecksHighEE;
 
-        edm::FileInPath templateFilePath_;
+        TH1F* hFakeVtxprob;
     };
 
     ParameterisedDiPhotonMVAProducer::ParameterisedDiPhotonMVAProducer( const ParameterSet &iConfig ) :
@@ -99,14 +99,14 @@ namespace flashgg {
         genJetToken_( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) )
     {
         //TFile *template_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/templates_v2.root");
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v2.root");
-        TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
-        //        TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
+        TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
 
         hSigmarvChecksLowEB  = (TH1F*)template_file->Get("hSigmarvChecksLowEB");
         hSigmarvChecksHighEB = (TH1F*)template_file->Get("hSigmarvChecksHighEB");
         hSigmarvChecksLowEE  = (TH1F*)template_file->Get("hSigmarvChecksLowEE");
         hSigmarvChecksHighEE = (TH1F*)template_file->Get("hSigmarvChecksHighEE");
+
+        hFakeVtxprob = (TH1F*)template_file->Get("hFakeVtxprob");
 
         vertex_prob_params_conv = iConfig.getParameter<vector<double>>( "VertexProbParamsConv" );
         vertex_prob_params_noConv = iConfig.getParameter<vector<double>>( "VertexProbParamsNoConv" );
@@ -349,6 +349,20 @@ namespace flashgg {
                 if( tempRand < tempHistVal ) done = true; 
             }
             //cout << "end of while loop" << endl;
+            
+            done = false;
+            max = hFakeVtxprob->GetMaximum();
+            vtxProbMVA_ = 0;
+            while( !done ) {
+                vtxProbMVA_ = CLHEP::RandFlat::shoot( &engine, 0., 1. ); 
+                int binNum = floor( vtxProbMVA_ / 0.005 ) + 1;
+                float tempRand = CLHEP::RandFlat::shoot( &engine, 0., max );
+                float tempHistVal = 0;
+                tempHistVal = hFakeVtxprob->GetBinContent( binNum );
+                if( tempRand < tempHistVal ) done = true; 
+            }
+
+            // two lines below just required to stop complaints about unused variables
             float MassResolutionWrongVtx = TMath::Sqrt( ( sigmarv * sigmarv ) + ( alpha_sig_wrg * alpha_sig_wrg ) );
             if( abs(fakeEta) > 2.5 ) cout << MassResolutionWrongVtx << endl;
 
@@ -372,7 +386,7 @@ namespace flashgg {
             //vtxProbMVA_ = diPhotons->ptrAt( candIndex )->vtxProbMVA();
             //vtxProbMVA_ = 0.999;
             //vtxProbMVA_ = 0.99;
-            vtxProbMVA_ = 0.96;
+            //vtxProbMVA_ = 0.96; // median
             vtxprob_ = vtxProbMVA_;
             //nConv_ = diPhotons->ptrAt( candIndex )->nConv();
             //nConv_ = promptPhoton->hasConversionTracks();
