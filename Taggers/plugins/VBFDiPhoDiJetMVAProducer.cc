@@ -78,6 +78,7 @@ namespace flashgg {
 
     void VBFDiPhoDiJetMVAProducer::produce( Event &evt, const EventSetup & )
     {
+        //cout << "Entering combined MVA produce method" << endl;
         Handle<View<flashgg::DiPhotonCandidate> > diPhotons;
         evt.getByToken( diPhotonToken_, diPhotons );
 //		const PtrVector<flashgg::DiPhotonCandidate>& diPhotonPointers = diPhotons->ptrVector();
@@ -126,6 +127,7 @@ namespace flashgg {
             vbfDiPhoDiJet_results->push_back( mvares );
         }
         evt.put( vbfDiPhoDiJet_results );
+        //cout << "Exiting combined MVA produce method" << endl;
     }
 }
 

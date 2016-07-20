@@ -178,6 +178,7 @@ namespace flashgg {
 
     void ParameterisedDiPhotonMVAProducer::produce( Event &evt, const EventSetup & )
     {
+        //cout << "Entering ParamDipho MVA produce method" << endl;
         // setup random number generator
         edm::Service<edm::RandomNumberGenerator> rng;
         if( ! rng.isAvailable() ) {
@@ -232,25 +233,9 @@ namespace flashgg {
             Photon2Dir_uv = Photon2Dir.Unit() * g2->superCluster()->rawEnergy();
             p14.SetPxPyPzE( Photon1Dir_uv.x(), Photon1Dir_uv.y(), Photon1Dir_uv.z(), g1->superCluster()->rawEnergy() );
             p24.SetPxPyPzE( Photon2Dir_uv.x(), Photon2Dir_uv.y(), Photon2Dir_uv.z(), g2->superCluster()->rawEnergy() );
-            //photon 4-vector with respect to correct vertex and superCluster hit// */
-            
-            // new version - no superclusters. No such thing as x, y, z for a photon - hmmmmm 
-            // does px, py, pz work instead? I think so... 
-            // NO NOT EVEN DIMENSIONALLY CONSISTENT
-            Photon1Dir.SetXYZ( g1->px() - vtx->position().x(), g1->py() - vtx->position().y(),
-                               g1->pz() - vtx->position().z() );
-            Photon2Dir.SetXYZ( g2->px() - vtx->position().x(), g2->py() - vtx->position().y(),
-                               g2->pz() - vtx->position().z() );
-            Photon1Dir_uv = Photon1Dir.Unit() * g1->energy();
-            Photon2Dir_uv = Photon2Dir.Unit() * g2->energy();
-            p14.SetPxPyPzE( Photon1Dir_uv.x(), Photon1Dir_uv.y(), Photon1Dir_uv.z(), g1->energy() );
-            p24.SetPxPyPzE( Photon2Dir_uv.x(), Photon2Dir_uv.y(), Photon2Dir_uv.z(), g2->energy() );
+            //photon 4-vector with respect to correct vertex and superCluster hit// 
 
-            //
-
-            //float angle = p14.Angle(p24.Vect());
-
-            /*float x1 = g1->superCluster()->position().x() - vtx->position().x();
+            float x1 = g1->superCluster()->position().x() - vtx->position().x();
             float y1 = g1->superCluster()->position().y() - vtx->position().y();
             float z1 = g1->superCluster()->position().z() - vtx->position().z();
 
@@ -258,22 +243,36 @@ namespace flashgg {
             float y2 = g2->superCluster()->position().y() - vtx->position().y();
             float z2 = g2->superCluster()->position().z() - vtx->position().z();*/
 
-            float x1 = g1->px() - vtx->position().x();
-            //cout << "g1 px = " << g1->px() << endl;
-            //cout << "vtx x = " << vtx->position().x() << endl;
-            float y1 = g1->py() - vtx->position().y();
-            //cout << "g1 py = " << g1->py() << endl;
-            //cout << "vty y = " << vtx->position().y() << endl;
-            float z1 = g1->pz() - vtx->position().z();
-            //cout << "g1 pz = " << g1->pz() << endl;
-            //cout << "vtz z = " << vtx->position().z() << endl;
+            //float r1 = TMath::Sqrt( x1 * x1 + y1 * y1 + z1 * z1 );
+            //float r2 = TMath::Sqrt( x2 * x2 + y2 * y2 + z2 * z2 );
+            
+            // my attempt here
+            Photon1Dir.SetXYZ( g1->px(), g1->py(),
+                               g1->pz() );
+            Photon2Dir.SetXYZ( g2->px(), g2->py(),
+                               g2->pz() );
+            Photon1Dir_uv = Photon1Dir.Unit() * g1->energy();
+            Photon2Dir_uv = Photon2Dir.Unit() * g2->energy();
+            p14.SetPxPyPzE( Photon1Dir_uv.x(), Photon1Dir_uv.y(), Photon1Dir_uv.z(), g1->energy() );
+            p24.SetPxPyPzE( Photon2Dir_uv.x(), Photon2Dir_uv.y(), Photon2Dir_uv.z(), g2->energy() );
 
-            float x2 = g2->px() - vtx->position().x();
-            float y2 = g2->py() - vtx->position().y();
-            float z2 = g2->pz() - vtx->position().z();
 
-            float r1 = TMath::Sqrt( x1 * x1 + y1 * y1 + z1 * z1 );
-            float r2 = TMath::Sqrt( x2 * x2 + y2 * y2 + z2 * z2 );
+            float new_r1 = 10. + TMath::Sqrt( 129.*129. + 314.*314. );
+            float theta1 = 2*TMath::ATan( exp( -1*g1->eta() ) );
+            if ( abs(g1->eta()) < 1.479 ) new_r1 = 10. + abs( 129. / TMath::Sin( theta1 ) );
+            else if ( abs(g1->eta()) > 1.653 ) new_r1 = 10. + abs( ( 314. - vtx->position().z() ) / TMath::Cos( theta1 ) );
+            //else continue;
+
+            float new_r2 = 10. + TMath::Sqrt( 129.*129. + 314.*314. );
+            float theta2 = 2*TMath::ATan( exp( -1*g2->eta() ) );
+            if ( abs(g2->eta()) < 1.479 ) new_r2 = 10. + abs( 129. / TMath::Sin( theta2 ) );
+            else if ( abs(g2->eta()) > 1.653 ) new_r2 = 10. + abs( ( 314. - vtx->position().z() ) / TMath::Cos( theta2 ) );
+            //else continue;
+
+            /*cout << "r1     = " << r1 << endl;
+            cout << "r2     = " << r2 << endl;
+            cout << "new_r1 = " << new_r1 << endl;
+            cout << "new_r2 = " << new_r2 << endl;*/
 
             float cos_term = TMath::Cos( p14.Phi() - p24.Phi() );
 
@@ -285,7 +284,8 @@ namespace flashgg {
             float numerator1 = sech1 * ( sech1 * tanh2 - tanh1 * sech2 * cos_term );
             float numerator2 = sech2 * ( sech2 * tanh1 - tanh2 * sech1 * cos_term );
             float denominator = 1. - tanh1 * tanh2 - sech1 * sech2 * cos_term;
-            float angleResolutionWrgVtx = ( ( -1.*beamsig * TMath::Sqrt( 2. ) ) / denominator ) * ( numerator1 / r1 + numerator2 / r2 ); //dz = sigmabeamspot*sqrt(2)
+            //float angleResolutionWrgVtx = ( ( -1.*beamsig * TMath::Sqrt( 2. ) ) / denominator ) * ( numerator1 / r1 + numerator2 / r2 ); //dz = sigmabeamspot*sqrt(2)
+            float angleResolutionWrgVtx = ( ( -1.*beamsig * TMath::Sqrt( 2. ) ) / denominator ) * ( numerator1 / new_r1 + numerator2 / new_r2 ); //dz = sigmabeamspot*sqrt(2)
             float alpha_sig_wrg = 0.5 * angleResolutionWrgVtx;
             //float alpha_sig_corr = angleResolutionCorrVtx;
             //float SigmaM = 0.5 * TMath::Sqrt( g1->sigEOverE() * g1->sigEOverE() + g2->sigEOverE() * g2->sigEOverE() );
@@ -369,6 +369,8 @@ namespace flashgg {
             // two lines below just required to stop complaints about unused variables
             float MassResolutionWrongVtx = TMath::Sqrt( ( sigmarv * sigmarv ) + ( alpha_sig_wrg * alpha_sig_wrg ) );
             if( abs(fakeEta) > 2.5 ) cout << MassResolutionWrongVtx << endl;
+            //cout << "sigmarv = " << sigmarv << endl;
+            //cout << "sigmawv = " << MassResolutionWrongVtx << endl;
 
 
             leadptom_       = g1->pt() / ( diPhotons->ptrAt( candIndex )->mass() );
@@ -382,9 +384,8 @@ namespace flashgg {
 
             //sigmarv_        = .5 * sqrt( ( g1->sigEOverE() ) * ( g1->sigEOverE() ) + ( g2->sigEOverE() ) * ( g2->sigEOverE() ) );
             sigmarv_        = sigmarv;
-            //sigmawv_        = MassResolutionWrongVtx;
-            //sigmawv_        = sigmarv + 0.01;
-            sigmawv_        = 1.36*sigmarv;
+            sigmawv_        = MassResolutionWrongVtx;
+            //sigmawv_        = 1.36*sigmarv;
             CosPhi_         = TMath::Cos( deltaPhi( g1->phi(), g2->phi() ) );
 
             //vtxProbMVA_ = diPhotons->ptrAt( candIndex )->vtxProbMVA();
@@ -425,6 +426,7 @@ namespace flashgg {
             results->push_back( mvares );
         }
         evt.put( results );
+        //cout << "Exiting ParamDipho MVA produce method" << endl;
     }
 }
 

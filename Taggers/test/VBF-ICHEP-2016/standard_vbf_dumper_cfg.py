@@ -122,7 +122,8 @@ if customize.processId == "Data":
     print "Data, so turn of all shifts and systematics, with some exceptions"
     variablesToUse = minimalNonSignalVariables
 
-    process.flashggElectronSystematics.src = cms.InputTag("flashggElectrons")
+    #process.flashggElectronSystematics.src = cms.InputTag("flashggElectrons")
+    process.flashggElectronSystematics.src = cms.InputTag("flashggSelectedElectrons")
     customizeSystematicsForData(process)
 else:
     print "Background MC, so store mgg and central only"

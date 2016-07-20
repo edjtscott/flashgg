@@ -241,6 +241,23 @@ namespace flashgg {
             float r1 = TMath::Sqrt( x1 * x1 + y1 * y1 + z1 * z1 );
             float r2 = TMath::Sqrt( x2 * x2 + y2 * y2 + z2 * z2 );
 
+            /*float new_r1 = -9999.;
+            float theta1 = 2*TMath::ATan( exp( -1*g1->eta() ) );
+            if ( abs(g1->eta()) < 1.479 ) new_r1 = 129. / TMath::Sin( theta1 );
+            else if ( abs(g1->eta()) > 1.653 ) new_r1 = ( 314. - vtx->position().z() ) / TMath::Cos( theta1 );
+            else continue;
+
+            float new_r2 = -9999.;
+            float theta2 = 2*TMath::ATan( exp( -1*g2->eta() ) );
+            if ( abs(g2->eta()) < 1.479 ) new_r2 = 129. / TMath::Sin( theta2 );
+            else if ( abs(g2->eta()) > 1.653 ) new_r2 = ( 314. - vtx->position().z() ) / TMath::Cos( theta2 );
+            else continue;
+
+            cout << "r1         = " << r1 << endl;
+            cout << "r2         = " << r2 << endl;
+            cout << "new_r1     = " << new_r1 << endl;
+            cout << "new_r2     = " << new_r2 << endl;*/
+
             float cos_term = TMath::Cos( p14.Phi() - p24.Phi() );
 
             float sech1 = 1.0 / TMath::CosH( p14.Eta() );

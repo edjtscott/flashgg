@@ -47,6 +47,7 @@ namespace flashgg {
 
     void VectorVectorJetUnpacker::produce( Event &evt, const EventSetup & )
     {
+        //cout << "Entering jet unpacker produce method" << endl;
 
         Handle<View<vector<flashgg::Jet> > > theJets;
         evt.getByToken( jetsToken_, theJets );
@@ -66,6 +67,7 @@ namespace flashgg {
             sprintf( number, "%u", i );
             evt.put( result, number );
         }
+        //cout << "Exiting jet unpacker produce method" << endl;
     }
 }
 typedef flashgg::VectorVectorJetUnpacker FlashggVectorVectorJetUnpacker;

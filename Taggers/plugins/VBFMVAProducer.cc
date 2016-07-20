@@ -138,7 +138,7 @@ namespace flashgg {
     
     void VBFMVAProducer::produce( Event &evt, const EventSetup & )
     {
-        //cout << "Inside VBF MVA produce method" << endl;
+        //cout << "Entering VBF MVA produce method" << endl;
         Handle<View<flashgg::DiPhotonCandidate> > diPhotons;
         evt.getByToken( diPhotonToken_, diPhotons );
         
