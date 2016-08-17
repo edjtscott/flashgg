@@ -19,8 +19,10 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
 #OLD WORKING VERSION HAS BOTH TTH TAGS AND THE UNTAGGED COMMENTED OUT #Ed
                                   MassCutUpper=cms.double(180.),
                                   MassCutLower=cms.double(100),
-                                  MinAcceptableObjectWeight = cms.double(0.35),
-                                  MaxAcceptableObjectWeight = cms.double(3.00),
+                                  MinObjectWeightException = cms.double(0.1),
+                                  MaxObjectWeightException = cms.double(10.),
+                                  MinObjectWeightWarning = cms.double(0.5),
+                                  MaxObjectWeightWarning = cms.double(2.),
                                   StoreOtherTagInfo = cms.bool(False),
                                   BlindedSelectionPrintout = cms.bool(False),
                                   Debug = cms.untracked.bool(False)
