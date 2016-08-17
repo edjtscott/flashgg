@@ -43,6 +43,9 @@ namespace flashgg {
         const float leading_rawPt   () const { return  hasValidVBFDiJet() ? vbfDiPhoDiJet_mva_result_.vbfMvaResult.leadJet_ptr->correctedJet("Uncorrected").pt() : -9999.;}
         const float subLeading_rawPt() const { return  hasValidVBFDiJet() ? vbfDiPhoDiJet_mva_result_.vbfMvaResult.subleadJet_ptr->correctedJet("Uncorrected").pt() : -9999.;}
 
+        const float fakeWeight() const { if(      diPhoton()->leadingPhoton()->hasFakeIDMVA() )    return diPhoton()->leadingPhoton()->weight("fakeWeight");
+                                         else if( diPhoton()->subLeadingPhoton()->hasFakeIDMVA() ) return diPhoton()->subLeadingPhoton()->weight("fakeWeight");
+                                         else     return 1.; }
 
         const float qcd_leadPho_pt_weight() const {return diPhoton()->leadingPhoton()->weight("fakePtReweight");}
         const float qcd_sublPho_pt_weight() const {return diPhoton()->subLeadingPhoton()->weight("fakePtReweight");}
