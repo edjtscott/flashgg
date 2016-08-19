@@ -23,7 +23,6 @@
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 #include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 #include "DataFormats/Math/interface/deltaR.h"
-//#include "TRandom3.h"
 #include "FWCore/Utilities/interface/RandomNumberGenerator.h"
 #include "CLHEP/Random/RandomEngine.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
@@ -47,15 +46,13 @@ namespace flashgg {
         EDGetTokenT<View<flashgg::Photon> > photonToken_;
         EDGetTokenT<View<reco::GenJet> > genJetToken_;
 
+        bool debug_;
+
         // for parameterisation
-        //TRandom3 *randomIDMVA;   
-        //TRandom3 *randomEGAMEGEN;
         TH1F *hFakeGenJetRatio;
         TH1F *hBarrelLowTemplateIDMVA;
-        //TH1F *hBarrelMedTemplateIDMVA;
         TH1F *hBarrelHighTemplateIDMVA;
         TH1F *hEndcapLowTemplateIDMVA;
-        //TH1F *hEndcapMedTemplateIDMVA;
         TH1F *hEndcapHighTemplateIDMVA;
 
         TH1F *hCorrectPt;
@@ -65,39 +62,33 @@ namespace flashgg {
         edm::FileInPath reweightFilePath_;
 
         //TH1F* hRandGenJetCheck;
+        
+        // can only do this if has been run once to generate corrections
+        bool doPtReweighting_;
     };
 
     ParameterisedFakePhotonProducer::ParameterisedFakePhotonProducer( const ParameterSet &iConfig ) :
         photonToken_( consumes<View<flashgg::Photon> >( iConfig.getParameter<InputTag> ( "PhotonTag" ) ) ),
-        //genJetToken_( consumes<View<reco::GenJet> >( iConfig.getUntrackedParameter<InputTag> ( "GenJetTag", InputTag( "slimmedGenJets" ) ) ) )
-        genJetToken_( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) )
+        genJetToken_( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) ),
+        debug_( iConfig.getUntrackedParameter<bool>( "debug", false ) ),
+        doPtReweighting_( iConfig.getUntrackedParameter<bool>( "doPtReweighting", true ) )
     {
         produces<vector<flashgg::Photon> >();
         
-        // random numbers for parameterisation
-        //randomIDMVA    = new TRandom3(8157);
-        //randomEGAMEGEN = new TRandom3(32935);
-
         // template histograms 
-        //TFile *template_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/templates.root");
-        //TFile *template_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/templates_v1.root");
-        //        TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v1.root");
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v1.root");
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v1.root"); // will be changed to just one template file at some point
         TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         hFakeGenJetRatio         = (TH1F*)template_file->Get("hFakeGenJetRatio");
         hBarrelLowTemplateIDMVA  = (TH1F*)template_file->Get("hBarrelLowTemplateIDMVA");
-        //hBarrelMedTemplateIDMVA  = (TH1F*)template_file->Get("hBarrelMedTemplateIDMVA");
         hBarrelHighTemplateIDMVA = (TH1F*)template_file->Get("hBarrelHighTemplateIDMVA");
         hEndcapLowTemplateIDMVA  = (TH1F*)template_file->Get("hEndcapLowTemplateIDMVA");
-        //hEndcapMedTemplateIDMVA  = (TH1F*)template_file->Get("hEndcapMedTemplateIDMVA");
         hEndcapHighTemplateIDMVA = (TH1F*)template_file->Get("hEndcapHighTemplateIDMVA");
 
-        //TFile *reweight_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/reweighting.root");
-        //        TFile *reweight_file = new TFile("file:/vols/cms/es811/TemplateHists/reweighting.root");
+        hCorrectPt = (TH1F*)template_file->Get("hCorrectPt");
+
         reweightFilePath_ = edm::FileInPath("flashgg/Taggers/data/reweighting.root");
         TFile *reweight_file = TFile::Open(reweightFilePath_.fullPath().c_str());
-        hCorrectPt = (TH1F*)reweight_file->Get("hCorrectPt");
         hWrongPt = (TH1F*)reweight_file->Get("hWrongPt");
 
         //hRandGenJetCheck = new TH1F( "hRandGenJetCheck", "Should be uniform on [0,1.2]", 48, 0., 1.2 );
@@ -119,14 +110,14 @@ namespace flashgg {
 
         Handle<View<flashgg::Photon> > photons;
         evt.getByToken( photonToken_, photons );
-        //cout << "size of input photons for fake photon producer = " << photons->size() << endl;
+        if(debug_) cout << "size of input photons for fake photon producer = " << photons->size() << endl;
 
         // Begin Prompt-Fake parameterisation----------------------------------------------------------------
         Handle<View<reco::GenJet> > genJets;
         evt.getByToken( genJetToken_, genJets );
 
         auto_ptr<vector<flashgg::Photon> > fakePhotonCollection( new vector<flashgg::Photon> );
-        //cout << "size of photon collection is " << photons->size() << endl;
+        if(debug_) cout << "size of photon collection is " << photons->size() << endl;
 
         // loop over photons, then loop over gen jets for each prompt photon
         auto_ptr<vector<flashgg::Photon> > goodPromptPhotons( new vector<flashgg::Photon> );
@@ -137,7 +128,7 @@ namespace flashgg {
             if( promptPhoton->pt() < 20 ) continue;
             goodPromptPhotons->push_back( *promptPhoton );
         }
-        //cout << "size of good prompt photons in fake photon producer = " << goodPromptPhotons->size() << endl;
+        if(debug_) cout << "size of good prompt photons in fake photon producer = " << goodPromptPhotons->size() << endl;
 
         if( goodPromptPhotons->size() == 1 ) {
             for( uint genJetIndex = 0; genJetIndex < genJets->size(); genJetIndex++ ) {
@@ -153,42 +144,37 @@ namespace flashgg {
                 // formula for BinNum is 1 + (x-x_min)/binwidth
                 // numbers currently hard-coded, should probably change
                 float fakeWeight = 1.;
-                //cout << "fakeWeight at step one = " << fakeWeight << endl;
-                //float fakeGenJetEnergyRatio = randomEGAMEGEN->Uniform( 0., 1.2 );
+                if(debug_) cout << "fakeWeight at step one = " << fakeWeight << endl;
                 float fakeGenJetEnergyRatio = CLHEP::RandFlat::shoot( &engine, 0., 1.2 );
                 //hRandGenJetCheck->Fill( fakeGenJetEnergyRatio );
-                //cout << "fakeGenJetEnergyRatio = " << fakeGenJetEnergyRatio << endl;
+                if(debug_) cout << "fakeGenJetEnergyRatio = " << fakeGenJetEnergyRatio << endl;
                 int fakeRatioBinNum = floor( fakeGenJetEnergyRatio / 0.025  ) + 1;
                 fakeWeight *= hFakeGenJetRatio->GetBinContent( fakeRatioBinNum ) / hFakeGenJetRatio->Integral("width");
-                //cout << "fakeWeight at step two = " << fakeWeight << endl;
+                if(debug_) cout << "fakeWeight at step two = " << fakeWeight << endl;
 
                 //float fakeIDMVA = randomIDMVA->Uniform( -0.9, 1.0 );
                 float fakeIDMVA = CLHEP::RandFlat::shoot( &engine, -0.9, 1.0 );
-                //cout << "fakeIDMVA = " << fakeIDMVA << endl;
+                if(debug_) cout << "fakeIDMVA = " << fakeIDMVA << endl;
                 fakePhoton.setFakeIDMVA( fakeIDMVA );
                 fakePhoton.setHasFakeIDMVA( true );
                 int fakeIDMVABinNum = floor( (fakeIDMVA + 1.) / 0.1 ) + 1;
                 if( abs( fakeEta ) < 1.5 ) {
-                    //if( fakeGenJetEnergyRatio < 0.4 )      fakeWeight *= hBarrelLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hBarrelLowTemplateIDMVA->Integral("width");
-                    //else if( fakeGenJetEnergyRatio < 0.8 ) fakeWeight *= hBarrelMedTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hBarrelMedTemplateIDMVA->Integral("width");
                     if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hBarrelLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hBarrelLowTemplateIDMVA->Integral("width");
                     else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hBarrelHighTemplateIDMVA->GetBinContent( fakeIDMVABinNum ) / hBarrelHighTemplateIDMVA->Integral("width");
                 }
                 else if( abs( fakeEta ) < 2.5 ) {
-                    //if( fakeGenJetEnergyRatio < 0.4 )      fakeWeight *= hEndcapLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hEndcapLowTemplateIDMVA->Integral("width");
-                    //else if( fakeGenJetEnergyRatio < 0.8 ) fakeWeight *= hEndcapMedTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hEndcapMedTemplateIDMVA->Integral("width");
                     if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hEndcapLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hEndcapLowTemplateIDMVA->Integral("width");
                     else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hEndcapHighTemplateIDMVA->GetBinContent( fakeIDMVABinNum ) / hEndcapHighTemplateIDMVA->Integral("width");
                 }
                 else { fakeWeight = 0.; }
-                //cout << "fakeWeight at step tre = " << fakeWeight << endl;
-                //cout << "absolute value fakeEta = " << abs(fakeEta) << endl << endl;
+                if(debug_) cout << "fakeWeight at step tre = " << fakeWeight << endl;
+                if(debug_) cout << "absolute value fakeEta = " << abs(fakeEta) << endl << endl;
                 fakePhoton.setWeight( "fakeWeight", fakeWeight );
 
                 float fakeEnergy = fakeGenJetEnergyRatio * fakeCandidate->energy();
-                //cout << "fakeEnergy = "  << fakeEnergy << endl;
+                if(debug_) cout << "fakeEnergy = "  << fakeEnergy << endl;
                 float fakePt = fakeEnergy * sin( 2 * atan( exp( -fakeEta ) ) );
-                //cout << "fakePt = "  << fakePt << endl;
+                if(debug_) cout << "fakePt = "  << fakePt << endl;
                 reco::Candidate::PolarLorentzVector fakeLV;
                 fakeLV.SetEta( fakeEta );
                 fakeLV.SetPhi( fakePhi );
@@ -200,22 +186,24 @@ namespace flashgg {
                 fakePhoton.setpfPhoIso03( 0. );
 
                 // additional new pt reweighting step 
-                float fakePtReweight = 0.;
-                if( fakePt > 0 && fakePt < 100 ) {
-                  int ptBinNum = floor( fakePt / 2.  ) + 1;
-                  float numer = hCorrectPt->GetBinContent( ptBinNum );
-                  float denom = hWrongPt->GetBinContent( ptBinNum );
-                  if( denom > 0 ) {
-                      fakePtReweight = numer / denom;
-                  }
+                if( doPtReweighting_ ) {
+                    float fakePtReweight = 0.;
+                    if( fakePt > 0 && fakePt < 100 ) {
+                      int ptBinNum = floor( fakePt / 2.  ) + 1;
+                      float numer = hCorrectPt->GetBinContent( ptBinNum );
+                      float denom = hWrongPt->GetBinContent( ptBinNum );
+                      if( denom > 0 ) {
+                          fakePtReweight = numer / denom;
+                      }
+                    }
+                    fakePhoton.setWeight( "fakePtReweight", fakePtReweight );
                 }
-                fakePhoton.setWeight( "fakePtReweight", fakePtReweight );
 
                 fakePhotonCollection->push_back( fakePhoton );
             }
         }
 
-        //cout << "size of fake photon collection = " << fakePhotonCollection->size() << endl;
+        if(debug_) cout << "size of fake photon collection = " << fakePhotonCollection->size() << endl;
         evt.put( fakePhotonCollection );
         // End Prompt-Fake parameterisation------------------------------------------------------------------
 

@@ -81,6 +81,8 @@ private:
 
     bool        debug_;
 
+    bool        doParam_;
+
     TH1F* hFakeGenJetRatio;
     TH1F* hBarrelLowTemplateIDMVA;
     TH1F* hBarrelHighTemplateIDMVA;
@@ -91,15 +93,17 @@ private:
     TH1F* hSigmarvLowEE;
     TH1F* hSigmarvHighEE;
     TH1F* hFakeVtxprob;
-    //TH1F* hCorrectPt;
-    //TH1F* hWrongPt;
+
+    TH1F* hCorrectPt;
+    TH1F* hWrongPt;
 };
 
 ParamTemplateMaker::ParamTemplateMaker( const edm::ParameterSet &iConfig ):
     genJetToken_( consumes<View<reco::GenJet> >( iConfig.getUntrackedParameter<InputTag> ( "GenJetTag", InputTag( "slimmedGenJets" ) ) ) ),
     diPhotonToken_( consumes<View<flashgg::DiPhotonCandidate> >( iConfig.getParameter<InputTag> ( "DiPhotonTag" ) ) ),
     mvaResultToken_( consumes<View<flashgg::DiPhotonMVAResult> >( iConfig.getParameter<InputTag> ( "MVAResultTag" ) ) ),
-    debug_( iConfig.getUntrackedParameter<bool>( "debug", false ) )
+    debug_( iConfig.getUntrackedParameter<bool>( "debug", false ) ),
+    doParam_( iConfig.getUntrackedParameter<bool>( "doParam", false ) )
 {
     cout << "Inside constructor of ParamTemplateMaker" << endl;
 
@@ -114,9 +118,8 @@ ParamTemplateMaker::ParamTemplateMaker( const edm::ParameterSet &iConfig ):
     hSigmarvHighEE = fs_->make<TH1F>( "hSigmarvHighEE", "Sigmarv for high FakeGenJetRatio, in endcap", 20, 0., 0.05 );
     hFakeVtxprob = fs_->make<TH1F>( "hFakeVtxprob", "Fake vtxprob", 200, 0., 1.0 );
     
-    // this can't be done here; need to think exactly how to implement elegantly
-    //hCorrectPt = fs_->make<TH1F>(  );
-    //hWrongPt = fs_->make<TH1F>(  );
+    hCorrectPt = fs_->make<TH1F>( "hCorrectPt", "True fake pt distribution", 50, 0., 100. );
+    hWrongPt = fs_->make<TH1F>( "hWrongPt", "Incorrect fake pt distribution", 50, 0., 100. );
 }
 
 ParamTemplateMaker::~ParamTemplateMaker()
@@ -154,9 +157,12 @@ ParamTemplateMaker::analyze( const edm::Event &iEvent, const edm::EventSetup &iS
         // Begin analysis of prompt-fake events // Ed
         //--------------------------------------------------------------------------------------------------
         auto printDipho = diPhotons->ptrAt( diphoIndex );
-        // need to figure out how to add this properly
+        // need to figure out how to add this properly; below line gives one at the moment
+        //cout << "centralWeight = " << printDipho->centralWeight() << endl << endl;
         //float weight = printDipho->weight();
         float weight = 1.;
+        if( doParam_ && printDipho->leadingPhoton()->hasFakeIDMVA() ) weight *= printDipho->leadingPhoton()->weight( "fakeWeight" );
+        else if( doParam_ && printDipho->subLeadingPhoton()->hasFakeIDMVA() ) weight *= printDipho->subLeadingPhoton()->weight( "fakeWeight" );
 
         if( printDipho->mass() < 100 || printDipho->mass() > 180 ) continue;
         /*if( genJets->size()    < 2 ) continue;
@@ -240,6 +246,10 @@ ParamTemplateMaker::analyze( const edm::Event &iEvent, const edm::EventSetup &iS
 
             float vtxprob = dipho_mvares->vtxprob;
             hFakeVtxprob->Fill( vtxprob, weight );
+           
+            float fakePt = fakePhoton->pt();
+            hCorrectPt->Fill( fakePt, weight );
+            hWrongPt->Fill( fakePt, weight );
 
         //--------------------------------------------------------------------------------------------------
         } // End of prompt-fake events */ // Ed
