@@ -20,12 +20,13 @@ customize.options.register('QCDParam',
                            VarParsing.VarParsing.multiplicity.singleton,
                            VarParsing.VarParsing.varType.bool,
                            'QCDParam')
-customize.options.register('FileNum',
-				  '8',
-				  VarParsing.VarParsing.multiplicity.singleton,
-				  VarParsing.VarParsing.varType.string,
-				  "File number")
+#customize.options.register('FileNum',
+#				  '8',
+#				  VarParsing.VarParsing.multiplicity.singleton,
+#				  VarParsing.VarParsing.varType.string,
+#				  "File number")
 customize.parse()
+print "customize.processId:",customize.processId
 
 process = cms.Process("ParamTemplateMaker")
 
@@ -39,11 +40,13 @@ process.MessageLogger.cerr.threshold = 'ERROR'
 # +++++ the source file
 process.source = cms.Source("PoolSource",
                             #fileNames=cms.untracked.vstring("root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_"+myfilenum+".root"))
-                            fileNames=cms.untracked.vstring("root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_"+customize.FileNum+".root"))
+                            #fileNames=cms.untracked.vstring("root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_"+customize.FileNum+".root"))
+                            fileNames=cms.untracked.vstring("root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_8.root"))
                             #fileNames=cms.untracked.vstring("/store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2/2_2_0/QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/RunIISpring16DR80X-2_2_0-25ns_ICHEP16_MiniAODv2-2_2_0-v0-RunIISpring16MiniAODv2-PUSpring16_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/160707_145437/0000/myMicroAODOutputFile_"+myfilenum+".root"))
 
 #process.TFileService = cms.Service("TFileService", fileName = cms.string(outdir+outname+myfilenum+".root")) 
-process.TFileService = cms.Service("TFileService", fileName = cms.string(outdir+outname+customize.FileNum+".root")) 
+#process.TFileService = cms.Service("TFileService", fileName = cms.string(outdir+outname+customize.FileNum+".root")) 
+process.TFileService = cms.Service("TFileService", fileName = cms.string("test.root")) 
 
 process.load("flashgg.Taggers.flashggParamTemplateMaker_cfi")
 

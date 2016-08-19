@@ -152,7 +152,6 @@ namespace flashgg {
                 fakeWeight *= hFakeGenJetRatio->GetBinContent( fakeRatioBinNum ) / hFakeGenJetRatio->Integral("width");
                 if(debug_) cout << "fakeWeight at step two = " << fakeWeight << endl;
 
-                //float fakeIDMVA = randomIDMVA->Uniform( -0.9, 1.0 );
                 float fakeIDMVA = CLHEP::RandFlat::shoot( &engine, -0.9, 1.0 );
                 if(debug_) cout << "fakeIDMVA = " << fakeIDMVA << endl;
                 fakePhoton.setFakeIDMVA( fakeIDMVA );
