@@ -275,6 +275,20 @@ namespace flashgg {
                 continue;
             }
 
+            if( ! evt.isRealData() ) {
+                float minFakePhoDr = 100.;
+                auto fakePhoton = dipho->leadingPhoton();
+                if( dipho->leadingPhoton()->genMatchType() == 1 ) fakePhoton = dipho->subLeadingPhoton();
+                for( unsigned int genJetLoop = 0 ; genJetLoop < genJets->size() ; genJetLoop++ ) {
+                    auto tempGenJet = genJets->ptrAt( genJetLoop );
+                    float tempFakePhoDr = deltaR( tempGenJet->eta(), tempGenJet->phi(), fakePhoton->eta(), fakePhoton->phi() );
+                    if( tempFakePhoDr < minFakePhoDr ) {
+                        minFakePhoDr = tempFakePhoDr;
+                        tag_obj.setGenJetNearestFake( tempGenJet );
+                    }
+                }
+            }
+
             int catnum = chooseCategory( vbfdipho_mvares->vbfDiPhoDiJetMvaResult );
             tag_obj.setCategoryNumber( catnum );
             unsigned int index_gp_leadjet = std::numeric_limits<unsigned int>::max();

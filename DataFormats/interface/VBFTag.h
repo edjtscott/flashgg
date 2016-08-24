@@ -46,7 +46,8 @@ namespace flashgg {
         const float fakeWeight() const { if(      diPhoton()->leadingPhoton()->hasFakeIDMVA() )    return diPhoton()->leadingPhoton()->weight("fakeWeight");
                                          else if( diPhoton()->subLeadingPhoton()->hasFakeIDMVA() ) return diPhoton()->subLeadingPhoton()->weight("fakeWeight");
                                          else     return 1.; }
-
+        void setGenJetNearestFake( edm::Ptr<reco::GenJet> gj ) { genJetNearestFake_ = gj; }
+        const edm::Ptr<reco::GenJet> genJetNearestFake_ptr() const { return genJetNearestFake_; }
         const float qcd_leadPho_pt_weight() const {return diPhoton()->leadingPhoton()->weight("fakePtReweight");}
         const float qcd_sublPho_pt_weight() const {return diPhoton()->subLeadingPhoton()->weight("fakePtReweight");}
         
@@ -90,6 +91,8 @@ namespace flashgg {
         float scaleUp_[3];
         float scaleDown_[3];
         float pdf_[60];
+
+        edm::Ptr<reco::GenJet> genJetNearestFake_;
 
     };
 

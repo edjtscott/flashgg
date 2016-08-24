@@ -215,6 +215,8 @@ new_variables = [
     "dipho_fakeWeight := fakeWeight",
     "dipho_leadPt     := diPhoton.leadingPhoton.pt()",
     "dipho_subPt      := diPhoton.subLeadingPhoton.pt()",
+    "dipho_leadEnergy := diPhoton.leadingPhoton.energy()",
+    "dipho_subEnergy  := diPhoton.subLeadingPhoton.energy()",
     "dipho_leadIDMVA  := diPhoton.leadPhotonId()",
     "dipho_subIDMVA   := diPhoton.subLeadPhotonId()",
     "dipho_vtxprob    := diPhotonMVA.vtxprob",
@@ -234,7 +236,10 @@ matching_photon = [
     "qcd_pt1_weight  := qcd_leadPho_pt_weight()",
     "qcd_pt2_weight  := qcd_sublPho_pt_weight()",
     "prompt_pho_1    := diPhoton.leadingPhoton.genMatchType()",
-    "prompt_pho_2    := diPhoton.subLeadingPhoton.genMatchType()"
+    "prompt_pho_2    := diPhoton.subLeadingPhoton.genMatchType()",
+    "fakeGenJetEnergy := genJetNearestFake_ptr().energy()",
+    "fakeGenJetEta    := genJetNearestFake_ptr().eta()",
+    "fakeGenJetPhi    := genJetNearestFake_ptr().phi()"
 ]
 
 all_variables = var.dipho_variables + var.dijet_variables +  new_variables
