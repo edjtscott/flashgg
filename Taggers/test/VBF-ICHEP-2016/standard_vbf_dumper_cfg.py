@@ -76,6 +76,9 @@ if customize.QCDParam :
     process.load("flashgg.MicroAOD.flashggParameterisedPromptFakeDiPhotons_cfi")
     from PhysicsTools.PatAlgos.tools.helpers import massSearchReplaceAnyInputTag
 
+    # include line below to omit pt reweighting. Only needs to be done when making templates
+    process.flashggParameterisedFakePhotons.doPtReweighting = cms.untracked.bool(False)
+
     process.flashggDiPhotonSystematics.src =  cms.InputTag("flashggParameterisedPromptFakeDiPhotons")
     process.RandomNumberGeneratorService   =  cms.Service ("RandomNumberGeneratorService",
                                                            flashggParameterisedFakePhotons = cms.PSet(
