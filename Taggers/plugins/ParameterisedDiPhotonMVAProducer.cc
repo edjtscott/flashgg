@@ -101,7 +101,8 @@ namespace flashgg {
     {
         //TFile *template_file = new TFile("file:/home/hep/es811/VBFStudies/CMSSW_7_6_3_patch2/src/flashgg/TemplateHists/templates_v2.root");
         //TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v2.root");
+        //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v2.root");
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/AllTemplates.root");
         TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         hSigmarvChecksLowEB  = (TH1F*)template_file->Get("hSigmarvChecksLowEB");

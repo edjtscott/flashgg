@@ -59,7 +59,7 @@ namespace flashgg {
         TH1F *hWrongPt;
 
         edm::FileInPath templateFilePath_;
-        edm::FileInPath reweightFilePath_;
+        //edm::FileInPath reweightFilePath_;
 
         //TH1F* hRandGenJetCheck;
         
@@ -76,7 +76,8 @@ namespace flashgg {
         produces<vector<flashgg::Photon> >();
         
         // template histograms 
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v1.root"); // will be changed to just one template file at some point
+        //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v1.root"); // will be changed to just one template file at some point
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/AllTemplates.root"); 
         TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         hFakeGenJetRatio         = (TH1F*)template_file->Get("hFakeGenJetRatio");
@@ -86,10 +87,11 @@ namespace flashgg {
         hEndcapHighTemplateIDMVA = (TH1F*)template_file->Get("hEndcapHighTemplateIDMVA");
 
         hCorrectPt = (TH1F*)template_file->Get("hCorrectPt");
+        //hWrongPt = (TH1F*)template_file->Get("hWrongPt");
 
-        reweightFilePath_ = edm::FileInPath("flashgg/Taggers/data/reweighting.root");
-        TFile *reweight_file = TFile::Open(reweightFilePath_.fullPath().c_str());
-        hWrongPt = (TH1F*)reweight_file->Get("hWrongPt");
+        //reweightFilePath_ = edm::FileInPath("flashgg/Taggers/data/reweighting.root");
+        //TFile *reweight_file = TFile::Open(reweightFilePath_.fullPath().c_str());
+        //hWrongPt = (TH1F*)reweight_file->Get("hWrongPt");
 
         //hRandGenJetCheck = new TH1F( "hRandGenJetCheck", "Should be uniform on [0,1.2]", 48, 0., 1.2 );
 
