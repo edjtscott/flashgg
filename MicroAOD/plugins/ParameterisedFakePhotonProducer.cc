@@ -87,7 +87,7 @@ namespace flashgg {
         hEndcapHighTemplateIDMVA = (TH1F*)template_file->Get("hEndcapHighTemplateIDMVA");
 
         hCorrectPt = (TH1F*)template_file->Get("hCorrectPt");
-        //hWrongPt = (TH1F*)template_file->Get("hWrongPt");
+        hWrongPt = (TH1F*)template_file->Get("hWrongPt");
 
         //reweightFilePath_ = edm::FileInPath("flashgg/Taggers/data/reweighting.root");
         //TFile *reweight_file = TFile::Open(reweightFilePath_.fullPath().c_str());
