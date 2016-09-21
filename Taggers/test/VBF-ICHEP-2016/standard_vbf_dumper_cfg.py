@@ -58,6 +58,18 @@ customize.options.register('QCDParam',
                            VarParsing.VarParsing.varType.bool,
                            'QCDParam')
 
+customize.options.register('Debug',
+                           False,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'Debug')
+
+customize.options.register('DoPtReweighting',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'DoPtReweighting')
+
 customize.parse()
 print "customize.processId:",customize.processId
 
@@ -77,7 +89,13 @@ if customize.QCDParam :
     from PhysicsTools.PatAlgos.tools.helpers import massSearchReplaceAnyInputTag
 
     # include line below to omit pt reweighting. Only needs to be done when making templates
-    #process.flashggParameterisedFakePhotons.doPtReweighting = cms.untracked.bool(False)
+    if customize.DoPtReweighting==False:
+	process.flashggParameterisedFakePhotons.doPtReweighting = cms.untracked.bool(False)
+
+    if customize.Debug:
+	process.flashggParameterisedFakePhotons.debug = cms.untracked.bool(True)
+	process.flashggParameterisedDiPhotonMVA.debug = cms.untracked.bool(True)
+    
 
     process.flashggDiPhotonSystematics.src =  cms.InputTag("flashggParameterisedPromptFakeDiPhotons")
     process.RandomNumberGeneratorService   =  cms.Service ("RandomNumberGeneratorService",
@@ -326,7 +344,7 @@ if customize.QCDParam :
         )
         * process.flashggTagSorter
     )
-    
+
     process.p = cms.Path( process.dataRequirements
                           * process.genFilter
                           * process.flashggParameterisedFakePhotons

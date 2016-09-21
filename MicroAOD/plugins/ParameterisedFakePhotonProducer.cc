@@ -50,10 +50,21 @@ namespace flashgg {
 
         // for parameterisation
         TH1F *hFakeGenJetRatio;
-        TH1F *hBarrelLowTemplateIDMVA;
+        /*TH1F *hBarrelLowTemplateIDMVA;
         TH1F *hBarrelHighTemplateIDMVA;
         TH1F *hEndcapLowTemplateIDMVA;
-        TH1F *hEndcapHighTemplateIDMVA;
+        TH1F *hEndcapHighTemplateIDMVA;*/
+
+        TH1F *hFakeIDMVAEB0Low;
+        TH1F *hFakeIDMVAEB0High;
+        TH1F *hFakeIDMVAEB1Low;
+        TH1F *hFakeIDMVAEB1High;
+        TH1F *hFakeIDMVAEB2Low;
+        TH1F *hFakeIDMVAEB2High;
+        TH1F *hFakeIDMVAEE0Low;
+        TH1F *hFakeIDMVAEE0High;
+        TH1F *hFakeIDMVAEE1Low;
+        TH1F *hFakeIDMVAEE1High;
 
         TH1F *hCorrectPt;
         TH1F *hWrongPt;
@@ -77,14 +88,27 @@ namespace flashgg {
         
         // template histograms 
         //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v1.root"); // will be changed to just one template file at some point
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/AllTemplates.root"); 
+        //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/AllTemplates.root"); 
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/FinerTemplates.root"); 
         TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         hFakeGenJetRatio         = (TH1F*)template_file->Get("hFakeGenJetRatio");
-        hBarrelLowTemplateIDMVA  = (TH1F*)template_file->Get("hBarrelLowTemplateIDMVA");
+
+        /*hBarrelLowTemplateIDMVA  = (TH1F*)template_file->Get("hBarrelLowTemplateIDMVA");
         hBarrelHighTemplateIDMVA = (TH1F*)template_file->Get("hBarrelHighTemplateIDMVA");
         hEndcapLowTemplateIDMVA  = (TH1F*)template_file->Get("hEndcapLowTemplateIDMVA");
-        hEndcapHighTemplateIDMVA = (TH1F*)template_file->Get("hEndcapHighTemplateIDMVA");
+        hEndcapHighTemplateIDMVA = (TH1F*)template_file->Get("hEndcapHighTemplateIDMVA");*/
+
+        hFakeIDMVAEB0Low  = (TH1F*)template_file->Get("hFakeIDMVAEB0Low");
+        hFakeIDMVAEB0High = (TH1F*)template_file->Get("hFakeIDMVAEB0High");
+        hFakeIDMVAEB1Low  = (TH1F*)template_file->Get("hFakeIDMVAEB1Low");
+        hFakeIDMVAEB1High = (TH1F*)template_file->Get("hFakeIDMVAEB1High");
+        hFakeIDMVAEB2Low  = (TH1F*)template_file->Get("hFakeIDMVAEB2Low");
+        hFakeIDMVAEB2High = (TH1F*)template_file->Get("hFakeIDMVAEB2High");
+        hFakeIDMVAEE0Low  = (TH1F*)template_file->Get("hFakeIDMVAEE0Low");
+        hFakeIDMVAEE0High = (TH1F*)template_file->Get("hFakeIDMVAEE0High");
+        hFakeIDMVAEE1Low  = (TH1F*)template_file->Get("hFakeIDMVAEE1Low");
+        hFakeIDMVAEE1High = (TH1F*)template_file->Get("hFakeIDMVAEE1High");
 
         hCorrectPt = (TH1F*)template_file->Get("hCorrectPt");
         hWrongPt = (TH1F*)template_file->Get("hWrongPt");
@@ -102,6 +126,7 @@ namespace flashgg {
 
     void ParameterisedFakePhotonProducer::produce( Event &evt, const EventSetup & )
     {
+        if(debug_) cout << "Entering ParameterisedFakePhoton produce method" << endl;
         // setup random number generator
         edm::Service<edm::RandomNumberGenerator> rng;
         if( ! rng.isAvailable() ) {
@@ -159,13 +184,33 @@ namespace flashgg {
                 fakePhoton.setFakeIDMVA( fakeIDMVA );
                 fakePhoton.setHasFakeIDMVA( true );
                 int fakeIDMVABinNum = floor( (fakeIDMVA + 1.) / 0.1 ) + 1;
-                if( abs( fakeEta ) < 1.5 ) {
+                /*if( abs( fakeEta ) < 1.5 ) {
                     if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hBarrelLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hBarrelLowTemplateIDMVA->Integral("width");
                     else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hBarrelHighTemplateIDMVA->GetBinContent( fakeIDMVABinNum ) / hBarrelHighTemplateIDMVA->Integral("width");
                 }
                 else if( abs( fakeEta ) < 2.5 ) {
                     if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hEndcapLowTemplateIDMVA->GetBinContent(  fakeIDMVABinNum ) / hEndcapLowTemplateIDMVA->Integral("width");
                     else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hEndcapHighTemplateIDMVA->GetBinContent( fakeIDMVABinNum ) / hEndcapHighTemplateIDMVA->Integral("width");
+                }*/
+                if( abs( fakeEta ) < 0.5 ) {
+                    if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hFakeIDMVAEB0Low->GetBinContent(  fakeIDMVABinNum ) / hFakeIDMVAEB0Low->Integral("width");
+                    else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hFakeIDMVAEB0High->GetBinContent( fakeIDMVABinNum ) / hFakeIDMVAEB0High->Integral("width");
+                }
+                else if( abs( fakeEta ) < 1.0 ) {
+                    if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hFakeIDMVAEB1Low->GetBinContent(  fakeIDMVABinNum ) / hFakeIDMVAEB1Low->Integral("width");
+                    else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hFakeIDMVAEB1High->GetBinContent( fakeIDMVABinNum ) / hFakeIDMVAEB1High->Integral("width");
+                }
+                else if( abs( fakeEta ) < 1.5 ) {
+                    if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hFakeIDMVAEB2Low->GetBinContent(  fakeIDMVABinNum ) / hFakeIDMVAEB2Low->Integral("width");
+                    else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hFakeIDMVAEB2High->GetBinContent( fakeIDMVABinNum ) / hFakeIDMVAEB2High->Integral("width");
+                }
+                else if( abs( fakeEta ) < 2.0 ) {
+                    if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hFakeIDMVAEE0Low->GetBinContent(  fakeIDMVABinNum ) / hFakeIDMVAEE0Low->Integral("width");
+                    else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hFakeIDMVAEE0High->GetBinContent( fakeIDMVABinNum ) / hFakeIDMVAEE0High->Integral("width");
+                }
+                else if( abs( fakeEta ) < 2.5 ) {
+                    if( fakeGenJetEnergyRatio < 0.8 )      fakeWeight *= hFakeIDMVAEE1Low->GetBinContent(  fakeIDMVABinNum ) / hFakeIDMVAEE1Low->Integral("width");
+                    else if( fakeGenJetEnergyRatio < 1.2 ) fakeWeight *= hFakeIDMVAEE1High->GetBinContent( fakeIDMVABinNum ) / hFakeIDMVAEE1High->Integral("width");
                 }
                 else { fakeWeight = 0.; }
                 if(debug_) cout << "fakeWeight at step tre = " << fakeWeight << endl;
@@ -208,6 +253,7 @@ namespace flashgg {
         evt.put( fakePhotonCollection );
         // End Prompt-Fake parameterisation------------------------------------------------------------------
 
+        if(debug_) cout << "Exiting ParameterisedFakePhoton produce method" << endl;
     }
 
     void ParameterisedFakePhotonProducer::endJob()
