@@ -94,25 +94,35 @@ namespace flashgg {
         //TH1F* hFakeVtxprob;
         
         TH1F* hSigmarvEB0Low;
+        TH1F* hSigmarvEB0Med;
         TH1F* hSigmarvEB0High;
         TH1F* hSigmarvEB1Low;
+        TH1F* hSigmarvEB1Med;
         TH1F* hSigmarvEB1High;
         TH1F* hSigmarvEB2Low;
+        TH1F* hSigmarvEB2Med;
         TH1F* hSigmarvEB2High;
         TH1F* hSigmarvEE0Low;
+        TH1F* hSigmarvEE0Med;
         TH1F* hSigmarvEE0High;
         TH1F* hSigmarvEE1Low;
+        TH1F* hSigmarvEE1Med;
         TH1F* hSigmarvEE1High;
 
         TH1F* hVtxprobEB0Low;
+        TH1F* hVtxprobEB0Med;
         TH1F* hVtxprobEB0High;
         TH1F* hVtxprobEB1Low;
+        TH1F* hVtxprobEB1Med;
         TH1F* hVtxprobEB1High;
         TH1F* hVtxprobEB2Low;
+        TH1F* hVtxprobEB2Med;
         TH1F* hVtxprobEB2High;
         TH1F* hVtxprobEE0Low;
+        TH1F* hVtxprobEE0Med;
         TH1F* hVtxprobEE0High;
         TH1F* hVtxprobEE1Low;
+        TH1F* hVtxprobEE1Med;
         TH1F* hVtxprobEE1High;
 
         bool debug_;
@@ -128,7 +138,8 @@ namespace flashgg {
         //TFile *template_file = new TFile("file:/vols/cms/es811/TemplateHists/templates_v2.root");
         //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/templates_v2.root");
         //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/AllTemplates.root");
-        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/FinerTemplates.root");
+        //templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/FinerTemplates.root");
+        templateFilePath_ = edm::FileInPath("flashgg/Taggers/data/EvenFinerTemplates.root");
         TFile *template_file = TFile::Open(templateFilePath_.fullPath().c_str());
 
         /*hSigmarvChecksLowEB  = (TH1F*)template_file->Get("hSigmarvChecksLowEB");
@@ -139,25 +150,35 @@ namespace flashgg {
         hFakeVtxprob = (TH1F*)template_file->Get("hFakeVtxprob");*/
 
         hSigmarvEB0Low  = (TH1F*)template_file->Get("hSigmarvEB0Low");
+        hSigmarvEB0Med  = (TH1F*)template_file->Get("hSigmarvEB0Med");
         hSigmarvEB0High = (TH1F*)template_file->Get("hSigmarvEB0High");
         hSigmarvEB1Low  = (TH1F*)template_file->Get("hSigmarvEB1Low");
+        hSigmarvEB1Med  = (TH1F*)template_file->Get("hSigmarvEB1Med");
         hSigmarvEB1High = (TH1F*)template_file->Get("hSigmarvEB1High");
         hSigmarvEB2Low  = (TH1F*)template_file->Get("hSigmarvEB2Low");
+        hSigmarvEB2Med  = (TH1F*)template_file->Get("hSigmarvEB2Med");
         hSigmarvEB2High = (TH1F*)template_file->Get("hSigmarvEB2High");
         hSigmarvEE0Low  = (TH1F*)template_file->Get("hSigmarvEE0Low");
+        hSigmarvEE0Med  = (TH1F*)template_file->Get("hSigmarvEE0Med");
         hSigmarvEE0High = (TH1F*)template_file->Get("hSigmarvEE0High");
         hSigmarvEE1Low  = (TH1F*)template_file->Get("hSigmarvEE1Low");
+        hSigmarvEE1Med  = (TH1F*)template_file->Get("hSigmarvEE1Med");
         hSigmarvEE1High = (TH1F*)template_file->Get("hSigmarvEE1High");
 
         hVtxprobEB0Low  = (TH1F*)template_file->Get("hVtxprobEB0Low");
+        hVtxprobEB0Med  = (TH1F*)template_file->Get("hVtxprobEB0Med");
         hVtxprobEB0High = (TH1F*)template_file->Get("hVtxprobEB0High");
         hVtxprobEB1Low  = (TH1F*)template_file->Get("hVtxprobEB1Low");
+        hVtxprobEB1Med  = (TH1F*)template_file->Get("hVtxprobEB1Med");
         hVtxprobEB1High = (TH1F*)template_file->Get("hVtxprobEB1High");
         hVtxprobEB2Low  = (TH1F*)template_file->Get("hVtxprobEB2Low");
+        hVtxprobEB2Med  = (TH1F*)template_file->Get("hVtxprobEB2Med");
         hVtxprobEB2High = (TH1F*)template_file->Get("hVtxprobEB2High");
         hVtxprobEE0Low  = (TH1F*)template_file->Get("hVtxprobEE0Low");
+        hVtxprobEE0Med  = (TH1F*)template_file->Get("hVtxprobEE0Med");
         hVtxprobEE0High = (TH1F*)template_file->Get("hVtxprobEE0High");
         hVtxprobEE1Low  = (TH1F*)template_file->Get("hVtxprobEE1Low");
+        hVtxprobEE1Med  = (TH1F*)template_file->Get("hVtxprobEE1Med");
         hVtxprobEE1High = (TH1F*)template_file->Get("hVtxprobEE1High");
 
         vertex_prob_params_conv = iConfig.getParameter<vector<double>>( "VertexProbParamsConv" );
@@ -374,15 +395,20 @@ namespace flashgg {
             else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) max = hSigmarvChecksHighEB->GetMaximum();
             else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvChecksLowEE->GetMaximum();
             else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) max = hSigmarvChecksHighEE->GetMaximum();*/
-            if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB0Low->GetMaximum();
+            if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.6 ) max = hSigmarvEB0Low->GetMaximum();
+            else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB0Med->GetMaximum();
             else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 1.2 ) max = hSigmarvEB0High->GetMaximum();
-            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB1Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.6 ) max = hSigmarvEB1Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB1Med->GetMaximum();
             else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 1.2 ) max = hSigmarvEB1High->GetMaximum();
-            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB2Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.6 ) max = hSigmarvEB2Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEB2Med->GetMaximum();
             else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) max = hSigmarvEB2High->GetMaximum();
-            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) max = hSigmarvEE0Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.6 ) max = hSigmarvEE0Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) max = hSigmarvEE0Med->GetMaximum();
             else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 1.2 ) max = hSigmarvEE0High->GetMaximum();
-            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEE1Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.6 ) max = hSigmarvEE1Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) max = hSigmarvEE1Med->GetMaximum();
             else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) max = hSigmarvEE1High->GetMaximum();
             //cout << "max = " << max << endl;
             float sigmarv = 0;
@@ -400,15 +426,20 @@ namespace flashgg {
                 else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvChecksHighEB->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvChecksLowEE->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvChecksHighEE->GetBinContent( binNum );*/
-                if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB0Low->GetBinContent( binNum );
+                if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hSigmarvEB0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB0Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvEB0High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.6 ) tempHistVal = hSigmarvEB1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB1Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvEB1High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB2Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hSigmarvEB2Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEB2Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvEB2High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEE0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.6 ) tempHistVal = hSigmarvEE0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEE0Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvEE0High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEE1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hSigmarvEE1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hSigmarvEE1Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hSigmarvEE1High->GetBinContent( binNum );
                 else {
                     cout << "ERROR OF SORTS - EITHER ETA OR RATIO NO IN VALID RANGE" << endl;
@@ -425,15 +456,20 @@ namespace flashgg {
             
             done = false;
             //max = hFakeVtxprob->GetMaximum();
-            if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB0Low->GetMaximum();
+            if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.6 ) max = hVtxprobEB0Low->GetMaximum();
+            else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB0Med->GetMaximum();
             else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 1.2 ) max = hVtxprobEB0High->GetMaximum();
-            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB1Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.6 ) max = hVtxprobEB1Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB1Med->GetMaximum();
             else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 1.2 ) max = hVtxprobEB1High->GetMaximum();
-            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB2Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.6 ) max = hVtxprobEB2Low->GetMaximum();
+            else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEB2Med->GetMaximum();
             else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) max = hVtxprobEB2High->GetMaximum();
-            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) max = hVtxprobEE0Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.6 ) max = hVtxprobEE0Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) max = hVtxprobEE0Med->GetMaximum();
             else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 1.2 ) max = hVtxprobEE0High->GetMaximum();
-            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEE1Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.6 ) max = hVtxprobEE1Low->GetMaximum();
+            else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) max = hVtxprobEE1Med->GetMaximum();
             else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) max = hVtxprobEE1High->GetMaximum();
             vtxProbMVA_ = 0;
             while( !done ) {
@@ -442,15 +478,20 @@ namespace flashgg {
                 float tempRand = CLHEP::RandFlat::shoot( &engine, 0., max );
                 float tempHistVal = 0;
                 //tempHistVal = hFakeVtxprob->GetBinContent( binNum );
-                if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB0Low->GetBinContent( binNum );
+                if(      abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hVtxprobEB0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB0Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 0.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hVtxprobEB0High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.6 ) tempHistVal = hVtxprobEB1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB1Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 1.0 && fakeGenJetRatio < 1.2 ) tempHistVal = hVtxprobEB1High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB2Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hVtxprobEB2Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEB2Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 1.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hVtxprobEB2High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEE0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.6 ) tempHistVal = hVtxprobEE0Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEE0Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.0 && fakeGenJetRatio < 1.2 ) tempHistVal = hVtxprobEE0High->GetBinContent( binNum );
-                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEE1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.6 ) tempHistVal = hVtxprobEE1Low->GetBinContent( binNum );
+                else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 0.8 ) tempHistVal = hVtxprobEE1Med->GetBinContent( binNum );
                 else if( abs( fakeEta ) < 2.5 && fakeGenJetRatio < 1.2 ) tempHistVal = hVtxprobEE1High->GetBinContent( binNum );
                 else {
                     cout << "ERROR OF SORTS - EITHER ETA OR RATIO NO IN VALID RANGE" << endl;
