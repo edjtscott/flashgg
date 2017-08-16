@@ -369,7 +369,8 @@ namespace flashgg {
                     const auto &weights = genInfo->weights();
                     // FIXME store alternative/all weight-sets
                     if( ! weights.empty() ) {
-                        weight *= weights[0];
+                        //weight *= weights[0];
+                        weight *= weights[9]; //from D. Sperka: this should be the central weight for NNLOPS
                     }
                 }
                 
