@@ -6,6 +6,7 @@ photonjetDumpConfig = cms.PSet(
     className  = cms.untracked.string("CutBasedPhotonJetDumper"),
     src = cms.InputTag("flashggPhotonJet"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(1), # -1 turns off the maxCandPerEvent check
     lumiWeight = cms.double(1.0),

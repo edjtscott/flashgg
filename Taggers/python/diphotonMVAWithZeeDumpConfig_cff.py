@@ -6,6 +6,7 @@ DiPhotonMVAWithZeeDumpConfig = cms.PSet(
     className = cms.untracked.string("CutBasedDiPhotonMVAResultDumper"),
     src = cms.InputTag("flashggDiPhotonMVA"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(1),
     lumiWeight = cms.double(1.0),

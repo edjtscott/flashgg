@@ -18,6 +18,7 @@
 #include "CommonTools/Utils/interface/StringObjectFunction.h"
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
+#include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/ConsumesCollector.h"
@@ -90,10 +91,11 @@ namespace flashgg {
 
         classifier_type classifier_;
 
-        edm::InputTag src_, genInfo_, pdfWeight_;
+        edm::InputTag src_, genInfo_, lheInfo_, pdfWeight_;
 
         edm::EDGetTokenT<collection_type> srcToken_;
         edm::EDGetTokenT<GenEventInfoProduct> genInfoToken_;
+        edm::EDGetTokenT<LHEEventProduct> lheInfoToken_;
         edm::EDGetTokenT<std::vector<flashgg::PDFWeightObject> > pdfWeightToken_;
 
         std::string processId_;
@@ -145,6 +147,7 @@ namespace flashgg {
         classifier_( cfg.getParameter<edm::ParameterSet>( "classifierCfg" ) ),
         src_( cfg.getParameter<edm::InputTag>( "src" ) ),
         genInfo_( cfg.getParameter<edm::InputTag>( "generatorInfo" ) ),
+        lheInfo_( cfg.getParameter<edm::InputTag>( "lheInfo" ) ),
         pdfWeight_( cfg.getUntrackedParameter<edm::InputTag>("flashggPDFWeightObject", edm::InputTag("flashggPDFWeightObject") ) ),
         dumpGlobalVariables_( cfg.getUntrackedParameter<bool>( "dumpGlobalVariables", true ) ),
         globalVarsDumper_(0)
@@ -161,9 +164,11 @@ namespace flashgg {
         classifier_( cfg.getParameter<edm::ParameterSet>( "classifierCfg" ) ),
         src_( cfg.getParameter<edm::InputTag>( "src" ) ),
         genInfo_( cfg.getParameter<edm::InputTag>( "generatorInfo" ) ),
+        lheInfo_( cfg.getParameter<edm::InputTag>( "lheInfo" ) ),
         pdfWeight_( cfg.getUntrackedParameter<edm::InputTag>("flashggPDFWeightObject", edm::InputTag("flashggPDFWeightObject") ) ),
         srcToken_( cc.consumes<collection_type>( src_ ) ),
         genInfoToken_( cc.consumes<GenEventInfoProduct>( genInfo_ ) ),
+        lheInfoToken_( cc.consumes<LHEEventProduct>( lheInfo_ ) ),
         pdfWeightToken_( cc.consumes<std::vector<flashgg::PDFWeightObject> >( pdfWeight_ ) ),
         dumpGlobalVariables_( cfg.getUntrackedParameter<bool>( "dumpGlobalVariables", true ) ),
         stage0catTag_( cfg.getUntrackedParameter<edm::InputTag>( "stage0catTag", edm::InputTag("rivetProducerHTXS","stage0cat") ) ),
@@ -356,23 +361,30 @@ namespace flashgg {
             double weight = 1.;
             if( ! event.isRealData() ) {
                 edm::Handle<GenEventInfoProduct> genInfo;
+                edm::Handle<LHEEventProduct> lheInfo; //need LHE info for correct NNLOPS sample weight
                 const edm::Event * fullEvent = dynamic_cast<const edm::Event *>(&event);
                 if (fullEvent != 0) {
                     fullEvent->getByToken(genInfoToken_, genInfo);
+                    fullEvent->getByToken(lheInfoToken_, lheInfo);
                 } else {
                     event.getByLabel(genInfo_,genInfo);
+                    event.getByLabel(lheInfo_,lheInfo);
                 }
 
                 weight = lumiWeight_;
 
                 if( genInfo.isValid() ) {
                     const auto &weights = genInfo->weights();
+                    const auto &lheWeights = lheInfo->weights();
                     // FIXME store alternative/all weight-sets
                     if( ! weights.empty() ) {
-                        weight *= weights[0];
+                        //weight *= weights[0];
                         //std::cout << "ED DEBUG: Size of weights collection is " << weights.size() << std::endl;
                         //std::cout << "ED DEBUG: weights[9] = " << weights[9] << std::endl << std::endl;
                         //weight *= weights[9]; //from D. Sperka: this should be the central weight for NNLOPS
+                        std::cout << "ED DEBUG: Size of LHE weights collection is " << lheWeights.size() << std::endl;
+                        std::cout << "ED DEBUG: lheWeights[9] = " << lheWeights[9].wgt << std::endl << std::endl;
+                        weight *= lheWeights[9].wgt;
                     }
                 }
                 

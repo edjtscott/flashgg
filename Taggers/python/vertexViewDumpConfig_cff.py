@@ -6,6 +6,7 @@ vertexViewDumpConfig = cms.PSet(
     className  = cms.untracked.string("VertexViewPhotonDumper"),
     src = cms.InputTag("flashggSingleVertexViews"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(2000),
     lumiWeight = cms.double(1.0),

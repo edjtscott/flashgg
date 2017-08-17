@@ -6,6 +6,7 @@ tagsDumpConfig = cms.PSet(
     className  = cms.untracked.string(""),
     src = cms.InputTag(""),    
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     processIndex = cms.int32(50),
     maxCandPerEvent = cms.int32(-1),

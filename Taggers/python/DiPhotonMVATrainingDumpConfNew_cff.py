@@ -7,6 +7,7 @@ DiPhotonMVATrainingDumpConfNew = cms.PSet(
 		src = cms.InputTag("flashggDiPhotonMVANew"),
 #src = cms.InputTag("flashggPhotons"),
 		generatorInfo = cms.InputTag("generator"),
+		lheInfo = cms.InputTag("externalLHEProducer"),
 		processId = cms.string(""),
 		maxCandPerEvent = cms.int32(1),
 		lumiWeight = cms.double(1.0),

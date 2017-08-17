@@ -7,6 +7,7 @@ mumugammaDumpConfig = cms.PSet(
     className  = cms.untracked.string("CutBasedMuMuGammaDumper"),
     src = cms.InputTag("flashggMuMuGamma"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(1),
     lumiWeight = cms.double(1.0),

@@ -4,6 +4,7 @@ genDiphotonDumpConfig = cms.PSet(
     className  = cms.untracked.string("CutBasedGenDiPhotonDumper"),
     src = cms.InputTag("flashggGenDiPhotons"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(1),
     lumiWeight = cms.double(1.0),

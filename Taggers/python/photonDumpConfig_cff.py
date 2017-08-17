@@ -6,6 +6,7 @@ photonDumpConfig = cms.PSet(
     className  = cms.untracked.string("CutBasedPhotonDumper"),
     src = cms.InputTag("flashggPhotons"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(2),
     lumiWeight = cms.double(1.0),

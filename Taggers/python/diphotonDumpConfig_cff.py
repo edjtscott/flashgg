@@ -6,6 +6,7 @@ diphotonDumpConfig = cms.PSet(
     className  = cms.untracked.string("CutBasedDiPhotonDumper"),
     src = cms.InputTag("flashggDiPhotons"),
     generatorInfo = cms.InputTag("generator"),
+    lheInfo = cms.InputTag("externalLHEProducer"),
     processId = cms.string(""),
     maxCandPerEvent = cms.int32(1), # -1 turns off the maxCandPerEvent check
     lumiWeight = cms.double(1.0),
