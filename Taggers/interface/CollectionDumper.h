@@ -380,10 +380,10 @@ namespace flashgg {
                     if( ! weights.empty() ) {
                         //weight *= weights[0];
                         //std::cout << "ED DEBUG: Size of weights collection is " << weights.size() << std::endl;
-                        //std::cout << "ED DEBUG: weights[9] = " << weights[9] << std::endl << std::endl;
+                        //std::cout << "ED DEBUG: weights[0] = " << weights[0] << std::endl;
                         //weight *= weights[9]; //from D. Sperka: this should be the central weight for NNLOPS
-                        std::cout << "ED DEBUG: Size of LHE weights collection is " << lheWeights.size() << std::endl;
-                        std::cout << "ED DEBUG: lheWeights[9] = " << lheWeights[9].wgt << std::endl << std::endl;
+                        //std::cout << "ED DEBUG: Size of LHE weights collection is " << lheWeights.size() << std::endl;
+                        //std::cout << "ED DEBUG: lheWeights[9] = " << lheWeights[9].wgt << std::endl << std::endl;
                         weight *= lheWeights[9].wgt;
                     }
                 }
