@@ -70,7 +70,9 @@ float vbf_2j(int STXS) {
 
 float vbf_3j(int STXS) {
   if (STXS==101) return -0.320; // GG2H_VBFTOPO_JET3VETO, tot unc 38%
+  //if (STXS==101) return -0.336; // Yacine's vals
   if (STXS==102) return  0.235; // GG2H_VBFTOPO_JET3, tot unc 30.4%
+  //if (STXS==102) return  0.211; // Yacine's vals
   return 0.0; // Events with no VBF topology have no VBF uncertainty
 }
 
