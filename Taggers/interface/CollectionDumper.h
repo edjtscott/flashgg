@@ -369,8 +369,10 @@ namespace flashgg {
                     const auto &weights = genInfo->weights();
                     // FIXME store alternative/all weight-sets
                     if( ! weights.empty() ) {
-                        //weight *= weights[0];
-                        weight *= weights[9]; //from D. Sperka: this should be the central weight for NNLOPS
+                        weight *= weights[0];
+                        //std::cout << "ED DEBUG: Size of weights collection is " << weights.size() << std::endl;
+                        //std::cout << "ED DEBUG: weights[9] = " << weights[9] << std::endl << std::endl;
+                        //weight *= weights[9]; //from D. Sperka: this should be the central weight for NNLOPS
                     }
                 }
                 
