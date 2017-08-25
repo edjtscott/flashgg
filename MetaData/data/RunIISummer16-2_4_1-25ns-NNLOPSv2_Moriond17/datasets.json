@@ -7,7 +7,8 @@
                 "name": "/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17/2_4_1/GluGluHToGG_M-125_13TeV_powheg_MINLO_NNLOPS_pythia8/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170817_153243/0000/myMicroAODOutputFile_1.root", 
                 "nevents": 75200, 
                 "totEvents": 75200, 
-                "weights": 2024157.5
+                //"weights": 2024157.5
+                "weights": 3331740
             }, 
             {
                 "bad": false, 
@@ -15,7 +16,8 @@
                 "name": "/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17/2_4_1/GluGluHToGG_M-125_13TeV_powheg_MINLO_NNLOPS_pythia8/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170817_153243/0000/myMicroAODOutputFile_2.root", 
                 "nevents": 71200, 
                 "totEvents": 71200, 
-                "weights": 1923429.0
+                //"weights": 1923429.0
+                "weights": 3164940
             }, 
             {
                 "bad": false, 
@@ -23,7 +25,8 @@
                 "name": "/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17/2_4_1/GluGluHToGG_M-125_13TeV_powheg_MINLO_NNLOPS_pythia8/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170817_153243/0000/myMicroAODOutputFile_3.root", 
                 "nevents": 64800, 
                 "totEvents": 64800, 
-                "weights": 1745060.875
+                //"weights": 1745060.875
+                "weights": 2871930
             }, 
             {
                 "bad": false, 
@@ -31,7 +34,8 @@
                 "name": "/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17/2_4_1/GluGluHToGG_M-125_13TeV_powheg_MINLO_NNLOPS_pythia8/RunIISummer16-2_4_1-25ns-NNLOPSv2_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170817_153243/0000/myMicroAODOutputFile_4.root", 
                 "nevents": 28800, 
                 "totEvents": 28800, 
-                "weights": 775639.75
+                //"weights": 775639.75
+                "weights": 1275500
             }
         ], 
         "vetted": true
