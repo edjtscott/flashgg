@@ -37,6 +37,7 @@
 
 #include "TFile.h"
 #include "TGraph.h"
+#include "TF1.h"
 
 /**
    \class CollectionDumper
@@ -143,6 +144,7 @@ namespace flashgg {
         //        correctionFile_ = conf.getParameter<edm::FileInPath>("CorrectionFile")
         edm::FileInPath NNLOPSWeightFile_;
         std::vector<std::unique_ptr<TGraph> > NNLOPSWeights_;
+        std::vector<std::unique_ptr<TF1> > NNLOPSfits_;
 
         //std::map<std::string, std::vector<dumper_type> > dumpers_; FIXME template key
         std::map< KeyT, std::vector<dumper_type> > dumpers_;
@@ -351,6 +353,30 @@ namespace flashgg {
             NNLOPSWeights_.emplace_back((TGraph*)((TGraph*) f->Get("gr_NNLOPSratio_pt_mcatnlo_2jet"))->Clone() );
             NNLOPSWeights_.emplace_back((TGraph*)((TGraph*) f->Get("gr_NNLOPSratio_pt_mcatnlo_3jet"))->Clone() );
             std::cout << "NNLOPSWeights_.size() = " << NNLOPSWeights_.size() << std::endl;
+            TF1* zeroJetFit  = new TF1("zeroJetFit" ,"pol4",2.5,125.);
+            TF1* oneJetFit1  = new TF1("oneJetFit1" ,"pol1",5.,32.5);
+            TF1* oneJetFit2  = new TF1("oneJetFit2" ,"pol2",32.5,625.);
+            TF1* twoJetFit1  = new TF1("twoJetFit1" ,"pol1",5.,85.);
+            TF1* twoJetFit2  = new TF1("twoJetFit2" ,"pol2",85.,800.);
+            TF1* threeJetFit = new TF1("threeJetFit","pol2",5.,925.);
+            NNLOPSWeights_[0]->Fit(zeroJetFit,"r");
+            NNLOPSWeights_[1]->Fit(oneJetFit1,"r");
+            NNLOPSWeights_[1]->Fit(oneJetFit2,"r");
+            NNLOPSWeights_[2]->Fit(twoJetFit1,"r");
+            NNLOPSWeights_[2]->Fit(twoJetFit2,"r");
+            NNLOPSWeights_[3]->Fit(threeJetFit,"r");
+            NNLOPSfits_.emplace_back((TF1*)zeroJetFit->Clone());
+            NNLOPSfits_.emplace_back((TF1*)oneJetFit1->Clone());
+            NNLOPSfits_.emplace_back((TF1*)oneJetFit2->Clone());
+            NNLOPSfits_.emplace_back((TF1*)twoJetFit1->Clone());
+            NNLOPSfits_.emplace_back((TF1*)twoJetFit2->Clone());
+            NNLOPSfits_.emplace_back((TF1*)threeJetFit->Clone());
+            delete zeroJetFit;
+            delete oneJetFit1;
+            delete oneJetFit2;
+            delete twoJetFit1;
+            delete twoJetFit2;
+            delete threeJetFit;
         }
     }
 
@@ -519,12 +545,22 @@ namespace flashgg {
                     stxsPtH_ = getStxsPtH( event );
                     //                    std::cout << " IN CollectionDumper::analyze set stage0cat to " << stage0cat_ << " and stxsNjet_ to " << stxsNJet_ << " and stxsPtH_ to " << stxsPtH_ << std::endl;
                     float extraweight = 1.;
-                    if ( stxsNJet_ == 0) extraweight = NNLOPSWeights_[0]->Eval(min(stxsPtH_,float(125.0)));
-                    if ( stxsNJet_ == 1) extraweight = NNLOPSWeights_[1]->Eval(min(stxsPtH_,float(625.0)));
-                    if ( stxsNJet_ == 2) extraweight = NNLOPSWeights_[2]->Eval(min(stxsPtH_,float(800.0)));
-                    if ( stxsNJet_ >= 3) extraweight = NNLOPSWeights_[3]->Eval(min(stxsPtH_,float(925.0)));
+                    //float originalweight = 1.;
+                    //if ( stxsNJet_ == 0) originalweight = NNLOPSWeights_[0]->Eval(min(stxsPtH_,float(125.0)));
+                    //if ( stxsNJet_ == 1) originalweight = NNLOPSWeights_[1]->Eval(min(stxsPtH_,float(625.0)));
+                    //if ( stxsNJet_ == 2) originalweight = NNLOPSWeights_[2]->Eval(min(stxsPtH_,float(800.0)));
+                    //if ( stxsNJet_ >= 3) originalweight = NNLOPSWeights_[3]->Eval(min(stxsPtH_,float(925.0)));
+                    if ( stxsNJet_ == 0)                     extraweight = NNLOPSfits_[0]->Eval(min(stxsPtH_,float(125.0)));
+                    if ( stxsNJet_ == 1 && stxsPtH_ <= 32.5) extraweight = NNLOPSfits_[1]->Eval(min(stxsPtH_,float(625.0)));
+                    if ( stxsNJet_ == 1 && stxsPtH_ >  32.5) extraweight = NNLOPSfits_[2]->Eval(min(stxsPtH_,float(625.0)));
+                    if ( stxsNJet_ == 2 && stxsPtH_ <= 85.)  extraweight = NNLOPSfits_[3]->Eval(min(stxsPtH_,float(800.0)));
+                    if ( stxsNJet_ == 2 && stxsPtH_ >  85.)  extraweight = NNLOPSfits_[4]->Eval(min(stxsPtH_,float(800.0)));
+                    if ( stxsNJet_ >= 3)                     extraweight = NNLOPSfits_[5]->Eval(min(stxsPtH_,float(925.0)));
+                    //weight_ *= 1629.391/1618.387;
+                    weight_ *= 1629.391/1621.833;
                     weight_ *= extraweight;
-                    std::cout << "NNLOPS " << stage0cat_ << " " << stxsNJet_ << " " << stxsPtH_ << " " << extraweight << " " << weight_ << endl;
+                    //std::cout << "NNLOPS " << stage0cat_ << " " << stxsNJet_ << " " << stxsPtH_ << " " << extraweight << " " << weight_ << endl;
+                    //std::cout << "ED DEBUG: extraweight = " << extraweight << ", compared to original " << originalweight << endl;
                     //                    std::cout << " IN CollectionDumper::analyze extraweight = " << extraweight << " so adjusted weight is " << weight_ << std::endl;
 
                 }
