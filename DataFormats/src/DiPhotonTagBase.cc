@@ -281,7 +281,7 @@ void DiPhotonTagBase::computeStage1Kinematics( const edm::Handle<edm::View<flash
                     stage1KinematicLabel_ = "RECO_GE2J_PTH_60_120_Tag0";
                     stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_60_120_Tag0;
                 }
-                if (mvaScore > 0.3) {
+                else if (mvaScore > 0.3) {
                     stage1KinematicLabel_ = "RECO_GE2J_PTH_60_120_Tag1";
                     stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_60_120_Tag1;
                 }
