@@ -305,7 +305,9 @@ namespace flashgg {
             vhhadtag_obj.setDiPhotonIndex( diphoIndex );
             vhhadtag_obj.setSystLabel( systLabel_ );
 
-            vhhadtag_obj.computeStage1Kinematics( Jets[jetCollectionIndex] ); // DO NOT give dijet pT here, that would be interpreted as leptonic
+            //vhhadtag_obj.computeStage1Kinematics( Jets[jetCollectionIndex] ); // DO NOT give dijet pT here, that would be interpreted as leptonic
+            vhhadtag_obj.setStage1KinematicLabel( "RECO_VHHAD" );
+            vhhadtag_obj.setStage1recoTag( DiPhotonTagBase::RECO_VHHAD );
 
             vhhadtags->push_back( vhhadtag_obj );
 

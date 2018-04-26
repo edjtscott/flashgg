@@ -198,8 +198,8 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
     if customize.doStage1:
         variablesToUse = minimalVariablesStage1
         #FIXME add these for now to study categorisation
-        variablesToUse.append("decorrSigmarv := diPhotonMVA().decorrSigmarv")
-        variablesToUse.append("diphoMVA := diPhotonMVA().result")
+        #variablesToUse.append("decorrSigmarv := diPhotonMVA().decorrSigmarv")
+        #variablesToUse.append("diphoMVA := diPhotonMVA().result")
     elif customize.doHTXS:
         variablesToUse = minimalVariablesHTXS
     else:
@@ -312,9 +312,9 @@ process.source = cms.Source ("PoolSource",
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_095140/0000/myMicroAODOutputFile_9.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_095013/0000/myMicroAODOutputFile_1.root"
 #FIXME
-#"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/170113_234241/0000/myMicroAODOutputFile_1.root"
+"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/170113_234241/0000/myMicroAODOutputFile_1.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/ReMiniAOD-03Feb2017-2_5_0-test/2_5_0/DoubleEG/ReMiniAOD-03Feb2017-2_5_0-test-2_5_0-v0-Run2016G-03Feb2017-v1/170210_054444/0000/myMicroAODOutputFile_264.root"
-"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/ReMiniAOD-03Feb2017-2_5_4/2_5_1/DoubleEG/ReMiniAOD-03Feb2017-2_5_4-2_5_1-v0-Run2016G-03Feb2017-v1/170307_170744/0000/myMicroAODOutputFile_1.root"
+#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/ReMiniAOD-03Feb2017-2_5_4/2_5_1/DoubleEG/ReMiniAOD-03Feb2017-2_5_4-2_5_1-v0-Run2016G-03Feb2017-v1/170307_170744/0000/myMicroAODOutputFile_1.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/VBFHToGG_M-125_13TeV_powheg_pythia8/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_092754/0000/myMicroAODOutputFile_10.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/ferriff/flashgg/RunIISpring16DR80X-2_3_0-25ns_Moriond17_MiniAODv2/2_3_0/DoubleEG/RunIISpring16DR80X-2_3_0-25ns_Moriond17_MiniAODv2-2_3_0-v0-Run2016B-23Sep2016-v2/161114_162452/0000/myMicroAODOutputFile_10.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/VHToGG_M120_13TeV_amcatnloFXFX_madspin_pythia8/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_094407/0000/myMicroAODOutputFile_19.root"
@@ -381,24 +381,45 @@ if(customize.doFiducial):
 ##["TTHLeptonicTag",0]
 #]
 
+#elif customize.doStage1 and not customize.processId == "Data":
+#    tagList = [
+#    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J",0], ["RECO_1J_PTH_0_60",0], ["RECO_1J_PTH_60_120",0], ["RECO_1J_PTH_120_200",0], ["RECO_1J_PTH_GT200",0], 
+#    ["RECO_GE2J_PTH_0_60",0], ["RECO_GE2J_PTH_60_120",0], ["RECO_GE2J_PTH_120_200",0], ["RECO_GE2J_PTH_GT200",0], ["RECO_VBFTOPO_JET3VETO",0], ["RECO_VBFTOPO_JET3",0], ["RECO_VH2JET",0],
+#    ["RECO_0LEP_PTV_0_150",0], ["RECO_0LEP_PTV_150_250_0J",0], ["RECO_0LEP_PTV_150_250_GE1J",0], ["RECO_0LEP_PTV_GT250",0], 
+#    ["RECO_1LEP_PTV_0_150",0], ["RECO_1LEP_PTV_150_250_0J",0], ["RECO_1LEP_PTV_150_250_GE1J",0], ["RECO_1LEP_PTV_GT250",0], 
+#    ["RECO_2LEP_PTV_0_150",0], ["RECO_2LEP_PTV_150_250_0J",0], ["RECO_2LEP_PTV_150_250_GE1J",0], ["RECO_2LEP_PTV_GT250",0], 
+#    ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
+#elif customize.doStage1 and customize.processId == "Data":
+#    tagList = [
+#    ["LOGICERROR",0], ["RECO_0J",0], ["RECO_1J_PTH_0_60",0], ["RECO_1J_PTH_60_120",0], ["RECO_1J_PTH_120_200",0], ["RECO_1J_PTH_GT200",0], 
+#    ["RECO_GE2J_PTH_0_60",0], ["RECO_GE2J_PTH_60_120",0], ["RECO_GE2J_PTH_120_200",0], ["RECO_GE2J_PTH_GT200",0], ["RECO_VBFTOPO_JET3VETO",0], ["RECO_VBFTOPO_JET3",0], ["RECO_VH2JET",0],
+#    ["RECO_0LEP_PTV_0_150",0], ["RECO_0LEP_PTV_150_250_0J",0], ["RECO_0LEP_PTV_150_250_GE1J",0], ["RECO_0LEP_PTV_GT250",0], 
+#    ["RECO_1LEP_PTV_0_150",0], ["RECO_1LEP_PTV_150_250_0J",0], ["RECO_1LEP_PTV_150_250_GE1J",0], ["RECO_1LEP_PTV_GT250",0], 
+#    ["RECO_2LEP_PTV_0_150",0], ["RECO_2LEP_PTV_150_250_0J",0], ["RECO_2LEP_PTV_150_250_GE1J",0], ["RECO_2LEP_PTV_GT250",0], 
+#    ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
+
 
 if customize.doFiducial:
     tagList=[["SigmaMpTTag",3]]
 elif customize.doStage1 and not customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J",0], ["RECO_1J_PTH_0_60",0], ["RECO_1J_PTH_60_120",0], ["RECO_1J_PTH_120_200",0], ["RECO_1J_PTH_GT200",0], 
-    ["RECO_GE2J_PTH_0_60",0], ["RECO_GE2J_PTH_60_120",0], ["RECO_GE2J_PTH_120_200",0], ["RECO_GE2J_PTH_GT200",0], ["RECO_VBFTOPO_JET3VETO",0], ["RECO_VBFTOPO_JET3",0], ["RECO_VH2JET",0],
-    ["RECO_0LEP_PTV_0_150",0], ["RECO_0LEP_PTV_150_250_0J",0], ["RECO_0LEP_PTV_150_250_GE1J",0], ["RECO_0LEP_PTV_GT250",0], 
-    ["RECO_1LEP_PTV_0_150",0], ["RECO_1LEP_PTV_150_250_0J",0], ["RECO_1LEP_PTV_150_250_GE1J",0], ["RECO_1LEP_PTV_GT250",0], 
-    ["RECO_2LEP_PTV_0_150",0], ["RECO_2LEP_PTV_150_250_0J",0], ["RECO_2LEP_PTV_150_250_GE1J",0], ["RECO_2LEP_PTV_GT250",0], 
+    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
+    ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
+    ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
+    ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
+    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0],
+    ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
 elif customize.doStage1 and customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["RECO_0J",0], ["RECO_1J_PTH_0_60",0], ["RECO_1J_PTH_60_120",0], ["RECO_1J_PTH_120_200",0], ["RECO_1J_PTH_GT200",0], 
-    ["RECO_GE2J_PTH_0_60",0], ["RECO_GE2J_PTH_60_120",0], ["RECO_GE2J_PTH_120_200",0], ["RECO_GE2J_PTH_GT200",0], ["RECO_VBFTOPO_JET3VETO",0], ["RECO_VBFTOPO_JET3",0], ["RECO_VH2JET",0],
-    ["RECO_0LEP_PTV_0_150",0], ["RECO_0LEP_PTV_150_250_0J",0], ["RECO_0LEP_PTV_150_250_GE1J",0], ["RECO_0LEP_PTV_GT250",0], 
-    ["RECO_1LEP_PTV_0_150",0], ["RECO_1LEP_PTV_150_250_0J",0], ["RECO_1LEP_PTV_150_250_GE1J",0], ["RECO_1LEP_PTV_GT250",0], 
-    ["RECO_2LEP_PTV_0_150",0], ["RECO_2LEP_PTV_150_250_0J",0], ["RECO_2LEP_PTV_150_250_GE1J",0], ["RECO_2LEP_PTV_GT250",0], 
+    ["LOGICERROR",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
+    ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
+    ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
+    ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
+    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0],
+    ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
 elif customize.tthTagsOnly:
     tagList=[

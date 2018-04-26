@@ -386,10 +386,14 @@ namespace flashgg {
             //including SFs for leading muon or electron
             if(tagMuons.size()>0){
                 VHLeptonicLooseTags_obj.includeWeightsByLabel( *tagMuons.at(0), "MuonWeight");
-                VHLeptonicLooseTags_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagMuons.at(0)->pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi() );
+                //VHLeptonicLooseTags_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagMuons.at(0)->pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi() );
+                VHLeptonicLooseTags_obj.setStage1KinematicLabel( "RECO_VHLEPLOOSE" );
+                VHLeptonicLooseTags_obj.setStage1recoTag( DiPhotonTagBase::RECO_VHLEPLOOSE );
             } else if (tagElectrons.size() > 0){
                 VHLeptonicLooseTags_obj.includeWeights( *tagElectrons.at(0));
-                VHLeptonicLooseTags_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagElectrons.at(0)->pt(), tagElectrons.at(0)->eta(),tagElectrons.at(0)->phi() );
+                //VHLeptonicLooseTags_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagElectrons.at(0)->pt(), tagElectrons.at(0)->eta(),tagElectrons.at(0)->phi() );
+                VHLeptonicLooseTags_obj.setStage1KinematicLabel( "RECO_VHLEPLOOSE" );
+                VHLeptonicLooseTags_obj.setStage1recoTag( DiPhotonTagBase::RECO_VHLEPLOOSE );
             }
 
             /*  

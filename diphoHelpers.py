@@ -37,43 +37,79 @@ def getRealSigma( theHist ):
   return sigma
 
 
-def computeBkg( hist, binCut, effSigma, isIncreasing=True ):
-   '''Use this to go from 2D hist in score (x) and mass (y) to a background estimation via a basic exponential fit'''
-   if isIncreasing: projHist = hist.ProjectionY('tempProj', binCut, -1)
-   else:            projHist = hist.ProjectionY('tempProj', 0, binCut)
-   bkgVal = 0.
-   if projHist.GetEntries() > 0:
-     projHist.Fit('expo')
-     fit = projHist.GetFunction('expo')
-     bkgVal = fit.Integral(125. - effSigma, 125. + effSigma)
-   return bkgVal
+def computeBkg( hist, binCutLow, binCutHigh, effSigma ):
+  '''Use this to go from 2D hist in score (x) and mass (y) to a background estimation via a basic exponential fit'''
+  projHist = hist.ProjectionY('tempProj', binCutLow, binCutHigh)
+  bkgVal = 0.
+  if projHist.GetEntries() > 0:
+    projHist.Fit('expo')
+    fit = projHist.GetFunction('expo')
+    bkgVal = fit.Integral(125. - effSigma, 125. + effSigma)
+  return bkgVal
 
-def computeSig( hist, binCut, isIncreasing=True ):
-   '''Use this to go from 2D hist in score (x) and mass (y) to a signal count plus effective sigma calculation'''
-   if isIncreasing: projHist = hist.ProjectionY('tempProj', binCut, -1)
-   else:            projHist = hist.ProjectionY('tempProj', 0, binCut)
-   sigCount = projHist.Integral()
-   #FIXME
-   #sigmaEff = getEffSigma( projHist )
-   sigmaEff = getRealSigma( projHist )
-   return sigCount, sigmaEff
+def computeSig( hist, binCutLow, binCutHigh ):
+  '''Use this to go from 2D hist in score (x) and mass (y) to a signal count plus effective sigma calculation'''
+  projHist = hist.ProjectionY('tempProj', binCutLow, binCutHigh)
+  sigCount = projHist.Integral()
+  #FIXME
+  #sigmaEff = getEffSigma( projHist )
+  sigmaEff = getRealSigma( projHist )
+  return sigCount, sigmaEff
 
 
 def evalMetric(S, B):
-  val = -1.
+  val = 0.
   if S+B > 0.: val = S / np.sqrt(S+B)
   return val
 
-def evalFancy(S, B, reg=0.):
+def evalFancy(S, B, reg=5.):
   bkg = B + reg
-  val = -1.
+  val = 0.
   if bkg > 0.:
     val = (S + bkg)*np.log(1. + (S/bkg))
     val = 2*(val - S)
     val = np.sqrt(val)
   return val
 
-def plotGraphCollection( coll, ytitle = 'S/#sqrt{S+B}', outdir = 'ClassificationPlots/', copydir = '' ):
+def evalSignif( hists, proc, tag, low, high, isFancy=False ):
+  sig, effSigma = computeSig( hists[(proc,tag)], low, high )
+  totSig, irrel = computeSig( hists[('all',tag)], low, high )
+  bkg = computeBkg( hists[('bkg',tag)], low, high , effSigma )
+  totBkg = totSig + bkg - sig
+  metric = evalMetric(sig, totBkg)
+  if isFancy: metric = evalFancy(sig, totBkg)
+  return metric
+
+def evalSignifImproved( hists, proc, tag, low, high ):
+  projSigHist = hists[('all',tag)].ProjectionY('projSigHist', low, high)
+  projBkgHist = hists[('bkg',tag)].ProjectionY('projBkgHist', low, high)
+  if not (projSigHist.GetEntries() > 0 and projBkgHist.GetEntries() > 0): return 0.
+  projSigHist.Fit('gaus')
+  initSigFit  = projSigHist.GetFunction('gaus')
+  projBkgHist.Fit('expo')
+  initBkgFit  = projBkgHist.GetFunction('expo')
+  sPlusBfunc = r.TF1('sPlusBfunc', 'gaus(0)+expo(3)', 100., 180.)
+  sPlusBfunc.SetParameter(0, initSigFit.GetParameter(0))
+  sPlusBfunc.SetParameter(1, initSigFit.GetParameter(1))
+  sPlusBfunc.SetParameter(2, initSigFit.GetParameter(2))
+  sPlusBfunc.SetParameter(3, initBkgFit.GetParameter(0))
+  sPlusBfunc.SetParameter(4, initBkgFit.GetParameter(1))
+  #nBins=320
+  nBins=160
+  sPlusBhist = r.TH1F('sPlusBhist', 'sPlusBhist', nBins, 100., 180.)
+  for i in range(1,nBins):
+    lowEdge  = 100.+ (i-1)*(180.-100.)/nBins
+    highEdge = 100.+ i*(180.-100.)/nBins
+    count = sPlusBfunc.Integral(lowEdge, highEdge)
+    sPlusBhist.SetBinContent( i, count )
+  sPlusBhist.Fit(sPlusBfunc)
+  sPlusBfit    = sPlusBhist.GetFunction('sPlusBfunc')
+  sPlusBchisq  = sPlusBfit.GetChisquare()
+  signif = r.Math.gaussian_quantile_c( r.TMath.Prob(sPlusBchisq,1) / 2., 1 )
+  return signif
+
+
+def plotGraphCollection( coll, ytitle='S/#sqrt{S+B}', outdir='ClassificationPlots/', copydir='', toAdd='' ):
   can = usefulStyle.setCanvas()
   for key,graph in coll.iteritems():
     graph.GetYaxis().SetRangeUser(0., 1.2*graph.GetMaximum())
@@ -90,7 +126,7 @@ def plotGraphCollection( coll, ytitle = 'S/#sqrt{S+B}', outdir = 'Classification
     graph.GetHistogram().GetXaxis().SetTitleOffset(1.3)
     usefulStyle.drawCMS()
     usefulStyle.drawEnPu()
-    fileName = outdir + graph.GetName()
+    fileName = outdir + toAdd + graph.GetName()
     can.SaveAs(fileName+'.pdf')
     can.SaveAs(fileName+'.png')
     if not copydir == '': system('cp %s* %s'%(outdir, copydir))

@@ -91,6 +91,7 @@ void DiPhotonTagBase::computeStage1Kinematics( const edm::Handle<edm::View<flash
     float dEta = 0.;
     float mjj = 0.;
     float ptHjj = 0.;
+    float mvaScore = this->diPhotonMVA().mvaValue();
     edm::Ptr<flashgg::Jet> j0;
     edm::Ptr<flashgg::Jet> j1;
     for ( unsigned int i = 0 ; i < jets->size(); i++ ) {
@@ -155,74 +156,157 @@ void DiPhotonTagBase::computeStage1Kinematics( const edm::Handle<edm::View<flash
         ptHjj = ( j0->p4() + j1->p4() + this->diPhoton()->p4() ).pt();
         //        std::cout << " dEta=" << dEta << " mjj=" << mjj << " ptHjj=" << ptHjj << std::endl;
     }
+    // have now added two categories for each RECO tag, using the moment diphoton MVA, with boundaries currently hard-coded below..
     if ( ptV < -0.5 ) {
         if (nJ == 0) {
-            stage1KinematicLabel_ = "RECO_0J";
-            stage1recoTag_ = DiPhotonTagBase::RECO_0J;
+            if (mvaScore > 0.46) {
+                stage1KinematicLabel_ = "RECO_0J_Tag0";
+                stage1recoTag_ = DiPhotonTagBase::RECO_0J_Tag0;
+            }
+            else if (mvaScore > -0.2) {
+                stage1KinematicLabel_ = "RECO_0J_Tag1";
+                stage1recoTag_ = DiPhotonTagBase::RECO_0J_Tag1;
+            }
+            else { 
+                stage1KinematicLabel_ = "NOTAG";
+                stage1recoTag_ = DiPhotonTagBase::NOTAG;
+            }
         } else if ( nJ == 1 ) {
             if ( ptH > 200 ) {
-                stage1KinematicLabel_ = "RECO_1J_PTH_GT200";
-                stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_GT200;
+                if (mvaScore > 0.86) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_GT200";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_GT200;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else if ( ptH > 120. ) {
-                stage1KinematicLabel_ = "RECO_1J_PTH_120_200";
-                stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_120_200;
+                if (mvaScore > 0.8) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_120_200_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_120_200_Tag0;
+                }
+                else if (mvaScore > 0.4) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_120_200_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_120_200_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else if ( ptH > 60. ) {
-                stage1KinematicLabel_ = "RECO_1J_PTH_60_120";
-                stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_60_120;
+                if (mvaScore > 0.64) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_60_120_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_60_120_Tag0;
+                }
+                else if (mvaScore > 0.1) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_60_120_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_60_120_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else {
-                stage1KinematicLabel_ = "RECO_1J_PTH_0_60";
-                stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_0_60;
+                if (mvaScore > 0.56) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_0_60_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_0_60_Tag0;
+                }
+                else if (mvaScore > -0.05) {
+                    stage1KinematicLabel_ = "RECO_1J_PTH_0_60_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_1J_PTH_0_60_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             }
         } else { // 2 jets
             if ( ptH > 200 ) {
-                stage1KinematicLabel_ ="RECO_GE2J_PTH_GT200";
-                stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_GT200;
+                if (mvaScore > 0.92) {
+                    stage1KinematicLabel_ ="RECO_GE2J_PTH_GT200_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_GT200_Tag0;
+                }
+                else if (mvaScore > 0.8) {
+                    stage1KinematicLabel_ ="RECO_GE2J_PTH_GT200_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_GT200_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else if ( mjj > 400. && dEta > 2.8 ) {
                 if ( ptHjj < 25. ) {
-                    stage1KinematicLabel_ = "RECO_VBFTOPO_JET3VETO";
-                    stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3VETO;
+                    if (mvaScore > 0.52) {
+                        stage1KinematicLabel_ = "RECO_VBFTOPO_JET3VETO_Tag0";
+                        stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3VETO_Tag0;
+                    }
+                    else if (mvaScore > 0.) {
+                        stage1KinematicLabel_ = "RECO_VBFTOPO_JET3VETO_Tag1";
+                        stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3VETO_Tag1;
+                    }
+                    else { 
+                        stage1KinematicLabel_ = "NOTAG";
+                        stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                    }
                 } else {
-                    stage1KinematicLabel_ = "RECO_VBFTOPO_JET3";
-                    stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3;
+                    if (mvaScore > 0.72) {
+                        stage1KinematicLabel_ = "RECO_VBFTOPO_JET3_Tag0";
+                        stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3_Tag0;
+                    }
+                    else if (mvaScore > 0.3) {
+                        stage1KinematicLabel_ = "RECO_VBFTOPO_JET3_Tag1";
+                        stage1recoTag_ = DiPhotonTagBase::RECO_VBFTOPO_JET3_Tag1;
+                    }
+                    else { 
+                        stage1KinematicLabel_ = "NOTAG";
+                        stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                    }
                 }
-            } else if ( mjj > 60. && mjj < 120. ) {
-                stage1KinematicLabel_ = "RECO_VH2JET";
-                stage1recoTag_ = DiPhotonTagBase::RECO_VH2JET;
             } else if ( ptH > 120. ) {
-                stage1KinematicLabel_ = "RECO_GE2J_PTH_120_200";
-                stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_120_200;
+                if (mvaScore > 0.86) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_120_200_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_120_200_Tag0;
+                }
+                else if (mvaScore > 0.5) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_120_200_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_120_200_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else if ( ptH > 60. ) {
-                stage1KinematicLabel_ = "RECO_GE2J_PTH_60_120";
-                stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_60_120;
+                if (mvaScore > 0.75) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_60_120_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_60_120_Tag0;
+                }
+                if (mvaScore > 0.3) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_60_120_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_60_120_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             } else {
-                stage1KinematicLabel_ = "RECO_GE2J_PTH_0_60";
-                stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_0_60;
+                if (mvaScore > 0.56) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_0_60_Tag0";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_0_60_Tag0;
+                }
+                else if (mvaScore > -0.1) {
+                    stage1KinematicLabel_ = "RECO_GE2J_PTH_0_60_Tag1";
+                    stage1recoTag_ = DiPhotonTagBase::RECO_GE2J_PTH_0_60_Tag1;
+                }
+                else { 
+                    stage1KinematicLabel_ = "NOTAG";
+                    stage1recoTag_ = DiPhotonTagBase::NOTAG;
+                }
             }
         }
-    } else { // Leptonic vector boson assigned
-        if ( ptV <  150. ) {
-            stage1KinematicLabel_ = "RECO_" + nlepstring + "_PTV_0_150";
-            if(nlep == 0) stage1recoTag_ = DiPhotonTagBase::RECO_0LEP_PTV_0_150;
-            else if(nlep == 1) stage1recoTag_ = DiPhotonTagBase::RECO_1LEP_PTV_0_150;
-            else if(nlep == 2) stage1recoTag_ = DiPhotonTagBase::RECO_2LEP_PTV_0_150;
-        } else if ( ptV < 250. ) {
-            if ( nJ >= 1 ) {
-                stage1KinematicLabel_ = "RECO_" + nlepstring + "_PTV_150_250_GE1J";
-                if(nlep == 0) stage1recoTag_ = DiPhotonTagBase::RECO_0LEP_PTV_150_250_GE1J;
-                else if(nlep == 1) stage1recoTag_ = DiPhotonTagBase::RECO_1LEP_PTV_150_250_GE1J;
-                else if(nlep == 2) stage1recoTag_ = DiPhotonTagBase::RECO_2LEP_PTV_150_250_GE1J;
-            } else {
-                stage1KinematicLabel_ = "RECO_" + nlepstring + "_PTV_150_250_0J";
-                if(nlep == 0) stage1recoTag_ = DiPhotonTagBase::RECO_0LEP_PTV_150_250_0J;
-                else if(nlep == 1) stage1recoTag_ = DiPhotonTagBase::RECO_1LEP_PTV_150_250_0J;
-                else if(nlep == 2) stage1recoTag_ = DiPhotonTagBase::RECO_2LEP_PTV_150_250_0J;
-            }
-        } else {
-            stage1KinematicLabel_ = "RECO_" + nlepstring + "_PTV_GT250";
-            if(nlep == 0) stage1recoTag_ = DiPhotonTagBase::RECO_0LEP_PTV_GT250;
-            else if(nlep == 1) stage1recoTag_ = DiPhotonTagBase::RECO_1LEP_PTV_GT250;
-            else if(nlep == 2) stage1recoTag_ = DiPhotonTagBase::RECO_2LEP_PTV_GT250;
-        }
+    } else { // Leptonic vector boson assigned. Leave this up to existing VH tags for now
+        stage1KinematicLabel_ = "NOTAG";
+        stage1recoTag_ = DiPhotonTagBase::NOTAG;
     }
     //    std::cout << " Final label " << stage1KinematicLabel_ << std::endl;
 }

@@ -431,7 +431,10 @@ namespace flashgg {
 
                 float px = theMET->getCorPx() + lpx;
                 float py = theMET->getCorPy() + lpy;
+                //FIXME this line is no longer necessary, and should be overwritten below... only leaving it so that the code compiles
                 whleptonictags_obj.computeStage1Kinematics( Jets[jetCollectionIndex], sqrt(px*px+py*py), leta, lphi );
+                whleptonictags_obj.setStage1KinematicLabel( "RECO_WHLEP" );
+                whleptonictags_obj.setStage1recoTag( DiPhotonTagBase::RECO_WHLEP );
 
                 whleptonictags->push_back( whleptonictags_obj );
                 if( ! evt.isRealData() ) 

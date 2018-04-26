@@ -141,9 +141,9 @@ def main():
     counter = 0
     #for iBin in range(0,1):
     for iBin in range(nBins-3):
-      diphoSig, diphoEffSigma = computeSig( theDiphoHists[(stage1proc,diagonalTag)], iBin )
-      diphoTotSig, diphoIrrel = computeSig( theDiphoHists[('all',diagonalTag)], iBin )
-      diphoBkg = computeBkg( theDiphoHists[('bkg',diagonalTag)], iBin, diphoEffSigma )
+      diphoSig, diphoEffSigma = computeSig( theDiphoHists[(stage1proc,diagonalTag)], iBin, -1 )
+      diphoTotSig, diphoIrrel = computeSig( theDiphoHists[('all',diagonalTag)], iBin, -1 )
+      diphoBkg = computeBkg( theDiphoHists[('bkg',diagonalTag)], iBin, -1, diphoEffSigma )
       diphoTotBkg = diphoTotSig + diphoBkg - diphoSig
       diphoMetric = evalMetric(diphoSig, diphoTotBkg)
       diphoFancy  = evalFancy(diphoSig, diphoTotBkg)
@@ -162,9 +162,9 @@ def main():
     counter = 0
     #for iBin in range(nBins-1,nBins):
     for iBin in range(15,nBins):
-      sigmaSig, sigmaEffSigma = computeSig( theSigmaHists[(stage1proc,diagonalTag)], iBin, False )
-      sigmaTotSig, sigmaIrrel = computeSig( theDiphoHists[('all',diagonalTag)], iBin, False )
-      sigmaBkg = computeBkg( theSigmaHists[('bkg',diagonalTag)], iBin, sigmaEffSigma, False )
+      sigmaSig, sigmaEffSigma = computeSig( theSigmaHists[(stage1proc,diagonalTag)], 0, iBin )
+      sigmaTotSig, sigmaIrrel = computeSig( theDiphoHists[('all',diagonalTag)], 0, iBin )
+      sigmaBkg = computeBkg( theSigmaHists[('bkg',diagonalTag)], 0, iBin, sigmaEffSigma )
       sigmaTotBkg = sigmaTotSig + sigmaBkg - sigmaSig
       sigmaMetric = evalMetric(sigmaSig, sigmaTotBkg)
       sigmaFancy  = evalFancy(sigmaSig, sigmaTotBkg)
@@ -202,10 +202,10 @@ def main():
   #doPlotting = False
   doPlotting = True
   if doPlotting:
-    plotGraphCollection( diphoSignifs, outdir = 'ClassificationPlots/DiphotonMVA/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass0/DiphotonMVA/' )
-    plotGraphCollection( diphoFracs, outdir = 'ClassificationPlots/DiphotonMVA/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass0/DiphotonMVA/' )
-    plotGraphCollection( sigmaSignifs, outdir = 'ClassificationPlots/SigmaMoM/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass0/SigmaMoM/' )
-    plotGraphCollection( sigmaFracs, outdir = 'ClassificationPlots/SigmaMoM/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass0/SigmaMoM/' )
+    plotGraphCollection( diphoSignifs, outdir = 'ClassificationPlots/DiphotonMVA/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass1/DiphotonMVA/' )
+    plotGraphCollection( diphoFracs, outdir = 'ClassificationPlots/DiphotonMVA/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass1/DiphotonMVA/' )
+    plotGraphCollection( sigmaSignifs, outdir = 'ClassificationPlots/SigmaMoM/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass1/SigmaMoM/' )
+    plotGraphCollection( sigmaFracs, outdir = 'ClassificationPlots/SigmaMoM/', copydir = '/afs/cern.ch/user/e/escott/www/FinalFits/Stage1STXS/ClassificationStudy/Pass1/SigmaMoM/' )
 
   #save hists
   outFile = r.TFile('classificationHists.root','RECREATE')

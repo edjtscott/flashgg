@@ -333,12 +333,16 @@ namespace flashgg {
                     ZHLeptonicTags_obj.includeWeightsByLabel( *tagMuons.at(0), "MuonWeight");
                     ZHLeptonicTags_obj.includeWeightsByLabel( *tagMuons.at(1), "MuonWeight");
                     unsigned int jet_i = diPhotons->ptrAt( diphoIndex )->jetCollectionIndex();
-                    ZHLeptonicTags_obj.computeStage1Kinematics( Jets[jet_i], (tagMuons.at(0)->p4() + tagMuons.at(1)->p4()).pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi(), tagMuons.at(1)->eta(), tagMuons.at(1)->phi() );
+                    //ZHLeptonicTags_obj.computeStage1Kinematics( Jets[jet_i], (tagMuons.at(0)->p4() + tagMuons.at(1)->p4()).pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi(), tagMuons.at(1)->eta(), tagMuons.at(1)->phi() );
+                    ZHLeptonicTags_obj.setStage1KinematicLabel( "RECO_ZHLEP" );
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::RECO_ZHLEP );
                 } else if(isDiElectron){
                     ZHLeptonicTags_obj.includeWeights( *tagElectrons.at(0) );
                     ZHLeptonicTags_obj.includeWeights( *tagElectrons.at(1) );
                     unsigned int jet_i = diPhotons->ptrAt( diphoIndex )->jetCollectionIndex();
-                    ZHLeptonicTags_obj.computeStage1Kinematics( Jets[jet_i], (tagElectrons.at(0)->p4() + tagElectrons.at(1)->p4()).pt(), tagElectrons.at(0)->eta(), tagElectrons.at(0)->phi(), tagElectrons.at(1)->eta(), tagElectrons.at(1)->phi() );
+                    //ZHLeptonicTags_obj.computeStage1Kinematics( Jets[jet_i], (tagElectrons.at(0)->p4() + tagElectrons.at(1)->p4()).pt(), tagElectrons.at(0)->eta(), tagElectrons.at(0)->phi(), tagElectrons.at(1)->eta(), tagElectrons.at(1)->phi() );
+                    ZHLeptonicTags_obj.setStage1KinematicLabel( "RECO_ZHLEP" );
+                    ZHLeptonicTags_obj.setStage1recoTag( DiPhotonTagBase::RECO_ZHLEP );
                 }
                 ZHLeptonicTags_obj.setDiPhotonIndex( diphoIndex );
                 ZHLeptonicTags_obj.setSystLabel( systLabel_ );
