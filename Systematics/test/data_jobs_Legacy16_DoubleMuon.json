@@ -1,0 +1,18 @@
+{
+    "cmdLine"  : "campaign=LegacyReReco-07Aug2017-2_6_1",
+    "processes": {
+	"Data"   : [
+
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016B-07Aug17_ver2-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016D-07Aug17-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016F-07Aug17-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016H-07Aug17-v1-d067a6d03efff4e88c65e923dce5abdc/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016E-07Aug17-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER"
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016H-07Aug17-v1-d067a6d03efff4e88c65e923dce5abdc/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016G-07Aug17-v1-d067a6d03efff4e88c65e923dce5abdc/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016B-07Aug17_ver2-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016C-07Aug17-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER",
+"/DoubleMuon/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016D-07Aug17-v1-3bcfe9e5e28cc9cc62c9caa018af2c82/USER"
+		   ]
+    }
+}

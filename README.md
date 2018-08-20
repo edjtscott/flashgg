@@ -15,7 +15,10 @@ Get everything you need, starting from a clean area:
  cmsenv
  git cms-init
  cd $CMSSW_BASE/src 
- git clone https://github.com/cms-analysis/flashgg flashgg
+ git clone https://github.com/rchatter/flashgg flashgg
+ cd flashgg
+ git checkout forLegacy2016_Working 
+ cd ..
  source flashgg/setup.sh
  ```
 

@@ -1,0 +1,21 @@
+{
+    "cmdLine"  : "campaign=LegacyReReco-07Aug2017-2_6_1",
+    "processes": {
+	"Data"   : [
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016B-07Aug17_ver2-v2-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016C-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016E-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016G-07Aug17-v1-655159626160af221fea4af842131560/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016D-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016F-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016F-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016H-07Aug17-v1-655159626160af221fea4af842131560/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016C-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016H-07Aug17-v1-655159626160af221fea4af842131560/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016B-07Aug17_ver2-v2-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016E-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v0-Run2016G-07Aug17-v1-655159626160af221fea4af842131560/USER",
+"/DoubleEG/sethzenz-LegacyReReco-07Aug2017-2_6_1-2_6_1-v1-Run2016D-07Aug17-v1-203e1f14147ffcf5b0c545f5735fc924/USER"
+		   ]
+    }
+}

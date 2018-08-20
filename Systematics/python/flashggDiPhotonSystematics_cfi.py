@@ -358,8 +358,12 @@ emptySigma = cms.PSet(
 #scalesAndSmearingsPrefixForSigmaEOverE = cms.string("EgammaAnalysis/ElectronTools/data/Golden22June")
 ##scalesAndSmearingsPrefix = cms.string("EgammaAnalysis/ElectronTools/data/Winter_2016_reReco_v1_ele")
 ##scalesAndSmearingsPrefixForSigmaEOverE = cms.string("EgammaAnalysis/ElectronTools/data/Winter_2016_reReco_v1_ele")
-scalesAndSmearingsPrefix = cms.string("EgammaAnalysis/ElectronTools/data/Moriond17_74x_pho")
-scalesAndSmearingsPrefixForSigmaEOverE = cms.string("EgammaAnalysis/ElectronTools/data/Winter_2016_reReco_v1_ele")
+#scalesAndSmearingsPrefix = cms.string("EgammaAnalysis/ElectronTools/data/Moriond17_74x_pho")
+#scalesAndSmearingsPrefixForSigmaEOverE = cms.string("EgammaAnalysis/ElectronTools/data/Winter_2016_reReco_v1_ele")
+scalesAndSmearingsPrefix = cms.string("EgammaAnalysis/ElectronTools/data/Legacy2016_07Aug2017_FineEtaR9_v3_ele_unc")
+scalesAndSmearingsPrefixForSigmaEOverE = cms.string("EgammaAnalysis/ElectronTools/data/Legacy2016_07Aug2017_FineEtaR9_v3_ele_unc")
+
+
 
 MCScaleHighR9EB = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScale"),
           MethodName = cms.string("FlashggDiPhotonFromPhoton"),
@@ -734,7 +738,34 @@ MCScaleHighR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScal
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
          Label = cms.string("MCScaleHighR9EB"),
          NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)<1.5"),
+         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)<1.0"),
+         BinList = emptyBins,
+         CorrectionFile = scalesAndSmearingsPrefix,
+         ApplyCentralValue = cms.bool(False),
+         UncertaintyBitMask = cms.string("011"),#cms.string("110"),
+         ExaggerateShiftUp = cms.bool(False),
+         Debug = cms.untracked.bool(False)
+         )
+
+MCScaleHighR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
+         MethodName = cms.string("FlashggDiPhotonFromPhoton"),
+         Label = cms.string("MCScaleHighR9EB"),
+         NSigmas = cms.vint32(-1,1),
+         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)>1.0&&abs(superCluster.eta)<1.5"),
+         BinList = emptyBins,
+         CorrectionFile = scalesAndSmearingsPrefix,
+         ApplyCentralValue = cms.bool(False),
+         UncertaintyBitMask = cms.string("011"),#cms.string("110"),
+         ExaggerateShiftUp = cms.bool(False),
+         Debug = cms.untracked.bool(False)
+         )
+
+
+MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
+         MethodName = cms.string("FlashggDiPhotonFromPhoton"),
+         Label = cms.string("MCScaleLowR9EB"),
+         NSigmas = cms.vint32(-1,1),
+         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)<1.0"),
          BinList = emptyBins,
          CorrectionFile = scalesAndSmearingsPrefix,
          ApplyCentralValue = cms.bool(False),
@@ -747,7 +778,7 @@ MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScale
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
          Label = cms.string("MCScaleLowR9EB"),
          NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)<1.5"),
+         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)>1.0&&abs(superCluster.eta)<1.5"),
          BinList = emptyBins,
          CorrectionFile = scalesAndSmearingsPrefix,
          ApplyCentralValue = cms.bool(False),
@@ -755,6 +786,7 @@ MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScale
          ExaggerateShiftUp = cms.bool(False),
          Debug = cms.untracked.bool(False)
          )
+
 
 MCScaleHighR9EE_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
@@ -815,8 +847,9 @@ flashggDiPhotonSystematics = cms.EDProducer('FlashggDiPhotonSystematicProducer',
                 # assumed for a given systematic uncertainty and is NOT required
                 # to match 1-to-1 the number of bins above.
                 SystMethods = cms.VPSet(
+		
                     MCScaleHighR9EB,
-                    MCScaleLowR9EB,
+		                MCScaleLowR9EB,
                     MCScaleHighR9EE,
                     MCScaleLowR9EE,
                     MCScaleGain6EB_EGM,
