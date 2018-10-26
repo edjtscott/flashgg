@@ -738,34 +738,7 @@ MCScaleHighR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScal
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
          Label = cms.string("MCScaleHighR9EB"),
          NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)<1.0"),
-         BinList = emptyBins,
-         CorrectionFile = scalesAndSmearingsPrefix,
-         ApplyCentralValue = cms.bool(False),
-         UncertaintyBitMask = cms.string("011"),#cms.string("110"),
-         ExaggerateShiftUp = cms.bool(False),
-         Debug = cms.untracked.bool(False)
-         )
-
-MCScaleHighR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
-         MethodName = cms.string("FlashggDiPhotonFromPhoton"),
-         Label = cms.string("MCScaleHighR9EB"),
-         NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)>1.0&&abs(superCluster.eta)<1.5"),
-         BinList = emptyBins,
-         CorrectionFile = scalesAndSmearingsPrefix,
-         ApplyCentralValue = cms.bool(False),
-         UncertaintyBitMask = cms.string("011"),#cms.string("110"),
-         ExaggerateShiftUp = cms.bool(False),
-         Debug = cms.untracked.bool(False)
-         )
-
-
-MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
-         MethodName = cms.string("FlashggDiPhotonFromPhoton"),
-         Label = cms.string("MCScaleLowR9EB"),
-         NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)<1.0"),
+         OverallRange = cms.string("full5x5_r9>0.94&&abs(superCluster.eta)<1.5"),
          BinList = emptyBins,
          CorrectionFile = scalesAndSmearingsPrefix,
          ApplyCentralValue = cms.bool(False),
@@ -778,7 +751,7 @@ MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScale
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
          Label = cms.string("MCScaleLowR9EB"),
          NSigmas = cms.vint32(-1,1),
-         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)>1.0&&abs(superCluster.eta)<1.5"),
+         OverallRange = cms.string("full5x5_r9<0.94&&abs(superCluster.eta)<1.5"),
          BinList = emptyBins,
          CorrectionFile = scalesAndSmearingsPrefix,
          ApplyCentralValue = cms.bool(False),
@@ -786,7 +759,6 @@ MCScaleLowR9EB_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScale
          ExaggerateShiftUp = cms.bool(False),
          Debug = cms.untracked.bool(False)
          )
-
 
 MCScaleHighR9EE_EGM = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonScaleEGMTool"),
          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
