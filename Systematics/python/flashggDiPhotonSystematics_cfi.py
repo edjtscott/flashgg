@@ -26,9 +26,9 @@ preselBins = cms.PSet(
 electronVetoBins = cms.PSet(
     variables = cms.vstring("abs(superCluster.eta)","full5x5_r9"),
     bins = cms.VPSet(
-        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.00 ) , upBounds = cms.vdouble( 1.5, 0.85 ) , values = cms.vdouble( 0.9863 ) , uncertainties = cms.vdouble( 0.0022 )  ) ,
-        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.85 ) , upBounds = cms.vdouble( 1.5, 999. ) , values = cms.vdouble( 0.9926 ) , uncertainties = cms.vdouble( 0.0006 )  ) ,
-        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.00 ) , upBounds = cms.vdouble( 6.0, 0.90 ) , values = cms.vdouble( 0.9765 ) , uncertainties = cms.vdouble( 0.0073 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.00 ) , upBounds = cms.vdouble( 1.5, 0.85 ) , values = cms.vdouble( 0.9864 ) , uncertainties = cms.vdouble( 0.0022 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.85 ) , upBounds = cms.vdouble( 1.5, 999. ) , values = cms.vdouble( 0.9925 ) , uncertainties = cms.vdouble( 0.0006 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.00 ) , upBounds = cms.vdouble( 6.0, 0.90 ) , values = cms.vdouble( 0.9771 ) , uncertainties = cms.vdouble( 0.0074 )  ) ,
         cms.PSet( lowBounds = cms.vdouble( 1.5, 0.90 ) , upBounds = cms.vdouble( 6.0, 999. ) , values = cms.vdouble( 0.9855 ) , uncertainties = cms.vdouble( 0.0018 )  )
         )
     )
@@ -253,14 +253,25 @@ subleadTriggerScaleBins = cms.PSet(
         )
     )
 
-# from Arnab via Martina 10/03/2016
+# from Arnab via Julie 2017 dataset updated 06/11/2018
 looseMvaBins = cms.PSet(
     variables = cms.vstring("abs(superCluster.eta)","full5x5_r9"),
     bins = cms.VPSet(
-        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.0  ) , upBounds = cms.vdouble( 1.5, 0.85  ) , values = cms.vdouble( 0.9999 ) , uncertainties = cms.vdouble( 0.0001 )  ) ,
-        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.85 ) , upBounds = cms.vdouble( 1.5, 999.0 ) , values = cms.vdouble( 1.0003 ) , uncertainties = cms.vdouble( 0.0000 )  ) ,
-        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.0  ) , upBounds = cms.vdouble( 6.0, 0.9   ) , values = cms.vdouble( 1.0003 ) , uncertainties = cms.vdouble( 0.0000 )  ) ,
-        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.9  ) , upBounds = cms.vdouble( 6.0, 999.0 ) , values = cms.vdouble( 1.0004 ) , uncertainties = cms.vdouble( 0.0000 ) ) ) ) 
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.0  ) , upBounds = cms.vdouble( 1.5, 0.85  ) , values = cms.vdouble( 0.998 ) , uncertainties = cms.vdouble( 0.003 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.85 ) , upBounds = cms.vdouble( 1.5, 999.0 ) , values = cms.vdouble( 0.999 ) , uncertainties = cms.vdouble( 0.005 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.0  ) , upBounds = cms.vdouble( 6.0, 0.9   ) , values = cms.vdouble( 1.000 ) , uncertainties = cms.vdouble( 0.004 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.9  ) , upBounds = cms.vdouble( 6.0, 999.0 ) , values = cms.vdouble( 1.000 ) , uncertainties = cms.vdouble( 0.003 ) ) ) ) 
+
+
+# from Arnab via Julie 2017 dataset updated 06/11/2018
+tightMvaBins = cms.PSet(
+    variables = cms.vstring("abs(superCluster.eta)","full5x5_r9"),
+    bins = cms.VPSet(
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.0  ) , upBounds = cms.vdouble( 1.5, 0.85  ) , values = cms.vdouble( 0.990 ) , uncertainties = cms.vdouble( 0.006 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 0.0, 0.85 ) , upBounds = cms.vdouble( 1.5, 999.0 ) , values = cms.vdouble( 0.999 ) , uncertainties = cms.vdouble( 0.009 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.0  ) , upBounds = cms.vdouble( 6.0, 0.9   ) , values = cms.vdouble( 1.004 ) , uncertainties = cms.vdouble( 0.013 )  ) ,
+        cms.PSet( lowBounds = cms.vdouble( 1.5, 0.9  ) , upBounds = cms.vdouble( 6.0, 999.0 ) , values = cms.vdouble( 1.004 ) , uncertainties = cms.vdouble( 0.008 ) ) ) ) 
+
 
 # RELATIVE shift of sigmaE/E --> 0.05 corresponds to a shift of 5%
 sigmaEOverEShiftBins = cms.PSet(
@@ -651,6 +662,16 @@ LooseMvaSF = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonWeight"),
           NSigmas = cms.vint32(-1,1),
           OverallRange = cms.string("1"),
           BinList = looseMvaBins,
+          Debug = cms.untracked.bool(False),
+          ApplyCentralValue = cms.bool(True)
+          )
+
+TightMvaSF = cms.PSet( PhotonMethodName = cms.string("FlashggPhotonWeight"),
+          MethodName = cms.string("FlashggDiPhotonFromPhoton"),
+          Label = cms.string("TightMvaSF"),
+          NSigmas = cms.vint32(-1,1),
+          OverallRange = cms.string("1"),
+          BinList = tightMvaBins,
           Debug = cms.untracked.bool(False),
           ApplyCentralValue = cms.bool(True)
           )

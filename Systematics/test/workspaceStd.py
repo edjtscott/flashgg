@@ -176,7 +176,7 @@ print process.flashggTagSequence
 if customize.doFiducial:
     from PhysicsTools.PatAlgos.tools.helpers import cloneProcessingSnippet,massSearchReplaceAnyInputTag
     process.flashggTagSequence.remove(process.flashggVBFTag)
-    process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
+    #process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
     process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
     process.flashggTagSequence.remove(process.flashggTTHHadronicTag)
    # process.flashggTagSequence.remove(process.flashggTTHeptonTag)
@@ -226,23 +226,26 @@ if customize.doFiducial:
     process.flashggTagSorter.TagPriorityRanges = cms.VPSet(     cms.PSet(TagName = cms.InputTag('flashggSigmaMoMpToMTag')) )
 
 if customize.tthTagsOnly:
-    process.flashggTagSorter.TagPriorityRanges = cms.VPSet(   cms.PSet(TagName = cms.InputTag('flashggTTHDiLeptonTag')),
+    process.flashggTagSorter.TagPriorityRanges = cms.VPSet(   #cms.PSet(TagName = cms.InputTag('flashggTTHDiLeptonTag')),
         cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
         cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')) )
 
     print "customize.processId:",customize.processId
 
-    print "Removing FracRV from syst and adding  PixelSeed"
+    print "Removing FracRVNvtxWeight from syst and adding  PixelSeed"
     
     newvpset = cms.VPSet()
     for pset in process.flashggDiPhotonSystematics.SystMethods:
-        if not pset.Label.value().count("FracRVWeight")and not pset.Label.value().count("FracRVNvtxWeight") :
+        if not pset.Label.value().count("FracRVNvtxWeight") and not  pset.Label.value().count("LooseMvaSF") :
             print  pset.Label.value()
             newvpset += [pset]
     from flashgg.Systematics.flashggDiPhotonSystematics_cfi import PixelSeedWeight
-    newvpset += [ PixelSeedWeight ]
+    newvpset += [ PixelSeedWeight ]    
+    from flashgg.Systematics.flashggDiPhotonSystematics_cfi import TightMvaSF
+    newvpset += [ TightMvaSF ]
     
     process.flashggDiPhotonSystematics.SystMethods = newvpset
+   
 
 print "customize.processId:",customize.processId
 # load appropriate scale and smearing bins here
@@ -253,7 +256,7 @@ print "customize.processId:",customize.processId
 useEGMTools(process)
 
 # Only run systematics for signal events
-if customize.processId.count("h_") or customize.processId.count("vbf_") or customize.processId.count("Acceptance"): # convention: ggh vbf wzh (wh zh) tth
+if customize.processId.count("h_") or customize.processId.count("vbf_") or customize.processId.count("thw_") or customize.processId.count("Acceptance"): # convention: ggh vbf wzh (wh zh) tth
     print "Signal MC, so adding systematics and dZ"
     if customize.doStage1:
         variablesToUse = minimalVariablesStage1
@@ -292,12 +295,16 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
             metsystlabels.append("metUncUncertainty%s01sigma" % direction)
             variablesToUse.append("UnmatchedPUWeight%s01sigma[1,-999999.,999999.] := weight(\"UnmatchedPUWeight%s01sigma\")" % (direction,direction))
             variablesToUse.append("MvaLinearSyst%s01sigma[1,-999999.,999999.] := weight(\"MvaLinearSyst%s01sigma\")" % (direction,direction))
-            variablesToUse.append("LooseMvaSF%s01sigma[1,-999999.,999999.] := weight(\"LooseMvaSF%s01sigma\")" % (direction,direction))
+            if not customize.tthTagsOnly:
+                variablesToUse.append("LooseMvaSF%s01sigma[1,-999999.,999999.] := weight(\"LooseMvaSF%s01sigma\")" % (direction,direction))
+            else:
+                variablesToUse.append("TightMvaSF%s01sigma[1,-999999.,999999.] := weight(\"TightMvaSF%s01sigma\")" % (direction,direction))
             variablesToUse.append("PreselSF%s01sigma[1,-999999.,999999.] := weight(\"PreselSF%s01sigma\")" % (direction,direction))
             variablesToUse.append("electronVetoSF%s01sigma[1,-999999.,999999.] := weight(\"electronVetoSF%s01sigma\")" % (direction,direction))
             variablesToUse.append("TriggerWeight%s01sigma[1,-999999.,999999.] := weight(\"TriggerWeight%s01sigma\")" % (direction,direction))
             variablesToUse.append("FracRVWeight%s01sigma[1,-999999.,999999.] := weight(\"FracRVWeight%s01sigma\")" % (direction,direction))
-            variablesToUse.append("FracRVNvtxWeight%s01sigma[1,-999999.,999999.] := weight(\"FracRVNvtxWeight%s01sigma\")" % (direction,direction))
+            if not customize.tthTagsOnly:           
+                variablesToUse.append("FracRVNvtxWeight%s01sigma[1,-999999.,999999.] := weight(\"FracRVNvtxWeight%s01sigma\")" % (direction,direction))
             variablesToUse.append("ElectronWeight%s01sigma[1,-999999.,999999.] := weight(\"ElectronWeight%s01sigma\")" % (direction,direction))
             if os.environ["CMSSW_VERSION"].count("CMSSW_8_0"):
                 variablesToUse.append("MuonWeight%s01sigma[1,-999999.,999999.] := weight(\"MuonWeight%s01sigma\")" % (direction,direction))
@@ -316,6 +323,8 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
             variablesToUse.append("THU_ggH_PT60%s01sigma[1,-999999.,999999.] := ggHweightCentralised(\"THU_ggH_PT60%s01sigma\")" % (direction,direction))
             variablesToUse.append("THU_ggH_PT120%s01sigma[1,-999999.,999999.] := ggHweightCentralised(\"THU_ggH_PT120%s01sigma\")" % (direction,direction))
             variablesToUse.append("THU_ggH_qmtop%s01sigma[1,-999999.,999999.] := ggHweightCentralised(\"THU_ggH_qmtop%s01sigma\")" % (direction,direction))
+            if customize.tthTagsOnly:  
+                variablesToUse.append("PixelSeedWeight%s01sigma[1,-999999.,999999.] := weight(\"PixelSeedWeight%s01sigma\")" % (direction,direction))
             for r9 in ["HighR9","LowR9"]:
                 for region in ["EB","EE"]:
                     phosystlabels.append("ShowerShape%s%s%s01sigma"%(r9,region,direction))
@@ -492,8 +501,9 @@ elif customize.tthTagsOnly:
     tagList=[
         ["NoTag",0],
         ["TTHHadronicTag",3],
-        ["TTHLeptonicTag",2],
-        ["TTHDiLeptonTag",0]
+#       ["TTHDiLeptonTag",0],
+        ["TTHLeptonicTag",2]
+
         ]
 else:
     tagList=[
@@ -506,8 +516,8 @@ else:
         ["VHMetTag",0],
         ["VHHadronicTag",0],
         ["TTHHadronicTag",3],
-        ["TTHLeptonicTag",2],
-        ["TTHDiLeptonTag",0]
+ #      ["TTHDiLeptonTag",0],
+        ["TTHLeptonicTag",2]
         ]
 
 definedSysts=set()
@@ -545,7 +555,7 @@ for tag in tagList:
           else:
               currentVariables = []
       isBinnedOnly = (systlabel !=  "")
-      if ( customize.doPdfWeights or customize.doSystematics ) and ( (customize.datasetName() and customize.datasetName().count("HToGG")) or customize.processId.count("h_") or customize.processId.count("vbf_") ) and (systlabel ==  "") and not (customize.processId == "th_125" or customize.processId == "bbh_125"):
+      if ( customize.doPdfWeights or customize.doSystematics ) and ( (customize.datasetName() and customize.datasetName().count("HToGG")) or customize.processId.count("h_") or customize.processId.count("vbf_") ) and (systlabel ==  "") and not (customize.processId == "th_125" or customize.processId == "bbh_125" or customize.processId == "thw_125"):
           print "Signal MC central value, so dumping PDF weights"
           dumpPdfWeights = True
           nPdfWeights = 60
@@ -605,7 +615,7 @@ if (customize.processId.count("wh") or customize.processId.count("zh")) and not 
     process.VHFilter.chooseW = bool(customize.processId.count("wh"))
     process.VHFilter.chooseZ = bool(customize.processId.count("zh"))
 
-if (customize.processId == "th_125" or customize.processId == "bbh_125"):
+if (customize.processId == "th_125" or customize.processId == "bbh_125" or customize.processId == "thw_125"):
     process.load("flashgg/Systematics/CentralHiggsFilter_cfi")
     process.genFilter += process.CentralHiggsFilter
 
