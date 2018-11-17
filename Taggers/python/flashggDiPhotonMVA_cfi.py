@@ -22,7 +22,6 @@ flashggDiPhotonMVA = cms.EDProducer('FlashggDiPhotonMVAProducer',
                                     BeamSpotSigma=cms.double(3.7),#value is average in data, set to <0 to use actual values from MC and data
                                     #diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/Flashgg_DiPhoton_80x.weights.xml"),
                                     diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/Flashgg_DiPhoton_Moriond17.weights.xml"),
-                                    #xgbDiphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/XGBoost_DiphotonBDT.weights.xml"),
                                     xgbDiphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/altDiphoModel.xml"),
                                     
                                     # xml 2015                                    

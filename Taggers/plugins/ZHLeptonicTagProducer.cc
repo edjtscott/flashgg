@@ -93,10 +93,6 @@ namespace flashgg {
         vector<double> electronEtaThresholds_;
         bool useElectronMVARecipe_;
         bool useElectronLooseID_;
-
-        std::vector<edm::EDGetTokenT<View<flashgg::Jet> > > tokenJets_;
-        std::vector<edm::InputTag> inputTagJets_;
-        typedef std::vector<edm::Handle<edm::View<flashgg::Jet> > > JetCollectionVector;
         
     };
 
@@ -108,8 +104,7 @@ namespace flashgg {
         vertexToken_( consumes<View<reco::Vertex> >( iConfig.getParameter<InputTag> ( "VertexTag" ) ) ),
         genParticleToken_( consumes<View<reco::GenParticle> >( iConfig.getParameter<InputTag> ( "GenParticleTag" ) ) ),
         rhoTag_( consumes<double>( iConfig.getParameter<InputTag>( "rhoTag" ) ) ),
-        systLabel_( iConfig.getParameter<string> ( "SystLabel" ) ),
-        inputTagJets_ ( iConfig.getParameter<std::vector<edm::InputTag> >( "inputTagJets" ) )
+        systLabel_( iConfig.getParameter<string> ( "SystLabel" ) )
     {
         
         leptonPtThreshold_ = iConfig.getParameter<double>( "leptonPtThreshold");
@@ -147,11 +142,6 @@ namespace flashgg {
         pTHToken_ = consumes<float>( HTXSps.getParameter<InputTag>("pTH") );
         pTVToken_ = consumes<float>( HTXSps.getParameter<InputTag>("pTV") );
         newHTXSToken_ = consumes<HTXS::HiggsClassification>( HTXSps.getParameter<InputTag>("ClassificationObj") );
-
-        for (unsigned i = 0 ; i < inputTagJets_.size() ; i++) {
-            auto token = consumes<View<flashgg::Jet> >(inputTagJets_[i]);
-            tokenJets_.push_back(token);
-        }
         
         produces<vector<ZHLeptonicTag> >();
         produces<vector<VHTagTruth> >();
@@ -181,11 +171,6 @@ namespace flashgg {
         Handle<View<flashgg::Electron> > theElectrons;
         evt.getByToken( electronToken_, theElectrons );
 
-        JetCollectionVector Jets( inputTagJets_.size() );
-        for( size_t j = 0; j < inputTagJets_.size(); ++j ) {
-            evt.getByToken( tokenJets_[j], Jets[j] );
-        }
-
         edm::Handle<double>  rho;
         evt.getByToken(rhoTag_,rho);
         double rho_    = *rho;
@@ -194,12 +179,10 @@ namespace flashgg {
         evt.getByToken( mvaResultToken_, mvaResults );
 
         Handle<View<reco::GenParticle> > genParticles;
- 
 
         std::unique_ptr<vector<ZHLeptonicTag> > ZHLeptonicTags( new vector<ZHLeptonicTag> );
         std::unique_ptr<vector<VHTagTruth> > truths( new vector<VHTagTruth> );
         std::unique_ptr<vector<StageOneTag> > stage1tags( new vector<StageOneTag> );
-
 
         Point higgsVtx;
         bool associatedZ=0;
@@ -348,14 +331,10 @@ namespace flashgg {
                 if(isDiMuon){
                     ZHLeptonicTags_obj.includeWeightsByLabel( *tagMuons.at(0), "MuonWeight");
                     ZHLeptonicTags_obj.includeWeightsByLabel( *tagMuons.at(1), "MuonWeight");
-                    unsigned int jet_i = diPhotons->ptrAt( diphoIndex )->jetCollectionIndex();
-                    stage1tag_obj.computeStage1Kinematics( Jets[jet_i], (tagMuons.at(0)->p4() + tagMuons.at(1)->p4()).pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi(), tagMuons.at(1)->eta(), tagMuons.at(1)->phi() ); //FIXME only here bc needed to compile
                     stage1tag_obj.setStage1recoTag( flashgg::RECO_ZHLEP );
                 } else if(isDiElectron){
                     ZHLeptonicTags_obj.includeWeights( *tagElectrons.at(0) );
                     ZHLeptonicTags_obj.includeWeights( *tagElectrons.at(1) );
-                    unsigned int jet_i = diPhotons->ptrAt( diphoIndex )->jetCollectionIndex();
-                    stage1tag_obj.computeStage1Kinematics( Jets[jet_i], (tagElectrons.at(0)->p4() + tagElectrons.at(1)->p4()).pt(), tagElectrons.at(0)->eta(), tagElectrons.at(0)->phi(), tagElectrons.at(1)->eta(), tagElectrons.at(1)->phi() ); //FIXME only here bc needed to compile
                     stage1tag_obj.setStage1recoTag( flashgg::RECO_ZHLEP );
                 }
                 ZHLeptonicTags_obj.setDiPhotonIndex( diphoIndex );

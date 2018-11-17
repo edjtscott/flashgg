@@ -2,8 +2,7 @@
 
 using namespace flashgg;
 
-NoTag::NoTag() : DiPhotonTagBase::DiPhotonTagBase() {
-}
+NoTag::NoTag() : DiPhotonTagBase::DiPhotonTagBase() {}
 
 NoTag::~NoTag() {}
 

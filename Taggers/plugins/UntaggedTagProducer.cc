@@ -165,7 +165,6 @@ namespace flashgg {
             stage1tag_obj.setDiPhotonIndex( candIndex );
             stage1tag_obj.setSystLabel( systLabel_ );
             stage1tag_obj.includeWeights( *dipho );
-            stage1tag_obj.computeStage1Kinematics( Jets[jetCollectionIndex] );
 
             bool passScaledPtCuts = 1;
             if ( requireScaledPtCuts_ ) {

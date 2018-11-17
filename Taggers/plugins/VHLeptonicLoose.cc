@@ -403,16 +403,13 @@ namespace flashgg {
             //including SFs for leading muon or electron
             if(tagMuons.size()>0){
                 VHLeptonicLooseTags_obj.includeWeightsByLabel( *tagMuons.at(0), "MuonWeight");
-                //stage1tag_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagMuons.at(0)->pt(), tagMuons.at(0)->eta(), tagMuons.at(0)->phi() );
                 stage1tag_obj.setStage1recoTag( flashgg::RECO_VHLEPLOOSE );
             } else if (tagElectrons.size() > 0){
                 VHLeptonicLooseTags_obj.includeWeights( *tagElectrons.at(0));
-                //stage1tag_obj.computeStage1Kinematics( Jets[jetCollectionIndex], tagElectrons.at(0)->pt(), tagElectrons.at(0)->eta(),tagElectrons.at(0)->phi() );
                 stage1tag_obj.setStage1recoTag( flashgg::RECO_VHLEPLOOSE );
             }
 
             stage1tag_obj.includeWeights(VHLeptonicLooseTags_obj);
-            
 
             /*  
                 //uncomment if we want to keep track of lepton vs muon tagged event

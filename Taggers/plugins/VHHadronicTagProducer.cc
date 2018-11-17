@@ -320,7 +320,6 @@ namespace flashgg {
 
             StageOneTag stage1tag_obj( dipho, mvares );
             stage1tag_obj.setSystLabel( systLabel_ );
-            //stage1tag_obj.computeStage1Kinematics( Jets[jetCollectionIndex] ); // DO NOT give dijet pT here, that would be interpreted as leptonic
             stage1tag_obj.setStage1recoTag( flashgg::RECO_VHHAD );
             stage1tag_obj.includeWeights(vhhadtag_obj);
 

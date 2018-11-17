@@ -28,12 +28,6 @@ namespace flashgg {
             if( ! cutbased.first.empty() ) {
                 cat += (cat.empty()?"":":")+cutbased.first; // FIXME: define ad-hoc method with dedicated + operator
             }
-            std::cout << "Inside CutAndClassBasedClassifier" << std::endl;
-            std::cout << "cutbased.first    = " << cutbased.first << std::endl;
-            std::cout << "cutbased.second   = " << cutbased.second << std::endl;
-            std::cout << "classbased.first  = " << classbased.first << std::endl;
-            std::cout << "classbased.second = " << classbased.second << std::endl;
-            std::cout << "cat = " << cat << std::endl << std::endl;
             return std::make_pair( cat, classbased.second  );
         }
     };

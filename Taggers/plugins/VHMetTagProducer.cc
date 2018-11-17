@@ -317,7 +317,6 @@ namespace flashgg {
 
             StageOneTag stage1tag_obj( dipho, mvares );
             stage1tag_obj.setSystLabel( systLabel_ );
-            //stage1tag_obj.computeStage1Kinematics ( Jets[jetCollectionIndex], theMET->getCorPt() );
             stage1tag_obj.setStage1recoTag( flashgg::RECO_VHMET );
             stage1tag_obj.includeWeights( tag_obj );
             stage1tags->push_back(stage1tag_obj);
