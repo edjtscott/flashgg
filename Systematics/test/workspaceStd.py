@@ -5,7 +5,6 @@ import FWCore.Utilities.FileUtils as FileUtils
 import FWCore.ParameterSet.VarParsing as VarParsing
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariables,minimalHistograms,minimalNonSignalVariables,systematicVariables
 from flashgg.Systematics.SystematicDumperDefaultVariables import minimalVariablesHTXS,systematicVariablesHTXS,minimalVariablesStage1,systematicVariablesStage1
-from flashgg.Systematics.SystematicDumperDefaultVariables import jetStudyVariables
 import os
 
 # SYSTEMATICS SECTION
@@ -29,8 +28,7 @@ elif os.environ["CMSSW_VERSION"].count("CMSSW_9_4"):
 else:
     raise Exception,"Could not find a sensible CMSSW_VERSION for default globaltag"
 
-#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 100 )
 
 MUON_ID = "Medium" #["Tight", "Medium" , "Loose", "Soft", "HighPt", "MediumPrompt", "TrkHighPt"]
@@ -202,12 +200,10 @@ if customize.tthTagsOnly:
     process.flashggTagSequence.remove(process.flashggVBFMVA)
     process.flashggTagSequence.remove(process.flashggVBFDiPhoDiJetMVA)
 
-#FIXME
-#sneaky way to ensure that the Stage1 tag selector always considers the jets in the event
 if customize.doStage1:
-    process.flashggVBFTag.RequireVBFPreselection = cms.bool(False)
     process.flashggTagSequence.remove(process.flashggUntagged)
-    process.flashggTagSorter.TagPriorityRanges = cms.VPSet( #otherwise would get zero events in VH MET and VH had
+    process.flashggTagSequence.replace(process.flashggVBFTag, process.flashggStageOneCombinedTag)
+    process.flashggTagSorter.TagPriorityRanges = cms.VPSet(
         cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
         cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
         cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
@@ -215,7 +211,7 @@ if customize.doStage1:
         cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),
         cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
         cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
+        cms.PSet(TagName = cms.InputTag('flashggStageOneCombinedTag'))
         )
 
 print 'here we print the tag sequence after'
@@ -260,8 +256,6 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
     print "Signal MC, so adding systematics and dZ"
     if customize.doStage1:
         variablesToUse = minimalVariablesStage1
-        #FIXME temp for jet studies
-        #variablesToUse += jetStudyVariables
     elif customize.doHTXS:
         variablesToUse = minimalVariablesHTXS
     else:
@@ -339,8 +333,6 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
 elif customize.processId == "Data":
     print "Data, so turn off all shifts and systematics, with some exceptions"
     variablesToUse = minimalNonSignalVariables
-    #FIXME temp for jet studies
-    #variablesToUse += jetStudyVariables
     if customize.doFiducial:
         variablesToUse.extend(fc.getRecoVariables(True))
     customizeSystematicsForData(process)
@@ -358,7 +350,6 @@ print "------------------------------------------------------------"
 
 if customize.doStage1:
   process.flashggTagSorter.DoStage1RecoTags = True
-
 
 #from flashgg.Taggers.globalVariables_cff import globalVariables
 #globalVariables.extraFloats.rho = cms.InputTag("rhoFixedGridAll")
@@ -384,7 +375,8 @@ process.source = cms.Source ("PoolSource",
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/DoubleEG/RunIIFall17-3_1_0-3_1_0-v0-Run2017F-31Mar2018-v1/180611_135216/0001/myMicroAODOutputFile_1382.root",
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/DoubleEG/RunIIFall17-3_1_0-3_1_0-v0-Run2017F-31Mar2018-v1/180611_135216/0000/myMicroAODOutputFile_685.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_0_0/3_0_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_0_0-3_0_0-v0-RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/180325_164819/0000/myMicroAODOutputFile_1.root"
-"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180723_162219/0000/myMicroAODOutputFile_16.root"
+#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180723_162219/0000/myMicroAODOutputFile_16.root"
+"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_112847/0000/myMicroAODOutputFile_14.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8_PSWeights/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/180605_202241/0000/myMicroAODOutputFile_9.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M95_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180723_163703/0000/myMicroAODOutputFile_3.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/THQ_HToGG_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_100016/0000/myMicroAODOutputFile_9.root"
@@ -430,10 +422,6 @@ if customize.doStage1:
   process.load("flashgg.Taggers.stage1diphotonTagDumper_cfi") #trying out stage 1 version
   process.tagsDumper.className = "Stage1DiPhotonTagDumper" 
   assert(not customize.doHTXS)
-  #FIXME temp for jet studies
-  #process.flashggUntagged.Boundaries = cms.vdouble(-0.999,1.)
-  #process.flashggVBFTag.Boundaries = cms.vdouble(-0.999,1.)
-  #process.flashggVBFTag.RequireVBFPreselection = cms.bool(False)
 else:
   process.load("flashgg.Taggers.diphotonTagDumper_cfi") ##  import diphotonTagDumper 
   process.tagsDumper.className = "DiPhotonTagDumper"
@@ -548,8 +536,6 @@ for tag in tagList:
       if tagName.upper() == "NOTAG":
           if customize.doStage1:
               currentVariables = ["stage1cat[39,-8.5,30.5] := tagTruth().HTXSstage1orderedBin"]
-              #FIXME temp for jet studies
-              #currentVariables += jetStudyVariables
           elif customize.doHTXS:
               currentVariables = ["stage0cat[72,9.5,81.5] := tagTruth().HTXSstage0cat"]
           else:
@@ -768,7 +754,5 @@ customize.setDefault("targetLumi",1.00e+3)
 customize(process)
 
 if customize.doStage1:
-    process.flashggTagSorter.Stage1Printout = True
+    process.flashggTagSorter.Stage1Printout = False
     process.flashggTagSorter.Debug = False
-    
-    

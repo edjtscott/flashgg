@@ -553,3 +553,14 @@ flashggZPlusJetTag = cms.EDProducer("FlashggZPlusJetTagProducer",
                                     GenJetTag = cms.InputTag("slimmedGenJets")
                                     )
 
+flashggStageOneCombinedTag = cms.EDProducer("FlashggStageOneCombinedTagProducer",
+                               DiPhotonTag=cms.InputTag('flashggPreselectedDiPhotons'),
+                               SystLabel=cms.string(""),
+                               MVAResultTag=cms.InputTag('flashggDiPhotonMVA'),
+                               VBFDiPhoDiJetMVAResultTag=cms.InputTag('flashggVBFDiPhoDiJetMVA'),
+                               VBFMVAResultTag=cms.InputTag('flashggVBFMVA'),
+                               GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
+                               GenJetTag = cms.InputTag("slimmedGenJets"),
+                               HTXSTags     = HTXSInputTags,
+                               inputTagJets = UnpackedJetCollectionVInputTag
+                               )

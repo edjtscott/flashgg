@@ -121,8 +121,6 @@ namespace flashgg {
             mvares.dipho_mva =   dipho_mva_ ;
             mvares.dipho_PToM =   dipho_PToM_ ;
                         
-            //FIXME ed testing...
-            //mvares.vbfMvaResult = ( VBFMVAResult )vbf_mvares;
             mvares.vbfMvaResult = *vbf_mvares;
             
             vbfDiPhoDiJet_results->push_back( mvares );
