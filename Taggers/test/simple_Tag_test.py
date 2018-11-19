@@ -23,7 +23,6 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 #                                       )
 
 process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring("file:myMicroAODOutputFile.root"))
-process.source = cms.Source ("PoolSource",fileNames = cms.untracked.vstring("/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/170113_234241/0000/myMicroAODOutputFile_1.root"))
 
 process.load("flashgg/Taggers/flashggTagSequence_cfi")
 process.load("flashgg/Taggers/flashggTagTester_cfi")
