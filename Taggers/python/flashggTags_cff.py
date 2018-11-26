@@ -562,5 +562,6 @@ flashggStageOneCombinedTag = cms.EDProducer("FlashggStageOneCombinedTagProducer"
                                GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
                                GenJetTag = cms.InputTag("slimmedGenJets"),
                                HTXSTags     = HTXSInputTags,
-                               inputTagJets = UnpackedJetCollectionVInputTag
+                               inputTagJets = UnpackedJetCollectionVInputTag,
+                               PrefireProbability = cms.InputTag("flashggPrefireWeight","prefireProbability")
                                )

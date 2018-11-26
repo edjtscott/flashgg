@@ -38,6 +38,7 @@ namespace flashgg {
 
         EDGetTokenT<View<DiPhotonCandidate> >      diPhotonToken_;
         EDGetTokenT<View<VBFDiPhoDiJetMVAResult> > vbfDiPhoDiJetMvaResultToken_;
+        EDGetTokenT<double> prefireToken_;
         EDGetTokenT<View<VBFMVAResult> >           vbfMvaResultToken_;
         EDGetTokenT<View<DiPhotonMVAResult> >      mvaResultToken_;
         EDGetTokenT<View<reco::GenParticle> >      genPartToken_;
@@ -58,6 +59,7 @@ namespace flashgg {
     StageOneCombinedTagProducer::StageOneCombinedTagProducer( const ParameterSet &iConfig ) :
         diPhotonToken_( consumes<View<flashgg::DiPhotonCandidate> >( iConfig.getParameter<InputTag> ( "DiPhotonTag" ) ) ),
         vbfDiPhoDiJetMvaResultToken_( consumes<View<flashgg::VBFDiPhoDiJetMVAResult> >( iConfig.getParameter<InputTag> ( "VBFDiPhoDiJetMVAResultTag" ) ) ),
+        prefireToken_ ( consumes<double>( iConfig.getParameter<InputTag> ( "PrefireProbability" ) ) ),
         mvaResultToken_( consumes<View<flashgg::DiPhotonMVAResult> >( iConfig.getParameter<InputTag> ( "MVAResultTag" ) ) ),
         genPartToken_( consumes<View<reco::GenParticle> >( iConfig.getParameter<InputTag> ( "GenParticleTag" ) ) ),
         genJetToken_ ( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) ),
@@ -104,6 +106,13 @@ namespace flashgg {
         Handle<View<flashgg::VBFDiPhoDiJetMVAResult> > vbfDiPhoDiJetMvaResults;
         evt.getByToken( vbfDiPhoDiJetMvaResultToken_, vbfDiPhoDiJetMvaResults );
 
+        Handle<double> prefireProb;
+        evt.getByToken( prefireToken_, prefireProb );
+        //if ( prefireProb.isValid() ) {
+        //    std::cout << "ED DEBUG: in stage 1 tagger, found prefire prob of " << *(prefireProb.product()) << std::endl;
+        //}
+        //else { std::cout << "ED DEBUG: in stage 1 tagger, prefire prob is not valid" << std::endl;  }
+
         JetCollectionVector Jets( inputTagJets_.size() );
         for( size_t j = 0; j < inputTagJets_.size(); ++j ) {
             evt.getByToken( tokenJets_[j], Jets[j] );
@@ -111,7 +120,7 @@ namespace flashgg {
 
         Handle<View<reco::GenParticle> > genParticles;
         Handle<View<reco::GenJet> > genJets;
-        
+
         std::unique_ptr<vector<StageOneTag> > dummystage0tags( new vector<StageOneTag> );
         std::unique_ptr<vector<StageOneTag> > stage1tags( new vector<StageOneTag> );
         std::unique_ptr<vector<TagTruthBase> > stage1truths( new vector<TagTruthBase> );
@@ -141,11 +150,13 @@ namespace flashgg {
             edm::Ptr<flashgg::VBFDiPhoDiJetMVAResult> vbfdipho_mvares = vbfDiPhoDiJetMvaResults->ptrAt( candIndex );
             edm::Ptr<flashgg::DiPhotonMVAResult>      mvares          = mvaResults->ptrAt( candIndex );
             edm::Ptr<flashgg::DiPhotonCandidate>      dipho           = diPhotons->ptrAt( candIndex );
+
             
             StageOneTag stage1tag_obj( dipho, mvares, vbfdipho_mvares );
             stage1tag_obj.setDiPhotonIndex( candIndex );
             stage1tag_obj.setSystLabel( systLabel_ );
             stage1tag_obj.includeWeights( *dipho );
+            stage1tag_obj.setWeight("prefireProbability", *(prefireProb.product())); // add the prefire probability
 
             if ( stage1tag_obj.VBFMVA().dijet_Mjj > 0. ) {
 
