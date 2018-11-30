@@ -250,7 +250,6 @@ namespace flashgg {
                     tag_obj.setWeight("UnmatchedPUWeightUp01sigma", tag_obj.centralWeight() * j1upadjust * j2upadjust );
                     tag_obj.setWeight("UnmatchedPUWeightDown01sigma", tag_obj.centralWeight() * j1downadjust * j2downadjust );
                 }
-                stage1tag_obj.includeWeights(tag_obj);
                 if (false && systLabel_ == "") {
                     for (auto it = tag_obj.weightListBegin() ; it != tag_obj.weightListEnd(); it++) {
                         std::cout << "SCZ Weight Debug " << *it << " " << tag_obj.weight(*it) << std::endl;
@@ -258,6 +257,8 @@ namespace flashgg {
                     }
                 }
             }
+
+            stage1tag_obj.includeWeights(tag_obj);
             
             if ( getQCDWeights_ ) {
                 for( unsigned int weight_index = 0; weight_index < (*WeightHandle).size(); weight_index++ ){

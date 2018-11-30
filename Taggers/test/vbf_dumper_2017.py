@@ -384,7 +384,8 @@ print
 printSystematicInfo(process)
 
 # set default options if needed
-customize.setDefault("maxEvents"  ,10000   )
+#customize.setDefault("maxEvents"  ,10000   )
+customize.setDefault("maxEvents"  ,10)
 customize.setDefault("targetLumi" ,1.00e+3)
 
 # call the customization
