@@ -382,8 +382,6 @@ namespace flashgg {
             }
         }
 
-        std::cout << " before NoTag " << std::endl;
-
         assert( SelectedTag->size() == 1 || SelectedTag->size() == 0 );
         if (createNoTag_ && SelectedTag->size() == 0) {
             SelectedTag->push_back(NoTag());
