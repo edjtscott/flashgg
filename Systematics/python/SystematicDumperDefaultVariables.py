@@ -69,5 +69,18 @@ jetStudyVariables = [
                     "dijet_subsubleadDeltaPhi := VBFMVA().dijet_subsubleadDeltaPhi",
                     "dijet_leadDeltaEta       := VBFMVA().dijet_leadDeltaEta",
                     "dijet_subleadDeltaEta    := VBFMVA().dijet_subleadDeltaEta",
-                    "dijet_subsubleadDeltaEta := VBFMVA().dijet_subsubleadDeltaEta"
+                    "dijet_subsubleadDeltaEta := VBFMVA().dijet_subsubleadDeltaEta",
+                    #remaining VBF inputs
+                    "dijet_abs_dEta      := VBFMVA().dijet_abs_dEta",
+                    "dijet_pt            := VBFMVA().dijet_pt",
+                    "dijet_Zep           := VBFMVA().dijet_Zep",
+                    "dijet_dphi_trunc    := VBFMVA().dijet_dphi_trunc",
+                    "dijet_dphi          := VBFMVA().dijet_dphi",
+                    "dijet_dipho_dphi    := VBFMVA().dijet_dipho_dphi",
+                    "dijet_Mjj           := VBFMVA().dijet_Mjj",
+                    "dijet_minDRJetPho   := VBFMVA().dijet_minDRJetPho",
+                    "dijet_dipho_pt      := VBFMVA().dijet_dipho_pt",
+                    #prompt-fake info
+                    "prompt_pho_1 := diPhoton.leadingPhoton.genMatchType()",
+                    "prompt_pho_2 := diPhoton.subLeadingPhoton.genMatchType()"
                     ]
