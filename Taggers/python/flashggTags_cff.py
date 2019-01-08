@@ -134,7 +134,8 @@ flashggVBFTag = cms.EDProducer("FlashggVBFTagProducer",
                                VBFPreselPhoIDMVAMin = cms.double(-0.2),
                                GetQCDWeights = cms.bool(False),
                                HTXSTags     = HTXSInputTags,
-                               inputTagJets = UnpackedJetCollectionVInputTag
+                               inputTagJets = UnpackedJetCollectionVInputTag,
+                               PrefireProbability = cms.InputTag("flashggPrefireWeight","prefireProbability")
                                )
 
 

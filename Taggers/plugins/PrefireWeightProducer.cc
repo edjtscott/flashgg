@@ -13,6 +13,7 @@
 #include "TMVA/Reader.h"
 #include "TMath.h"
 #include "TH2.h"
+#include "TFile.h"
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
 #include <string>
@@ -54,13 +55,13 @@ namespace flashgg {
 
         photonFilename_ = iConfig.getParameter<edm::FileInPath>( "photonFilename" );
         TFile* photonFile = TFile::Open(photonFilename_.fullPath().c_str());
-        photonHist_ = (TH2F*)((TH2F*) photonFile->Get("L1prefiring_photon_2017BtoF"))->Clone();
+        photonHist_ = (TH2F*)((TH2F*) photonFile->Get("L1prefiring_photonpt_2016BtoH"))->Clone();
         photonFile->Close();
         delete photonFile;
 
         jetFilename_  = iConfig.getParameter<edm::FileInPath>( "jetFilename" );
         TFile* jetFile = TFile::Open(jetFilename_.fullPath().c_str());
-        jetHist_ = (TH2F*)((TH2F*) jetFile->Get("L1prefiring_jet_2017BtoF"))->Clone();
+        jetHist_ = (TH2F*)((TH2F*) jetFile->Get("L1prefiring_jetpt_2016BtoH"))->Clone();
         jetFile->Close();
         delete jetFile;
     }
@@ -96,16 +97,18 @@ namespace flashgg {
                 // if so use the photon probability map, else use the jet one
                 bool nearLead  = deltaR( dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->phi(), jet->eta(), jet->phi() ) < 0.4;
                 bool nearSublead = deltaR( dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->phi(), jet->eta(), jet->phi() ) < 0.4;
-                bool nearPhoton = nearLead || nearSublead;
-                double objProb = nearPhoton ? getProb(photonHist_, jet->eta(), jet->pt()) : getProb(jetHist_, jet->eta(), jet->pt());
+                double objProb = -1.;
+                if (nearLead) { objProb = getProb(photonHist_, dipho->leadingPhoton()->eta(), dipho->leadingPhoton()->pt()); }
+                else if (nearSublead) { objProb = getProb(photonHist_, dipho->subLeadingPhoton()->eta(), dipho->subLeadingPhoton()->pt()); }
+                else { objProb = getProb(jetHist_, jet->eta(), jet->pt()); }
                 prefireProd *= 1. - objProb;
             }
         }
 
         if (1. - prefireProd < 0.) {
-            throw cms::Exception("Negative probablility found!!!");
+            throw cms::Exception("Negative probablility found");
         }
-        std::cout << "ED DEBUG: prefire probability for this event is " << 1. - prefireProd << std::endl;
+        //std::cout << "ED DEBUG: prefire probability for this event is " << 1. - prefireProd << std::endl;
         std::unique_ptr<double> prefireProbability = std::make_unique<double>(1. - prefireProd);
         evt.put( std::move(prefireProbability), "prefireProbability" );
     }

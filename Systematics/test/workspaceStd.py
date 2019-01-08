@@ -412,7 +412,7 @@ elif customize.doStage1 and not customize.processId == "Data":
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
     ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
-    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0],
+    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0], ["RECO_VBFTOPO_BSM",0],
     ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
 elif customize.doStage1 and customize.processId == "Data":
@@ -422,7 +422,7 @@ elif customize.doStage1 and customize.processId == "Data":
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
     ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
-    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0],
+    ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0], ["RECO_VBFTOPO_BSM",0],
     ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
 elif customize.tthTagsOnly:
@@ -666,7 +666,5 @@ customize.setDefault("targetLumi",1.00e+3)
 customize(process)
 
 if customize.doStage1:
-    process.flashggTagSorter.Stage1Printout = True
+    process.flashggTagSorter.Stage1Printout = False
     process.flashggTagSorter.Debug = False
-    
-    
