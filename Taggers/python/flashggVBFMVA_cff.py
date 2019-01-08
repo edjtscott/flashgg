@@ -8,6 +8,8 @@ flashggVBFMVA = cms.EDProducer('FlashggVBFMVAProducer',
                                DiPhotonTag=cms.InputTag('flashggPreselectedDiPhotons'),
                                #JetTag=cms.InputTag('flashggSelectedJets'),
                                inputTagJets= UnpackedJetCollectionVInputTag,
+                               GenParticleTag=cms.InputTag( "flashggPrunedGenParticles" ),
+                               GenJetTag = cms.InputTag("slimmedGenJets"),
                                MVAMethod = cms.string("BDTG"),
                                UsePuJetID  = cms.bool(False),
                                UseJetID    = cms.bool(True),
@@ -29,6 +31,8 @@ flashggVBFMVA = cms.EDProducer('FlashggVBFMVAProducer',
                                #vbfMVAweightfile = cms.FileInPath("flashgg/Taggers/data/sklearn_training_moriond17_v8.xml"),
                                #vbfMVAweightfile = cms.FileInPath("flashgg/Taggers/data/dijet-2017-10Jul.xml")
                                vbfMVAweightfile = cms.FileInPath("flashgg/Taggers/data/fromShameena_dijet2017.xml")
+                               #FIXME
+                               #ADD GEN COLLECTIONS INTO CONFIG
 )
 # Legacy DiPhoDiJet MVA
 flashggVBFDiPhoDiJetMVA = cms.EDProducer('FlashggVBFDiPhoDiJetMVAProducer',

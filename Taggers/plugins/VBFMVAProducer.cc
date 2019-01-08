@@ -35,6 +35,10 @@ namespace flashgg {
         //EDGetTokenT<View<flashgg::Jet> > jetTokenDz_;
         std::vector<edm::InputTag> inputTagJets_;
 
+        //STXS 1.1: tokens for gen collections
+        EDGetTokenT<View<reco::GenParticle> > genPartToken_;
+        EDGetTokenT<View<reco::GenJet> > genJetToken_;
+
         unique_ptr<TMVA::Reader>VbfMva_;
         FileInPath vbfMVAweightfile_;
         string     _MVAMethod;
@@ -93,12 +97,18 @@ namespace flashgg {
         float dijet_subsubleadEta_;
         float dijet_SubsubJPt_;
 
+        //STXS 1.1: gen-level quantities to define STXS bin
+        float gen_dijet_Mjj_;
+        float gen_ptHjj_;
+
     };
     
     VBFMVAProducer::VBFMVAProducer( const ParameterSet &iConfig ) :
         diPhotonToken_( consumes<View<flashgg::DiPhotonCandidate> >( iConfig.getParameter<InputTag> ( "DiPhotonTag" ) ) ),
         //jetTokenDz_( consumes<View<flashgg::Jet> >( iConfig.getParameter<InputTag>( "JetTag" ) ) ),
         inputTagJets_ ( iConfig.getParameter<std::vector<edm::InputTag> >( "inputTagJets" ) ),
+        genPartToken_( consumes<View<reco::GenParticle> >( iConfig.getParameter<InputTag> ( "GenParticleTag" ) ) ),
+        genJetToken_ ( consumes<View<reco::GenJet> >( iConfig.getParameter<InputTag> ( "GenJetTag" ) ) ),
         _MVAMethod    ( iConfig.getParameter<string> ( "MVAMethod"    ) ),
         _usePuJetID   ( iConfig.getParameter<bool>   ( "UsePuJetID"   ) ),
         _useJetID     ( iConfig.getParameter<bool>   ( "UseJetID"     ) ),
@@ -152,6 +162,9 @@ namespace flashgg {
         dijet_SubsubJPt_ = -999.;
 
         ptHjj_        = -999.;
+          
+        gen_dijet_Mjj_   = -999;
+        gen_ptHjj_       = -999;
         
         if (_MVAMethod != ""){
             VbfMva_.reset( new TMVA::Reader( "!Color:Silent" ) );
@@ -198,6 +211,15 @@ namespace flashgg {
         for( size_t j = 0; j < inputTagJets_.size(); ++j ) {
             evt.getByToken( tokenJets_[j], Jets[j] );
         }
+
+        //For Gen info
+        Handle<View<reco::GenParticle> > genParticles;
+        Handle<View<reco::GenJet> > genJets;
+
+        if(!evt.isRealData() ){
+          evt.getByToken( genPartToken_, genParticles );
+          evt.getByToken( genJetToken_, genJets );
+        }
         
         std::unique_ptr<vector<VBFMVAResult> > vbf_results( new vector<VBFMVAResult> );
         for( unsigned int candIndex = 0; candIndex < diPhotons->size() ; candIndex++ ) {
@@ -242,6 +264,15 @@ namespace flashgg {
             dijet_SubsubJPt_ = -999.;
 
             ptHjj_        = -999.;
+
+            gen_dijet_Mjj_      =  -999;
+            gen_ptHjj_          =  -999;
+
+            //STXS 1.1 extract gen info
+            for( unsigned int genJet_itr = 0; genJet_itr<genJets->size(); genJet_itr++ ){
+              float genJet_pt = genJets->ptrAt( genJet_itr )->pt();
+              std::cout << "GENJET " << genJet_itr << " ::: pT = " << genJet_pt << " GeV" << std::endl;
+            }
  
             // First find dijet by looking for highest-pt jets...
             std::pair <int, int>     dijet_indices( -1, -1 );

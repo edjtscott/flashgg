@@ -40,6 +40,7 @@ jetStudyVariables = [
                     "diphoptom  := VBFDiPhoDiJetMVA().dipho_PToM",
                     "diphomva   := diPhotonMVA().result",
                     "diphomvaxgb   := 1. / ( 1. + exp( 0.5*log( 2./(diPhotonMVA().xgbResult+1.) - 1 ) ) )",
+                    "dipho_pt   := VBFDiPhoDiJetMVA().dipho_PToM*diPhoton().mass",
                     #diphoton BDT inputs
                     "leadmva     := diPhotonMVA().leadmva",
                     "subleadmva  := diPhotonMVA().subleadmva",
@@ -69,5 +70,10 @@ jetStudyVariables = [
                     "dijet_subsubleadDeltaPhi := VBFMVA().dijet_subsubleadDeltaPhi",
                     "dijet_leadDeltaEta       := VBFMVA().dijet_leadDeltaEta",
                     "dijet_subleadDeltaEta    := VBFMVA().dijet_subleadDeltaEta",
-                    "dijet_subsubleadDeltaEta := VBFMVA().dijet_subsubleadDeltaEta"
+                    "dijet_subsubleadDeltaEta := VBFMVA().dijet_subsubleadDeltaEta",
+                    #STSX 1.1: gen-level quantities to define STXS 1.1 bin
+                    "gen_pTH        := tagTruth().HTXSpTH()",
+                    "n_gen_jets     := tagTruth().HTXSnjets()"#,
+                    #"gen_dijet_Mjj  := VBFMVA().gen_dijet_Mjj",
+                    #"gen_ptHjj      := VBFMVA().gen_ptHjj"
                     ]

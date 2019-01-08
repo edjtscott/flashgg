@@ -89,6 +89,11 @@ namespace flashgg {
         float vbfMvaResult_value;
         float vbfMvaResult_value_bdt;
         float vbfMvaResult_value_bdtg;
+
+        // Gen-level information required for STXS Stage 1.1 studies
+        float gen_dijet_Mjj;
+        float gen_ptHjj;
+        
     };
     
     typedef std::map<edm::Ptr<DiPhotonCandidate>, VBFMVAResult> VBFMVAResultMap;
