@@ -215,7 +215,6 @@ namespace flashgg {
         //For Gen info
         Handle<View<reco::GenParticle> > genParticles;
         Handle<View<reco::GenJet> > genJets;
-
         if(!evt.isRealData() ){
           evt.getByToken( genPartToken_, genParticles );
           evt.getByToken( genJetToken_, genJets );
@@ -269,10 +268,20 @@ namespace flashgg {
             gen_ptHjj_          =  -999;
 
             //STXS 1.1 extract gen info
-            for( unsigned int genJet_itr = 0; genJet_itr<genJets->size(); genJet_itr++ ){
-              float genJet_pt = genJets->ptrAt( genJet_itr )->pt();
-              std::cout << "GENJET " << genJet_itr << " ::: pT = " << genJet_pt << " GeV" << std::endl;
+            //for( unsigned int genJet_itr = 0; genJet_itr<genJets->size(); genJet_itr++ ){
+            //  float genJet_pt = genJets->ptrAt( genJet_itr )->pt();
+            //  std::cout << "GENJET " << genJet_itr << " ::: pT = " << genJet_pt << " GeV" << std::endl;
+            //}
+            
+            //loop over gen particles output info of all "hard" gen particles
+            for( unsigned int genPart_idx = 0; genPart_idx<genParticles->size(); genPart_idx++ ){
+              edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(genPart_idx);
+              if( part->isHardProcess() ){
+                std::cout << "Hard gen particle: " << genPart_idx << "::: pT = " << part->pt() << " GeV, eta = " << part->eta() << ", phi = " << part->phi() << ", pdgID = " << part->pdgId() << std::endl;
+
+              }
             }
+
  
             // First find dijet by looking for highest-pt jets...
             std::pair <int, int>     dijet_indices( -1, -1 );
