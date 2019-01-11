@@ -212,6 +212,7 @@ namespace flashgg {
             evt.getByToken( tokenJets_[j], Jets[j] );
         }
 
+
         //For Gen info
         Handle<View<reco::GenParticle> > genParticles;
         Handle<View<reco::GenJet> > genJets;
@@ -219,6 +220,12 @@ namespace flashgg {
           evt.getByToken( genPartToken_, genParticles );
           evt.getByToken( genJetToken_, genJets );
         }
+
+        //DEBUG: to be deleted
+        //std::cout << std::endl << "In VBFMVAProducer..." << std::endl << std::endl;
+        //std::cout << "   * Size of gen particles = " << genParticles->size() << std::endl;
+        //std::cout << "   * Size of gen jets      = " << genJets->size() << std::endl;
+        //std::cout << "   * Size of DiPhotons     = " << diPhotons->size() << std::endl;
         
         std::unique_ptr<vector<VBFMVAResult> > vbf_results( new vector<VBFMVAResult> );
         for( unsigned int candIndex = 0; candIndex < diPhotons->size() ; candIndex++ ) {
@@ -267,21 +274,98 @@ namespace flashgg {
             gen_dijet_Mjj_      =  -999;
             gen_ptHjj_          =  -999;
 
-            //STXS 1.1 extract gen info
-            //for( unsigned int genJet_itr = 0; genJet_itr<genJets->size(); genJet_itr++ ){
-            //  float genJet_pt = genJets->ptrAt( genJet_itr )->pt();
-            //  std::cout << "GENJET " << genJet_itr << " ::: pT = " << genJet_pt << " GeV" << std::endl;
+            //STXS 1.1 extract gen 
+            //DEBUG: to be deleted
+            //std::cout << std::endl;
+            //std::cout << "!!! VBFMVAProducer !!!" << std::endl;
+            //for( unsigned int genJet_idx = 0; genJet_idx<genJets->size(); genJet_idx++ ){
+            //  edm::Ptr<reco::GenJet> gjet = genJets->ptrAt(genJet_idx);
+            //  std::cout << "GENJET " << genJet_idx << " ::: pT = " << gjet->pt() << " GeV, eta = " << gjet->eta() << ", phi = " << gjet->phi() << std::endl;
             //}
-            
             //loop over gen particles output info of all "hard" gen particles
-            for( unsigned int genPart_idx = 0; genPart_idx<genParticles->size(); genPart_idx++ ){
-              edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(genPart_idx);
-              if( part->isHardProcess() ){
-                std::cout << "Hard gen particle: " << genPart_idx << "::: pT = " << part->pt() << " GeV, eta = " << part->eta() << ", phi = " << part->phi() << ", pdgID = " << part->pdgId() << std::endl;
+            //for( unsigned int genPart_idx = 0; genPart_idx<genParticles->size(); genPart_idx++ ){
+            //  edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(genPart_idx);
+            //  if( part->isHardProcess() ){
+            //    std::cout << "Hard gen particle: " << genPart_idx << "::: pT = " << part->pt() << " GeV, eta = " << part->eta() << ", phi = " << part->phi() << ", pdgID = " << part->pdgId() << std::endl;
+            //
+            //  }
+            //}
+            //std::cout << "!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+            //std::cout << std::endl;
 
+            //GenPhoton overlap removal
+            //Store genPhotons and genQuarks in vectors
+            //std::vector< edm::Ptr<reco::GenParticle> > GenPhotons;
+            //std::vector< edm::Ptr<reco::GenParticle> > GenQuarks;
+            //for( unsigned int genPart_idx = 0; genPart_idx<genParticles->size(); genPart_idx++ ){
+            //  edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(genPart_idx);
+            //  if( part->isHardProcess() ){
+            //    if( part->pdgId() == 22 ){
+            //      GenPhotons.push_back( part );
+            //    }
+            //    else if( part->pdgId() <= 5 ){
+            //      GenQuarks.push_back( part );
+            //    }
+            //  }
+            //}
+            //Check:: output info of photons and quarks
+            //for( unsigned int genPho_idx = 0; genPho_idx < GenPhotons.size(); genPho_idx++ ){ std::cout << "   * Gen photon (" << genPho_idx << ") ::: pT = " << GenPhotons[genPho_idx]->pt() << " GeV, pdgId = " << GenPhotons[genPho_idx]->pdgId() << std::endl; }
+            //for( unsigned int genQ_idx = 0; genQ_idx < GenQuarks.size(); genQ_idx++ ){ std::cout << "   * Gen quark  (" << genQ_idx << ") ::: pT = " << GenQuarks[genQ_idx]->pt() << " GeV, pdgId = " << GenQuarks[genQ_idx]->pdgId() << std::endl; }
+            //Loop through pT-ordered genJets and require
+            //  1) isolated from gen photons dR > 0.4
+            //  2) associated to gen quarks dR < 0.4
+            //  3) if in acceptance( pT > 30 GeV and |eta| < 4.7
+            //Store two gen-jets in collection (leading and subleading), if size < 2: set gen variables to -999
+            std::vector< edm::Ptr<reco::GenJet> > QGenJets;
+            for( unsigned int genJet_idx = 0; genJet_idx < genJets->size(); genJet_idx++ ){
+              bool isIsolated = true, isQ = false;
+              edm::Ptr<reco::GenJet> jet = genJets->ptrAt(genJet_idx);
+              for( unsigned int gen_idx = 0; gen_idx < genParticles->size(); gen_idx++ ){
+                edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(gen_idx);
+                if( part->isHardProcess() ){
+                  // 1) Isolated from gen photons (pdgId==22)
+                  if( part->pdgId() == 22 ){
+                    if( deltaR( part->eta(), part->phi(), jet->eta(), jet->phi() ) < 0.4 ){ isIsolated = false; }
+                  }
+                  // 2) Associated with gen quark (|pdgId|<7)
+                  else if( abs(part->pdgId()) < 7 ){
+                    if( deltaR( part->eta(), part->phi(), jet->eta(), jet->phi() ) < 1.0 ){ isQ = true; }
+                  }
+                }
               }
+              //If satisfies conditions and in acceptance then save gen jets to vector 
+              if( isQ && isIsolated ){ 
+                if( jet->pt() > 30. && abs(jet->eta()) < 4.7 ){ QGenJets.push_back( jet ); }
+              }
+              
+              //If size of vector has reached two then leave loop (pT ordered so choosing lead and sublead)
+              if( QGenJets.size() == 2 ) break;
             }
 
+            //Extract generator level Higgs
+            edm::Ptr<reco::GenParticle> genHiggs;
+            for( unsigned int gen_idx = 0; gen_idx < genParticles->size(); gen_idx++ ){
+              edm::Ptr<reco::GenParticle> part = genParticles->ptrAt(gen_idx);
+              if( part->isHardProcess() && part->pdgId() == 25 ){ genHiggs = part; }
+            }
+            
+            //If genHiggs and lead and sublead jets passing acceptance:
+            if( genHiggs.isNonnull() && QGenJets.size() == 2 ){
+              gen_dijet_Mjj_ = (QGenJets[0]->p4()+QGenJets[1]->p4()).mass();
+              gen_ptHjj_ = (genHiggs->p4()+QGenJets[0]->p4()+QGenJets[1]->p4()).pt();
+            }
+
+
+            //std::cout << std::endl;
+            //Print info of quark jets
+            //for( unsigned int qjet_idx = 0; qjet_idx < QGenJets.size(); qjet_idx++ ){
+            //  std::cout << "QJet (" << qjet_idx << "): pT = " << QGenJets[qjet_idx]->pt() << " GeV" << std::endl;
+            //}
+            //std::cout << std::endl;
+            //std::cout << " ----> Mjj   = " << gen_dijet_Mjj_ << " GeV" << std::endl;
+            //std::cout << " ----> pTHjj = " << gen_ptHjj_ << " GeV" << std::endl;
+            //std::cout << std::endl;
+            
  
             // First find dijet by looking for highest-pt jets...
             std::pair <int, int>     dijet_indices( -1, -1 );
@@ -587,7 +671,11 @@ namespace flashgg {
             mvares.dijet_SubsubJPt = dijet_SubsubJPt_;
             mvares.dijet_subsubleadEta = dijet_subsubleadEta_;
 
-            mvares.ptHjj         = ptHjj_;
+            mvares.ptHjj = ptHjj_;
+
+            //STXS 1.1: gen info
+            mvares.gen_dijet_Mjj = gen_dijet_Mjj_;
+            mvares.gen_ptHjj = gen_ptHjj_;
             
             vbf_results->push_back( mvares );
         }

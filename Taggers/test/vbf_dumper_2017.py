@@ -33,7 +33,7 @@ elif os.environ["CMSSW_VERSION"].count("CMSSW_9_4"):
 else:
     raise Exception,"Could not find a sensible CMSSW_VERSION for default globaltag"
 
-process.maxEvents   = cms.untracked.PSet( input  = cms.untracked.int32( 10 ) )
+process.maxEvents   = cms.untracked.PSet( input  = cms.untracked.int32( 1000 ) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 1000 )
 
 from flashgg.Systematics.SystematicsCustomize import *
@@ -378,7 +378,7 @@ print
 printSystematicInfo(process)
 
 # set default options if needed
-customize.setDefault("maxEvents"  ,10   )
+customize.setDefault("maxEvents"  , 1000   )
 customize.setDefault("targetLumi" ,1.00e+3)
 
 # call the customization

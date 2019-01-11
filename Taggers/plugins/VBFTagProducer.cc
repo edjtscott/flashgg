@@ -158,6 +158,7 @@ namespace flashgg {
 
         Handle<View<reco::GenParticle> > genParticles;
         Handle<View<reco::GenJet> > genJets;
+
         
         Handle<vector<flashgg::PDFWeightObject> > WeightHandle;
         if (getQCDWeights_) {
@@ -183,6 +184,7 @@ namespace flashgg {
         if( ! evt.isRealData() ) {
             evt.getByToken( genPartToken_, genParticles );
             evt.getByToken( genJetToken_, genJets );
+
             for( unsigned int genLoop = 0 ; genLoop < genParticles->size(); genLoop++ ) {
                 int pdgid = genParticles->ptrAt( genLoop )->pdgId();
                 if( pdgid == 25 || pdgid == 22 ) {
