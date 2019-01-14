@@ -1,6 +1,6 @@
 # NB this command is specific to the configuration on lxplus and is not gaurenteed elsewhere
 #outdir="/afs/cern.ch/work/s/sethzenz/ws/" # can't set absolute path on lsf because we're expecting to stage
-queue="1nd"
+queue="testmatch"
 useAAA=0
 #version="ReweighAndNewggHweights"
 #version="Stage1info"

@@ -93,6 +93,7 @@ namespace flashgg {
         // Gen-level information required for STXS Stage 1.1 studies
         float gen_dijet_Mjj;
         float gen_ptHjj;
+        float gen_njets_vbfmva;
         
     };
     

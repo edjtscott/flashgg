@@ -72,8 +72,9 @@ jetStudyVariables = [
                     "dijet_subleadDeltaEta    := VBFMVA().dijet_subleadDeltaEta",
                     "dijet_subsubleadDeltaEta := VBFMVA().dijet_subsubleadDeltaEta",
                     #STSX 1.1: gen-level quantities to define STXS 1.1 bin
-                    "gen_pTH        := tagTruth().HTXSpTH()",
-                    "n_gen_jets     := tagTruth().HTXSnjets()",
-                    "gen_dijet_Mjj  := VBFMVA().gen_dijet_Mjj",
-                    "gen_ptHjj      := VBFMVA().gen_ptHjj"
+                    #"gen_pTH        := tagTruth().HTXSpTH()",
+                    #"n_gen_jets     := tagTruth().HTXSnjets()",
+                    #"gen_dijet_Mjj  := VBFMVA().gen_dijet_Mjj",
+                    #"gen_ptHjj      := VBFMVA().gen_ptHjj",
+                    #"gen_njets_vbfmva := VBFMVA().gen_njets_vbfmva"
                     ]

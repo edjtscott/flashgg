@@ -33,7 +33,7 @@ elif os.environ["CMSSW_VERSION"].count("CMSSW_9_4"):
 else:
     raise Exception,"Could not find a sensible CMSSW_VERSION for default globaltag"
 
-process.maxEvents   = cms.untracked.PSet( input  = cms.untracked.int32( 1000 ) )
+process.maxEvents   = cms.untracked.PSet( input  = cms.untracked.int32( 100 ) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 1000 )
 
 from flashgg.Systematics.SystematicsCustomize import *
@@ -281,12 +281,19 @@ cloneTagSequenceForEachSystematic(process,
                                   jetSystematicsInputTags=jetSystematicsInputTags,
                                   ZPlusJetMode=2)
 
-
 all_variables = jetStudyVariables
 all_variables.append("prefireProbability := weight(\"prefireProbability\")")
 
 if customize.processId != "Data":
     all_variables += minimalVariablesStage1
+    all_variables += [
+                     #STSX 1.1: gen-level quantities to define STXS 1.1 bin
+                    "gen_pTH        := tagTruth().HTXSpTH()",
+                    "n_gen_jets     := tagTruth().HTXSnjets()",
+                    "gen_dijet_Mjj  := VBFMVA().gen_dijet_Mjj",
+                    "gen_ptHjj      := VBFMVA().gen_ptHjj",
+                    "gen_njets_vbfmva := VBFMVA().gen_njets_vbfmva"
+    ] 
 else:
     all_variables += minimalNonSignalVariables
 
@@ -378,7 +385,7 @@ print
 printSystematicInfo(process)
 
 # set default options if needed
-customize.setDefault("maxEvents"  , 1000   )
+customize.setDefault("maxEvents"  , 100   )
 customize.setDefault("targetLumi" ,1.00e+3)
 
 # call the customization
