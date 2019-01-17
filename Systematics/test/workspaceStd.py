@@ -179,15 +179,26 @@ if customize.tthTagsOnly:
 #sneaky way to ensure that the Stage1 tag selector always considers the jets in the event
 if customize.doStage1:
     process.flashggVBFTag.RequireVBFPreselection = cms.bool(False)
+    #process.flashggTagSequence.remove(process.flashggUntagged)
+    #process.flashggTagSorter.TagPriorityRanges = cms.VPSet( #otherwise would get zero events in VH MET and VH had
+    #    cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHLeptonicLooseTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
+    #    )
     process.flashggTagSequence.remove(process.flashggUntagged)
-    process.flashggTagSorter.TagPriorityRanges = cms.VPSet( #otherwise would get zero events in VH MET and VH had
-        cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHLeptonicLooseTag')),
-        cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+    process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
+    process.flashggTagSequence.remove(process.flashggZHLeptonicTag)
+    process.flashggTagSequence.remove(process.flashggWHLeptonicTag)
+    process.flashggTagSequence.remove(process.flashggVHLeptonicLooseTag)
+    process.flashggTagSequence.remove(process.flashggTTHHadronicTag)
+    process.flashggTagSequence.remove(process.flashggVHMetTag)
+    process.flashggTagSequence.remove(process.flashggVHHadronicTag)
+    process.flashggTagSorter.TagPriorityRanges = cms.VPSet(
         cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
         )
 
@@ -407,7 +418,7 @@ if customize.doFiducial:
     tagList=[["SigmaMpTTag",3]]
 elif customize.doStage1 and not customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], ["RECO_0J_Tag2",0],
     ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
@@ -417,7 +428,7 @@ elif customize.doStage1 and not customize.processId == "Data":
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
 elif customize.doStage1 and customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["LOGICERROR",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0],["RECO_0J_Tag2",0], 
     ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 

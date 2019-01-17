@@ -281,13 +281,13 @@ void StageOneTag::computeStage1Kinematics( const edm::Ptr<flashgg::Jet> j0, cons
     // have now added two categories for each RECO tag, using the moment diphoton MVA, with boundaries currently hard-coded below..
     if ( ptV < -0.5 ) {
         if (nJ == 0) {
-            if (mvaScore > 0.853) {
+            if (mvaScore > 0.851) {
                 stage1recoTag_ = stage1recoTag::RECO_0J_Tag0;
             }
-            else if (mvaScore > 0.781) {
+            else if (mvaScore > 0.796) {
                 stage1recoTag_ = stage1recoTag::RECO_0J_Tag1;
             }
-            else if (mvaScore > 0.613) {
+            else if (mvaScore > 0.586) {
                 stage1recoTag_ = stage1recoTag::RECO_0J_Tag2;
             }
             else { 
@@ -295,37 +295,37 @@ void StageOneTag::computeStage1Kinematics( const edm::Ptr<flashgg::Jet> j0, cons
             }
         } else if ( nJ == 1 ) {
             if ( ptH > 200 ) {
-                if (mvaScore > 0.768) {
+                if (mvaScore > 0.917) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_GT200;
                 }
                 else { 
                     stage1recoTag_ = stage1recoTag::NOTAG;
                 }
             } else if ( ptH > 120. ) {
-                if (mvaScore > 0.787) {
+                if (mvaScore > 0.908) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_120_200_Tag0;
                 }
-                else if (mvaScore > 0.653) {
+                else if (mvaScore > 0.810) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_120_200_Tag1;
                 }
                 else { 
                     stage1recoTag_ = stage1recoTag::NOTAG;
                 }
             } else if ( ptH > 60. ) {
-                if (mvaScore > 0.739) {
+                if (mvaScore > 0.866) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_60_120_Tag0;
                 }
-                else if (mvaScore > 0.601) {
+                else if (mvaScore > 0.749) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_60_120_Tag1;
                 }
                 else { 
                     stage1recoTag_ = stage1recoTag::NOTAG;
                 }
             } else {
-                if (mvaScore > 0.682) {
+                if (mvaScore > 0.832) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_0_60_Tag0;
                 }
-                else if (mvaScore > 0.562) {
+                else if (mvaScore > 0.718) {
                     stage1recoTag_ = stage1recoTag::RECO_1J_PTH_0_60_Tag1;
                 }
                 else { 
@@ -386,40 +386,40 @@ void StageOneTag::computeStage1Kinematics( const edm::Ptr<flashgg::Jet> j0, cons
             }
             if ( reProcess ) {
                 if ( ptH > 200 ) {
-                    if (mvaScore > 0.788) {
+                    if (mvaScore > 0.938) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_GT200_Tag0;
                     }
-                    else if (mvaScore > 0.750) {
+                    else if (mvaScore > 0.865) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_GT200_Tag1;
                     }
                     else { 
                         stage1recoTag_ = stage1recoTag::NOTAG;
                     }
                 } else if ( ptH > 120. ) {
-                    if (mvaScore > 0.790) {
+                    if (mvaScore > 0.910) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_120_200_Tag0;
                     }
-                    else if (mvaScore > 0.674) {
+                    else if (mvaScore > 0.811) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_120_200_Tag1;
                     }
                     else { 
                         stage1recoTag_ = stage1recoTag::NOTAG;
                     }
                 } else if ( ptH > 60. ) {
-                    if (mvaScore > 0.731) {
+                    if (mvaScore > 0.869) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_60_120_Tag0;
                     }
-                    else if (mvaScore > 0.603) {
+                    else if (mvaScore > 0.757) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_60_120_Tag1;
                     }
                     else { 
                         stage1recoTag_ = stage1recoTag::NOTAG;
                     }
                 } else {
-                    if (mvaScore > 0.683) {
+                    if (mvaScore > 0.833) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_0_60_Tag0;
                     }
-                    else if (mvaScore > 0.546) {
+                    else if (mvaScore > 0.709) {
                         stage1recoTag_ = stage1recoTag::RECO_GE2J_PTH_0_60_Tag1;
                     }
                     else { 
