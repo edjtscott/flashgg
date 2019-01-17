@@ -1,12 +1,12 @@
 {
-    "cmdLine"  : "campaign=RunIIFall17-3_1_0",
+    "cmdLine"  : "campaign=RunIIFall17-3_2_0",
     "processes": {
 	"Data"   : [
-"/DoubleEG/sethzenz-RunIIFall17-3_1_0-3_1_0-v0-Run2017B-31Mar2018-v1-aa3a4880c1f02b5f7421114b3c220c90/USER",
-"/DoubleEG/sethzenz-RunIIFall17-3_1_0-3_1_0-v0-Run2017C-31Mar2018-v1-aa3a4880c1f02b5f7421114b3c220c90/USER",
-"/DoubleEG/sethzenz-RunIIFall17-3_1_0-3_1_0-v0-Run2017D-31Mar2018-v1-aa3a4880c1f02b5f7421114b3c220c90/USER",
-"/DoubleEG/sethzenz-RunIIFall17-3_1_0-3_1_0-v0-Run2017E-31Mar2018-v1-aa3a4880c1f02b5f7421114b3c220c90/USER",
-"/DoubleEG/sethzenz-RunIIFall17-3_1_0-3_1_0-v0-Run2017F-31Mar2018-v1-aa3a4880c1f02b5f7421114b3c220c90/USER"
+"/DoubleEG/spigazzi-RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017D-31Mar2018-v1-4445f8b8434638d185ab881c99726e95/USER",
+"/DoubleEG/spigazzi-RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017C-31Mar2018-v1-4445f8b8434638d185ab881c99726e95/USER",
+"/DoubleEG/spigazzi-RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017E-31Mar2018-v1-4445f8b8434638d185ab881c99726e95/USER",
+"/DoubleEG/spigazzi-RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017B-31Mar2018-v1-4445f8b8434638d185ab881c99726e95/USER",
+"/DoubleEG/spigazzi-RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017F-09May2018-v1-b20a6d6568e74bd35d904b62a0ede15e/USER"
 		   ]
     }
 }

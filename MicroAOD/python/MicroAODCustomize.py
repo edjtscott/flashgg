@@ -517,8 +517,9 @@ class MicroAODCustomize(object):
             process.rivetProducerHTXS.ProductionMode = "TTH"
 
     def customizeVBF(self,process):
-        if os.environ["CMSSW_VERSION"].count("CMSSW_8_0"):
-            process.rivetProducerHTXS.ProductionMode = "VBF"
+        process.rivetProducerHTXS.ProductionMode = "VBF"
+        #if os.environ["CMSSW_VERSION"].count("CMSSW_8_0"):
+        #    process.rivetProducerHTXS.ProductionMode = "VBF"
 
     def customizeVH(self,process):
         if os.environ["CMSSW_VERSION"].count("CMSSW_8_0"):

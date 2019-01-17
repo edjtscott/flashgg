@@ -206,15 +206,26 @@ if customize.tthTagsOnly:
 #sneaky way to ensure that the Stage1 tag selector always considers the jets in the event
 if customize.doStage1:
     process.flashggVBFTag.RequireVBFPreselection = cms.bool(False)
+    #process.flashggTagSequence.remove(process.flashggUntagged)
+    #process.flashggTagSorter.TagPriorityRanges = cms.VPSet( #otherwise would get zero events in VH MET and VH had
+    #    cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHLeptonicLooseTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+    #    cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
+    #    )
+    process.flashggTagSequence.remove(process.flashggVHMetTag)
+    process.flashggTagSequence.remove(process.flashggWHLeptonicTag)
+    process.flashggTagSequence.remove(process.flashggZHLeptonicTag)
+    process.flashggTagSequence.remove(process.flashggVHLeptonicLooseTag)
+    process.flashggTagSequence.remove(process.flashggVHHadronicTag)
     process.flashggTagSequence.remove(process.flashggUntagged)
     process.flashggTagSorter.TagPriorityRanges = cms.VPSet( #otherwise would get zero events in VH MET and VH had
-        cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHLeptonicLooseTag')),
-        cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHMetTag')),
-        cms.PSet(TagName = cms.InputTag('flashggVHHadronicTag')),
+        cms.PSet(TagName = cms.InputTag('flashggTTHLeptonicTag')), #FIXME
+        cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')), #FIXME
         cms.PSet(TagName = cms.InputTag('flashggVBFTag'))
         )
 
@@ -260,7 +271,6 @@ if customize.processId.count("h_") or customize.processId.count("vbf_") or custo
     print "Signal MC, so adding systematics and dZ"
     if customize.doStage1:
         variablesToUse = minimalVariablesStage1
-        variablesToUse.append("prefireProbability := weight(\"prefireProbability\")")
     elif customize.doHTXS:
         variablesToUse = minimalVariablesHTXS
     else:
@@ -385,7 +395,7 @@ process.source = cms.Source ("PoolSource",
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_0_0/3_0_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_0_0-3_0_0-v0-RunIIFall17MiniAOD-94X_mc2017_realistic_v10-v1/180325_164819/0000/myMicroAODOutputFile_1.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_112847/0000/myMicroAODOutputFile_14.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_112847/0000/myMicroAODOutputFile_24.root"
-"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180605_202651/0000/myMicroAODOutputFile_7.root"
+#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180605_202651/0000/myMicroAODOutputFile_7.root"
 #"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/THQ_HToGG_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_100016/0000/myMicroAODOutputFile_9.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/bbHToGG_M-125_4FS_ybyt_13TeV_amcatnlo/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_095140/0000/myMicroAODOutputFile_9.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISummer16-2_4_1-25ns_Moriond17/2_4_1/bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo/RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/170114_095013/0000/myMicroAODOutputFile_1.root"
@@ -408,7 +418,10 @@ process.source = cms.Source ("PoolSource",
 #        "/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/DoubleEG/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017C-31Mar2018-v1/181008_110052/0000/myMicroAODOutputFile_15.root"
         #"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_PSWeights/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/181008_114855/0000/myMicroAODOutputFile_8.root"
         #"file:myMicroAODOutputFile.root"
-	"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_PSWeights/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/181008_114855/0000/myMicroAODOutputFile_8.root"
+	#"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_PSWeights/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/181008_114855/0000/myMicroAODOutputFile_8.root"
+	#"/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8_PSWeights/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/180802_194628/0000/myMicroAODOutputFile_16.root"
+	#"/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8_PSWeights/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/180605_202241/0000/myMicroAODOutputFile_11.root"
+	"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_111719/0000/myMicroAODOutputFile_19.root"
 #        "file:myMicroAODOutputFile.root"
         #        "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISpring15-ReMiniAOD-1_1_0-25ns/1_1_0/VBFHToGG_M-125_13TeV_powheg_pythia8/RunIISpring15-ReMiniAOD-1_1_0-25ns-1_1_0-v0-RunIISpring15MiniAODv2-74X_mcRun2_asymptotic_v2-v1/160105_224017/0000/myMicroAODOutputFile_1.root"
 #        "root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/szenz/flashgg/RunIISpring15-ReReco74X-Rerun-1_1_0-25ns/1_2_0/DoubleEG/RunIISpring15-ReReco74X-Rerun-1_1_0-25ns-1_2_0-v0-Run2015D-04Dec2015-v2/160117_214114/0000/myMicroAODOutputFile_10.root"
@@ -481,24 +494,24 @@ if customize.doFiducial:
     tagList=[["SigmaMpTTag",3]]
 elif customize.doStage1 and not customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["LOGICERROR",0], ["NOTAG",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], ["RECO_0J_Tag2",0],
     ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
     ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
     ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0], ["RECO_VBFTOPO_BSM",0],
-    ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
+    #["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
 elif customize.doStage1 and customize.processId == "Data":
     tagList = [
-    ["LOGICERROR",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], 
+    ["LOGICERROR",0], ["RECO_0J_Tag0",0], ["RECO_0J_Tag1",0], ["RECO_0J_Tag2",0],
     ["RECO_1J_PTH_0_60_Tag0",0], ["RECO_1J_PTH_0_60_Tag1",0], ["RECO_1J_PTH_60_120_Tag0",0], ["RECO_1J_PTH_60_120_Tag1",0], 
     ["RECO_1J_PTH_120_200_Tag0",0], ["RECO_1J_PTH_120_200_Tag1",0], ["RECO_1J_PTH_GT200",0], 
     ["RECO_GE2J_PTH_0_60_Tag0",0], ["RECO_GE2J_PTH_0_60_Tag1",0], ["RECO_GE2J_PTH_60_120_Tag0",0], ["RECO_GE2J_PTH_60_120_Tag1",0], 
     ["RECO_GE2J_PTH_120_200_Tag0",0], ["RECO_GE2J_PTH_120_200_Tag1",0], ["RECO_GE2J_PTH_GT200_Tag0",0], ["RECO_GE2J_PTH_GT200_Tag1",0], 
     ["RECO_VBFTOPO_JET3VETO_Tag0",0], ["RECO_VBFTOPO_JET3VETO_Tag1",0], ["RECO_VBFTOPO_JET3_Tag0",0], ["RECO_VBFTOPO_JET3_Tag1",0], ["RECO_VBFTOPO_REST",0], ["RECO_VBFTOPO_BSM",0],
-    ["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
     ["RECO_TTH_LEP",0], ["RECO_TTH_HAD",0] ]
+    #["RECO_WHLEP",0], ["RECO_ZHLEP",0], ["RECO_VHLEPLOOSE",0], ["RECO_VHMET",0], ["RECO_VHHAD",0],
 elif customize.tthTagsOnly:
     tagList=[
         ["NoTag",0],

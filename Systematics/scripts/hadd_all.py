@@ -11,7 +11,7 @@ if len(argv) > 2:
 
 dobig = False
 dobigsig = False
-dobigdata = False # LOL
+dobigdata = True # LOL
 
 filelist = {}
 bigfiles = []
