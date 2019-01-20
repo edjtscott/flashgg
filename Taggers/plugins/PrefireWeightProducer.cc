@@ -54,13 +54,13 @@ namespace flashgg {
 
         photonFilename_ = iConfig.getParameter<edm::FileInPath>( "photonFilename" );
         TFile* photonFile = TFile::Open(photonFilename_.fullPath().c_str());
-        photonHist_ = (TH2F*)((TH2F*) photonFile->Get("L1prefiring_photon_2017BtoF"))->Clone();
+        photonHist_ = (TH2F*)((TH2F*) photonFile->Get("L1prefiring_photonpt_2017BtoF"))->Clone();
         photonFile->Close();
         delete photonFile;
 
         jetFilename_  = iConfig.getParameter<edm::FileInPath>( "jetFilename" );
         TFile* jetFile = TFile::Open(jetFilename_.fullPath().c_str());
-        jetHist_ = (TH2F*)((TH2F*) jetFile->Get("L1prefiring_jet_2017BtoF"))->Clone();
+        jetHist_ = (TH2F*)((TH2F*) jetFile->Get("L1prefiring_jetpt_2017BtoF"))->Clone();
         jetFile->Close();
         delete jetFile;
     }
@@ -103,11 +103,11 @@ namespace flashgg {
                 prefireProd *= 1. - objProb;
             }
         }
+        std::cout << "ED DEBUG event probability is " << (1. - prefireProd) << std::endl << std::endl;
 
         if (1. - prefireProd < 0.) {
             throw cms::Exception("Negative probablility found");
         }
-        //std::cout << "ED DEBUG: prefire probability for this event is " << 1. - prefireProd << std::endl;
         std::unique_ptr<double> prefireProbability = std::make_unique<double>(1. - prefireProd);
         evt.put( std::move(prefireProbability), "prefireProbability" );
     }

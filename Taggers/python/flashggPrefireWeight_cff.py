@@ -6,6 +6,6 @@ from flashgg.Taggers.flashggTags_cff import UnpackedJetCollectionVInputTag
 flashggPrefireWeight = cms.EDProducer('FlashggPrefireWeightProducer',
                                DiPhotonTag=cms.InputTag('flashggPreselectedDiPhotons'),
                                inputTagJets= UnpackedJetCollectionVInputTag,
-                               photonFilename = cms.FileInPath("flashgg/Taggers/data/L1prefiring_photon_2017BtoF.root"),
-                               jetFilename = cms.FileInPath("flashgg/Taggers/data/L1prefiring_jet_2017BtoF.root")
+                               photonFilename = cms.FileInPath("flashgg/Taggers/data/L1prefiring_photonpt_2017BtoF.root"),
+                               jetFilename = cms.FileInPath("flashgg/Taggers/data/L1prefiring_jetpt_2017BtoF.root")
 )
