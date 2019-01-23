@@ -94,6 +94,17 @@ namespace flashgg {
         float gen_dijet_Mjj;
         float gen_ptHjj;
         float gen_njets_vbfmva;
+
+        // add complete gen dijet bdt input info 
+        float gen_dijet_LeadJPt;
+        float gen_dijet_SubJPt;
+        float gen_dijet_abs_dEta;
+        float gen_dijet_centrality_gg;
+        float gen_dijet_dphi_trunc;
+        float gen_dijet_dphi;
+        float gen_dijet_minDRJetPho;
+        float gen_leadPho_PToM;
+        float gen_sublPho_PToM;
         
     };
     

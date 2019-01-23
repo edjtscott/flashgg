@@ -101,6 +101,17 @@ namespace flashgg {
         float gen_dijet_Mjj_;
         float gen_ptHjj_;
         int gen_njets_vbfmva_;
+        
+        //gen dijet bdt input info
+        float gen_dijet_LeadJPt_;
+        float gen_dijet_SubJPt_;
+        float gen_dijet_abs_dEta_;
+        float gen_dijet_centrality_gg_;
+        float gen_dijet_dphi_trunc_;
+        float gen_dijet_dphi_;
+        float gen_dijet_minDRJetPho_;
+        float gen_leadPho_PToM_;
+        float gen_sublPho_PToM_;
 
     };
     
@@ -167,6 +178,16 @@ namespace flashgg {
         gen_dijet_Mjj_   = -999;
         gen_ptHjj_       = -999;
         gen_njets_vbfmva_ = -1;
+
+        gen_dijet_LeadJPt_ = -999.;
+        gen_dijet_SubJPt_ = -999.;
+        gen_dijet_abs_dEta_ = -999.;
+        gen_dijet_centrality_gg_ = -999.;
+        gen_dijet_dphi_trunc_ = -999.;
+        gen_dijet_dphi_ = -999.;
+        gen_dijet_minDRJetPho_ = -999.;
+        gen_leadPho_PToM_ = -999.;
+        gen_sublPho_PToM_ = -999.;
         
         if (_MVAMethod != ""){
             VbfMva_.reset( new TMVA::Reader( "!Color:Silent" ) );
@@ -277,6 +298,16 @@ namespace flashgg {
             gen_ptHjj_          =  -999;
             gen_njets_vbfmva_   =  -1;
 
+            gen_dijet_LeadJPt_ = -999.;
+            gen_dijet_SubJPt_ = -999.;
+            gen_dijet_abs_dEta_ = -999.;
+            gen_dijet_centrality_gg_ = -999.;
+            gen_dijet_dphi_trunc_ = -999.;
+            gen_dijet_dphi_ = -999.;
+            gen_dijet_minDRJetPho_ = -999.;
+            gen_leadPho_PToM_ = -999.;
+            gen_sublPho_PToM_ = -999.;
+
             //STXS 1.1 extract gen 
             if( !evt.isRealData() ){ 
 
@@ -324,6 +355,24 @@ namespace flashgg {
               if( genHiggs.isNonnull() && VBFGenJets.size() >= 2 ){
                 gen_dijet_Mjj_ = (VBFGenJets[0]->p4()+VBFGenJets[1]->p4()).mass();
                 gen_ptHjj_ = (genHiggs->p4()+VBFGenJets[0]->p4()+VBFGenJets[1]->p4()).pt();
+                //FIXME add the rest of the gen info here
+                gen_dijet_LeadJPt_ = VBFGenJets[0]->p4().pt();
+                gen_dijet_SubJPt_ = VBFGenJets[1]->p4().pt();
+                gen_dijet_abs_dEta_ = abs(VBFGenJets[0]->p4().eta()-VBFGenJets[1]->p4().eta());
+                gen_dijet_dphi_       = fabs(reco::deltaPhi(VBFGenJets[0]->p4().phi(),VBFGenJets[1]->p4().phi()));
+                if (diPhotons->ptrAt(candIndex)->leadingPhoton()->hasMatchedGenPhoton() && diPhotons->ptrAt(candIndex)->subLeadingPhoton()->hasMatchedGenPhoton()) {
+                  float tmp_gen_dijet_Zep_ = fabs( (diPhotons->ptrAt(candIndex)->leadingPhoton()->matchedGenPhoton()->p4()+diPhotons->ptrAt(candIndex)->subLeadingPhoton()->matchedGenPhoton()->p4()).eta() - 0.5*(VBFGenJets[0]->p4().eta()+VBFGenJets[1]->p4().eta()) );
+                  gen_dijet_centrality_gg_ = exp(-4*pow(tmp_gen_dijet_Zep_/VBFGenJets[0]->p4().eta(),2));
+                  float tmp_gen_dijet_dipho_dphi_ = fabs(reco::deltaPhi((VBFGenJets[0]->p4()+VBFGenJets[1]->p4()).phi(),(diPhotons->ptrAt(candIndex)->leadingPhoton()->matchedGenPhoton()->p4()+diPhotons->ptrAt(candIndex)->subLeadingPhoton()->matchedGenPhoton()->p4()).phi()));
+                  gen_dijet_dphi_trunc_ = std::min((float) tmp_gen_dijet_dipho_dphi_, (float) 2.9416);
+                  gen_leadPho_PToM_ = diPhotons->ptrAt(candIndex)->leadingPhoton()->matchedGenPhoton()->p4().pt()/diPhotons->ptrAt(candIndex)->mass();
+                  gen_sublPho_PToM_ = diPhotons->ptrAt(candIndex)->subLeadingPhoton()->matchedGenPhoton()->p4().pt()/diPhotons->ptrAt(candIndex)->mass();
+                  gen_dijet_minDRJetPho_ = std::min( std::min(deltaR( VBFGenJets[0]->p4(), diPhotons->ptrAt(candIndex)->leadingPhoton()->matchedGenPhoton()->p4() ),
+                                                              deltaR( VBFGenJets[1]->p4(), diPhotons->ptrAt(candIndex)->leadingPhoton()->matchedGenPhoton()->p4() )),
+                                                     std::min(deltaR( VBFGenJets[0]->p4(), diPhotons->ptrAt(candIndex)->subLeadingPhoton()->matchedGenPhoton()->p4() ),
+                                                              deltaR( VBFGenJets[1]->p4(), diPhotons->ptrAt(candIndex)->subLeadingPhoton()->matchedGenPhoton()->p4() ))        
+                                                );
+                }
               }
             }
 
@@ -637,6 +686,15 @@ namespace flashgg {
             mvares.gen_dijet_Mjj = gen_dijet_Mjj_;
             mvares.gen_ptHjj = gen_ptHjj_;
             mvares.gen_njets_vbfmva = gen_njets_vbfmva_;
+            mvares.gen_dijet_LeadJPt = gen_dijet_LeadJPt_;
+            mvares.gen_dijet_SubJPt = gen_dijet_SubJPt_;
+            mvares.gen_dijet_abs_dEta = gen_dijet_abs_dEta_;
+            mvares.gen_dijet_centrality_gg = gen_dijet_centrality_gg_;
+            mvares.gen_dijet_dphi_trunc = gen_dijet_dphi_trunc_;
+            mvares.gen_dijet_dphi = gen_dijet_dphi_;
+            mvares.gen_dijet_minDRJetPho = gen_dijet_minDRJetPho_;
+            mvares.gen_leadPho_PToM = gen_leadPho_PToM_;
+            mvares.gen_sublPho_PToM = gen_sublPho_PToM_;
             
             vbf_results->push_back( mvares );
         }

@@ -292,7 +292,16 @@ if customize.processId != "Data":
                     "n_gen_jets     := tagTruth().HTXSnjets()",
                     "gen_dijet_Mjj  := VBFMVA().gen_dijet_Mjj",
                     "gen_ptHjj      := VBFMVA().gen_ptHjj",
-                    "gen_njets_vbfmva := VBFMVA().gen_njets_vbfmva"
+                    "gen_njets_vbfmva := VBFMVA().gen_njets_vbfmva",
+                    "gen_dijet_LeadJPt := VBFMVA().gen_dijet_LeadJPt",
+                    "gen_dijet_SubJPt := VBFMVA().gen_dijet_SubJPt",
+                    "gen_dijet_abs_dEta := VBFMVA().gen_dijet_abs_dEta",
+                    "gen_dijet_centrality_gg := VBFMVA().gen_dijet_centrality_gg",
+                    "gen_dijet_dphi_trunc := VBFMVA().gen_dijet_dphi_trunc",
+                    "gen_dijet_dphi := VBFMVA().gen_dijet_dphi",
+                    "gen_dijet_minDRJetPho := VBFMVA().gen_dijet_minDRJetPho",
+                    "gen_leadPho_PToM := VBFMVA().gen_leadPho_PToM",
+                    "gen_sublPho_PToM := VBFMVA().gen_sublPho_PToM"
     ] 
 else:
     all_variables += minimalNonSignalVariables
