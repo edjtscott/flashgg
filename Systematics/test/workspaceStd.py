@@ -421,7 +421,11 @@ process.source = cms.Source ("PoolSource",
 	#"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_PSWeights/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/181008_114855/0000/myMicroAODOutputFile_8.root"
 	#"/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8_PSWeights/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/180802_194628/0000/myMicroAODOutputFile_16.root"
 	#"/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8_PSWeights/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/180605_202241/0000/myMicroAODOutputFile_11.root"
-	"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_111719/0000/myMicroAODOutputFile_19.root"
+	#"/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181008_111719/0000/myMicroAODOutputFile_19.root"
+	#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_1/RunIIFall17-3_2_0-22-g0f6ac03c/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_2_1-RunIIFall17-3_2_0-22-g0f6ac03c-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/190118_101225/0000/myMicroAODOutputFile_10.root"
+	#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_1/RunIIFall17-3_2_0-22-g0f6ac03c/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_2_1-RunIIFall17-3_2_0-22-g0f6ac03c-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/190118_101225/0000/myMicroAODOutputFile_24.root"
+	#"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0-16-g755a881e/bbHToGG_M-125_4FS_yb2_13TeV_amcatnlo/RunIIFall17-3_2_0-RunIIFall17-3_2_0-16-g755a881e-v1-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181114_190448/0000/myMicroAODOutputFile_19.root"
+	"root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0-6-g0758a19d/ggZH_HToGG_ZToQQ_M125_13TeV_powheg_pythia8/RunIIFall17-3_2_0-RunIIFall17-3_2_0-6-g0758a19d-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/181028_110735/0000/myMicroAODOutputFile_7.root"
 #        "file:myMicroAODOutputFile.root"
         #        "root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIISpring15-ReMiniAOD-1_1_0-25ns/1_1_0/VBFHToGG_M-125_13TeV_powheg_pythia8/RunIISpring15-ReMiniAOD-1_1_0-25ns-1_1_0-v0-RunIISpring15MiniAODv2-74X_mcRun2_asymptotic_v2-v1/160105_224017/0000/myMicroAODOutputFile_1.root"
 #        "root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/szenz/flashgg/RunIISpring15-ReReco74X-Rerun-1_1_0-25ns/1_2_0/DoubleEG/RunIISpring15-ReReco74X-Rerun-1_1_0-25ns-1_2_0-v0-Run2015D-04Dec2015-v2/160117_214114/0000/myMicroAODOutputFile_10.root"
@@ -624,13 +628,13 @@ if customize.processId == "Data":
 
 # Split WH and ZH
 process.genFilter = cms.Sequence()
-if (customize.processId.count("wh") or customize.processId.count("zh")) and not customize.processId.count("wzh"):
+if (customize.processId.count("wh") or customize.processId.count("zh")) and not customize.processId.count("wzh") and not customize.processId.count("ggzh"):
     process.load("flashgg/Systematics/VHFilter_cfi")
     process.genFilter += process.VHFilter
     process.VHFilter.chooseW = bool(customize.processId.count("wh"))
     process.VHFilter.chooseZ = bool(customize.processId.count("zh"))
 
-if (customize.processId == "th_125" or customize.processId == "bbh_125" or customize.processId == "thw_125"):
+if (customize.processId == "th_125" or customize.processId == "bbh_125" or customize.processId == "thw_125" or customize.processId.count("ggzh")):
     process.load("flashgg/Systematics/CentralHiggsFilter_cfi")
     process.genFilter += process.CentralHiggsFilter
 

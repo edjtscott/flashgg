@@ -30,7 +30,7 @@ for fn in listdir("."):
         except Exception:
             continue
         print fnr,fnn
-        assert ((fnr % fnn) == fn)
+        assert ((fnr % fnn) == fn) #FIXME
         if filelist.has_key(fnr):
             filelist[fnr] += [fnn]
         else:
@@ -39,7 +39,7 @@ for fn in listdir("."):
 for fnr in filelist.keys():
     result = sorted(filelist[fnr])
     print fnr,result
-    assert(result[-1]+1 == len(result))
+    assert(result[-1]+1 == len(result)) #FIXME
     bigfile = fnr.replace("_%i","")
     bigfiles.append(bigfile)
     if bigfile.count("HToGG") or bigfile.count("ttHJetToGG"):

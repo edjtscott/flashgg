@@ -112,6 +112,9 @@ print "customize.processId:",customize.processId
 
 modifyTagSequenceForSystematics(process,jetSystematicsInputTags,2)
 
+if customize.runOnZee:
+  process.flashggMetSystematics.src = cms.InputTag("flashggMets")
+
 systlabels    = [""]
 phosystlabels = []
 jetsystlabels = []
@@ -189,7 +192,8 @@ from flashgg.MetaData.samples_utils import SamplesManager
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180605_202403/0000/myMicroAODOutputFile_24.root"
-"root://eoscms.cern.ch//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180723_162219/0000/myMicroAODOutputFile_2.root"
+#"root://eoscms.cern.ch//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_1/3_1_1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/RunIIFall17-3_1_1-3_1_1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/180723_162219/0000/myMicroAODOutputFile_2.root"
+"root://eoscms.cern.ch//store/group/phys_higgs/cmshgg/spigazzi/flashgg/RunIIFall17-3_2_0/RunIIFall17-3_2_0/DoubleEG/RunIIFall17-3_2_0-RunIIFall17-3_2_0-v0-Run2017C-31Mar2018-v1/181008_110052/0003/myMicroAODOutputFile_3527.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa/RunIIFall17-3_1_0-3_1_0-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/180706_100515/0000/myMicroAODOutputFile_607.root"
 #"root://eoscms.cern.ch//eos/cms//store/group/phys_higgs/cmshgg/sethzenz/flashgg/RunIIFall17-3_1_0/3_1_0/DoubleEG/RunIIFall17-3_1_0-3_1_0-v0-Run2017B-31Mar2018-v1/180606_155530/0000/myMicroAODOutputFile_39.root"
                              )
@@ -310,8 +314,10 @@ process.vbfTagDumper.nameTemplate = "$PROCESS_$SQRTS_$CLASSNAME_$SUBCAT_$LABEL"
 from HLTrigger.HLTfilters.hltHighLevel_cfi import hltHighLevel
 if customize.runOnZee:
     if customize.processId == "Data":
+        process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele35_WPTight_Gsf*") )
         #process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v**") )
-        process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele27_WPTight_Gsf_v*") )
+        #process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele27_WPTight_Gsf_v*") )
+        #process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele32_WPTight_Gsf*") )
 else:
     #process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Diphoton30_18_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90_v*"))
     process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90_v*"))
@@ -378,7 +384,7 @@ print
 printSystematicInfo(process)
 
 # set default options if needed
-customize.setDefault("maxEvents"  ,10000   )
+customize.setDefault("maxEvents"  ,1000   )
 customize.setDefault("targetLumi" ,1.00e+3)
 
 # call the customization
