@@ -14,11 +14,19 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32( 1000 ) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 100 )
 
+print 'ED DEBUG A'
+
 import os
 ### 2016
 process.GlobalTag = GlobalTag(process.GlobalTag, '', '')
 process.source = cms.Source("PoolSource",
-                             fileNames=cms.untracked.vstring("/store/mc/RunIISummer16MiniAODv3/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/50000/38128C3C-892D-E911-AC8E-008CFA0087C4.root"))
+                             fileNames=cms.untracked.vstring(
+#"/store/mc/RunIIAutumn18MiniAOD/GluGluHToGG_M-125_13TeV_powheg_pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/60000/E5DD2278-3592-6C4F-9A27-30A56815F4B4.root"
+#"/store/mc/RunIIAutumn18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/80000/29310511-1B75-5B42-9B7B-03E292BA5985.root"
+#"/store/data/Run2018C/EGamma/MINIAOD/17Sep2018-v1/270000/56D78BB6-9ACF-6848-8EDC-E95C10FF5C4A.root"
+#"/store/data/Run2016C/DoubleEG/MINIAOD/17Jul2018-v1/40000/CCE5AA49-C798-E811-BA37-0425C5DE7BEC.root"
+"/store/mc/RunIISummer16MiniAODv3/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/MINIAODSIM/BS2016_BSandPUSummer16_94X_mcRun2_asymptotic_v3-v1/100000/1ACD76D7-32D0-E811-BCCE-0242AC130002.root"
+))
 #    process.GlobalTag = GlobalTag(process.GlobalTag,'80X_dataRun2_2016LegacyRepro_v4','')
 #    process.source = cms.Source("PoolSource",fileNames=cms.untracked.vstring("/store/data/Run2016B/SingleElectron/MINIAOD/07Aug17_ver1-v1/110000/0248293E-578B-E711-A639-44A842CFC9D9.root"))
 
@@ -43,6 +51,7 @@ process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService
 process.RandomNumberGeneratorService.flashggRandomizedPhotons = cms.PSet(
           initialSeed = cms.untracked.uint32(16253245)
         )
+print 'ED DEBUG B'
 
 #process.GlobalTag = GlobalTag(process.GlobalTag,'92X_upgrade2017_realistic_v10','')
 #process.source.fileNames=cms.untracked.vstring("/store/mc/RunIISummer17MiniAOD/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/92X_upgrade2017_realistic_v10_ext1-v2/10000/00F9D855-E293-E711-B625-02163E014200.root")
@@ -85,6 +94,7 @@ from flashgg.MicroAOD.flashggMicroAODOutputCommands_cff import microAODDefaultOu
 process.out = cms.OutputModule("PoolOutputModule", fileName = cms.untracked.string('myMicroAODOutputFile.root'),
                                outputCommands = microAODDefaultOutputCommand
                                )
+print 'ED DEBUG C'
 
 # All jets are now handled in MicroAODCustomize.py
 # Switch from PFCHS to PUPPI with puppi=1 argument (both if puppi=2)
@@ -104,6 +114,7 @@ process.flag_BadPFMuonFilter = cms.Path(process.BadPFMuonFilter)
 
 process.p = cms.Path(process.flashggMicroAODSequence)
 process.e = cms.EndPath(process.out)
+print 'ED DEBUG D'
 
 # Uncomment these lines to run the example commissioning module and send its output to root
 #process.commissioning = cms.EDAnalyzer('flashggCommissioning',
@@ -118,6 +129,7 @@ process.e = cms.EndPath(process.out)
 
 from flashgg.MicroAOD.MicroAODCustomize import customize
 customize(process)
+print 'ED DEBUG E'
 
 if "DY" in customize.datasetName or "SingleElectron" in customize.datasetName or "DoubleEG" in customize.datasetName or "EGamma" in customize.datasetName:
     customize.customizeHLT(process)

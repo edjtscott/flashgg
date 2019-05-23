@@ -25,10 +25,11 @@ def addFlashggPFCHSJets(process,
                         vertexIndex = 0, 
                         #doQGTagging = True, 
                         label ='', 
-                        debug = False):
+                        debug = True):
+                        #debug = False):
 
 
-  if os.environ["CMSSW_VERSION"].count("CMSSW_9"): # Currently editing the line below
+  if os.environ["CMSSW_VERSION"].count("CMSSW_9") or os.environ["CMSSW_VERSION"].count("CMSSW_10"): # Currently editing the line below
     setattr(process,'pfCHSLeg' + label,cms.EDFilter("CandPtrSelector", src = cms.InputTag("packedPFCandidates"), cut = cms.string("fromPV(%i)"%vertexIndex)))
   else:
     setattr(process, 'selectedMuons' + label, cms.EDFilter("CandPtrSelector", 
@@ -80,7 +81,7 @@ def addFlashggPFCHSJets(process,
  
   #Import RECO jet producer for ak4 PF and GEN jet
   from RecoJets.JetProducers.ak4PFJets_cfi  import ak4PFJets
-  if os.environ["CMSSW_VERSION"].count("CMSSW_9"):
+  if os.environ["CMSSW_VERSION"].count("CMSSW_9") or os.environ["CMSSW_VERSION"].count("CMSSW_10"):
     setattr(process, 'ak4PFJetsCHSLeg' + label, ak4PFJets.clone ( src = 'pfCHSLeg' + label, doAreaFastjet = True))
   else:  
     setattr(process, 'ak4PFJetsCHSLeg' + label, ak4PFJets.clone ( src = 'pfNoElectronsCHSLeg' + label, doAreaFastjet = True))
@@ -122,7 +123,8 @@ def addFlashggPFCHSJets(process,
     process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
                                             CondDBSetup,
                                             toGet = cms.VPSet(),
-                                            connect = cms.string('sqlite:QGL_'+qgDatabaseVersion+'.db') 
+                                            #connect = cms.string('sqlite:QGL_'+qgDatabaseVersion+'.db') 
+                                            connect = cms.string('sqlite:MicroAOD/data/QGL_'+qgDatabaseVersion+'.db') #ED FIXME
                                             )
     process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
   
@@ -140,7 +142,7 @@ def addFlashggPFCHSJets(process,
 
   from RecoJets.JetProducers.PileupJetIDParams_cfi import full_80x_chs
   from RecoJets.JetProducers.PileupJetIDParams_cfi import full_81x_chs
-  if os.environ["CMSSW_VERSION"].count("CMSSW_9"):
+  if os.environ["CMSSW_VERSION"].count("CMSSW_9") or os.environ["CMSSW_VERSION"].count("CMSSW_10"):
     pujidparam = full_81x_chs
   if os.environ["CMSSW_VERSION"].count("CMSSW_8"):
     pujidparam = full_80x_chs

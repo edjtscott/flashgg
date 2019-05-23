@@ -49,6 +49,10 @@
 
     "flashggDiPhotonSystematics" : "flashggDiPhotonSystematics2018_cfi",
 
+    "bTagEffBins" : "bTagEffBins2017",
+    "bDiscriminatorValue" : 0.4941,
+    "bTagCalibrationFile" : "flashgg/Systematics/data/DeepCSV_94XSF_V3_B_F.csv",
+
     "bRegression" :
     {
         "weightFile" : "/src/flashgg/Taggers/data/DNN_models/breg_training_2017_updated.pb",

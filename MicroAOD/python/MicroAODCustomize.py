@@ -308,11 +308,15 @@ class MicroAODCustomize(object):
         process.out.SelectEvents = cms.untracked.PSet(SelectEvents=cms.vstring('p1'))
 
         ###---Add HLT filter as first step of MicroAOD sequence
+        print 'ED DEBUG 1'
         if self.addMicroAODHLTFilter:
             process.triggerFilterModule = getMicroAODHLTFilter(customize.datasetName, self.metaConditions)
+            print 'ED DEBUG 2'
             if process.triggerFilterModule:
                 process.p = cms.Path(process.triggerFilterModule*process.p._seq)
+                print 'ED DEBUG 3'
                 process.p1 = cms.Path(process.triggerFilterModule*process.p1._seq)
+                print 'ED DEBUG 4'
 
     def customizeDec2016Regression(self,process):
         if not (process.GlobalTag.globaltag == "80X_mcRun2_asymptotic_2016_TrancheIV_v7" or process.GlobalTag.globaltag == "80X_dataRun2_2016SeptRepro_v6"):

@@ -23,6 +23,7 @@ jetsystlabels = []
 elesystlabels = []
 musystlabels  = []
 
+print 'ED DEBUG A'
 # import flashgg customization to check if we have signal or background
 from flashgg.MetaData.JobConfig import customize
 # Register forwardJetRMSCut to be used from customize
@@ -54,16 +55,19 @@ customize.setDefault("maxEvents",-1)
 customize.setDefault("targetLumi",1.00e+3)
 customize.parse()
 customize.metaConditions = MetaConditionsReader(customize.metaConditions)
+print 'ED DEBUG B'
 
 ### Global Tag
 from Configuration.AlCa.GlobalTag import GlobalTag
 if customize.processId == "Data": process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['data'])
 else: process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['MC'])
+print 'ED DEBUG C'
 
 #Systematics customize
 from flashgg.Systematics.SystematicsCustomize import *
 jetSystematicsInputTags = createStandardSystematicsProducers(process,customize)
 modifyTagSequenceForSystematics(process,jetSystematicsInputTags,2)
+print 'ED DEBUG D'
 
 #Using standard tools
 useEGMTools(process)
@@ -170,7 +174,11 @@ from flashgg.MetaData.samples_utils import SamplesManager
 
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
-"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
+#"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
+#'root://cms-xrd-global.cern.ch//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_94.root'
+#"file:uAOD_default.root"
+#"file:uAOD_updated.root"
+"file:uAOD_ggHupdated.root"
                              )
 )
 
