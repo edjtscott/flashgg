@@ -22,10 +22,10 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '', '')
 process.source = cms.Source("PoolSource",
                              fileNames=cms.untracked.vstring(
 #"/store/mc/RunIIAutumn18MiniAOD/GluGluHToGG_M-125_13TeV_powheg_pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/60000/E5DD2278-3592-6C4F-9A27-30A56815F4B4.root"
-#"/store/mc/RunIIAutumn18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/80000/29310511-1B75-5B42-9B7B-03E292BA5985.root"
+"/store/mc/RunIIAutumn18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/80000/29310511-1B75-5B42-9B7B-03E292BA5985.root"
 #"/store/data/Run2018C/EGamma/MINIAOD/17Sep2018-v1/270000/56D78BB6-9ACF-6848-8EDC-E95C10FF5C4A.root"
 #"/store/data/Run2016C/DoubleEG/MINIAOD/17Jul2018-v1/40000/CCE5AA49-C798-E811-BA37-0425C5DE7BEC.root"
-"/store/mc/RunIISummer16MiniAODv3/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/MINIAODSIM/BS2016_BSandPUSummer16_94X_mcRun2_asymptotic_v3-v1/100000/1ACD76D7-32D0-E811-BCCE-0242AC130002.root"
+#"/store/mc/RunIISummer16MiniAODv3/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/MINIAODSIM/BS2016_BSandPUSummer16_94X_mcRun2_asymptotic_v3-v1/100000/1ACD76D7-32D0-E811-BCCE-0242AC130002.root"
 ))
 #    process.GlobalTag = GlobalTag(process.GlobalTag,'80X_dataRun2_2016LegacyRepro_v4','')
 #    process.source = cms.Source("PoolSource",fileNames=cms.untracked.vstring("/store/data/Run2016B/SingleElectron/MINIAOD/07Aug17_ver1-v1/110000/0248293E-578B-E711-A639-44A842CFC9D9.root"))

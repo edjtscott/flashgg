@@ -882,6 +882,7 @@ class SamplesManager(object):
         else:
             files = allFiles
 
+        #specialPrepend = "root://llrxrd-redir.in2p3.fr/" #ED FIXME temp hack to try to access 2018 files...!!!
         return found,xsec,totEvents,files,maxEvents,specialPrepend
 
     def getAllDatasets(self):

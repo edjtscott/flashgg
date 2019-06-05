@@ -1,0 +1,1 @@
+fggRunJobs.py --load dydata_2018.json -d Zee2018Data_2June19 --stage-to /eos/home-e/escott/Stage1STXS/JetValidation/Pass1/Data -x cmsRun vbf_dumper_2017.py maxEvents=-1 runOnZee=True dumpJetSysTrees=True metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2018_RR-17Sep2018_v1.json -q testmatch useAAA=0 pujidWP=none -n 200 --no-copy-proxy

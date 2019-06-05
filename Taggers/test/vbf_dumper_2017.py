@@ -175,10 +175,10 @@ from flashgg.MetaData.samples_utils import SamplesManager
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
 #"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
-#'root://cms-xrd-global.cern.ch//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_94.root'
+'root://xrootd-cms-redir-01.cr.cnaf.infn.it:1094//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_848.root'
 #"file:uAOD_default.root"
 #"file:uAOD_updated.root"
-"file:uAOD_ggHupdated.root"
+#"file:uAOD_ggHupdated.root"
                              )
 )
 
