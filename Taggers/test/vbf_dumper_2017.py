@@ -175,7 +175,8 @@ from flashgg.MetaData.samples_utils import SamplesManager
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
 #"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
-'root://xrootd-cms-redir-01.cr.cnaf.infn.it:1094//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_848.root'
+#'root://xrootd-cms-redir-01.cr.cnaf.infn.it:1094//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_848.root'
+'root://xrootd.ba.infn.it:1094//store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v1/legacyRun2TestV1/VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8/Era2017_RR-31Mar2018_v1-legacyRun2TestV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/190425_150507/0000/myMicroAODOutputFile_1.root'
 #"file:uAOD_default.root"
 #"file:uAOD_updated.root"
 #"file:uAOD_ggHupdated.root"
@@ -240,8 +241,8 @@ new_variables = [
     "dijet_jet1_pujid_mva := leading_pujidMVA()",
     "dijet_jet2_pujid_mva := subleading_pujidMVA()",
     "dipho_pt             := diPhoton.pt",
-    "dijet_pt             := VBFMVA.dijet_pt"#,
-#    "n_gen_jet_30         := nGenJet30()"
+    "dijet_pt             := VBFMVA.dijet_pt",
+    "cosThetaStar         := VBFMVA.cosThetaStar",
 ]
 
 matching_photon = [

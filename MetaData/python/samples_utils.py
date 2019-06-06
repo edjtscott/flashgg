@@ -838,7 +838,12 @@ class SamplesManager(object):
         totWeights = 0.
         specialPrepend = ""
         for dataset,info in catalog.iteritems():
-            empty,prim,sec,tier=dataset.split("/")
+            print 'dataset is %s'%dataset
+            try: 
+                empty,prim,sec,tier=dataset.split("/")
+            except:
+                print 'WARNING skipping dodgy thing'
+                continue
             if prim == primary:
                 if secondary and sec != secondary:
                     continue
@@ -883,6 +888,7 @@ class SamplesManager(object):
             files = allFiles
 
         #specialPrepend = "root://llrxrd-redir.in2p3.fr/" #ED FIXME temp hack to try to access 2018 files...!!!
+        specialPrepend = "root://llrxrd-redir.in2p3.fr:1094/" #ED FIXME temp hack to try to access 2017 files...!!!
         return found,xsec,totEvents,files,maxEvents,specialPrepend
 
     def getAllDatasets(self):

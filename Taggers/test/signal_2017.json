@@ -1,0 +1,14 @@
+{
+    "cmdLine"  : "campaign=Era2017_RR-31Mar2018_v1",
+    "processes": {
+	"ggh"   : [
+"/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/spigazzi-Era2017_RR-31Mar2018_v1-legacyRun2TestV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1-c5c79046a8d852d199ef16332907bf1a/USER"
+		   ],
+	"vbf"   : [
+"/VBFHToGG_M125_13TeV_amcatnlo_pythia8/spigazzi-Era2017_RR-31Mar2018_v1-legacyRun2TestV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1-fe5dfe0e4a020b27bc1a4160a520db9c/USER"
+		   ],
+	"vh"   : [
+"/VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8/spigazzi-Era2017_RR-31Mar2018_v1-legacyRun2TestV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1-b75800e92eec2732b01634c1b025be67/USER"
+		   ]
+    }
+}

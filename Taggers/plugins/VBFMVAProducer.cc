@@ -17,6 +17,8 @@
 #include "DataFormats/Math/interface/deltaPhi.h"
 #include <string>
 
+#include "TLorentzVector.h"
+
 using namespace std;
 using namespace edm;
 
@@ -72,6 +74,9 @@ namespace flashgg {
         float dijet_leady_    ;
         float dijet_subleady_ ;
         float dijet_dipho_pt_ ;
+
+        // some VH had variables
+        float cosThetaStar_; 
         
         float dipho_PToM_  ;
         float leadPho_PToM_;
@@ -110,6 +115,7 @@ namespace flashgg {
         dijet_dphi_       = -999.;
         dijet_Mjj_        = -999.;
         dijet_dy_         = -999.;
+        cosThetaStar_     = -999.; 
         dipho_PToM_       = -999.;
         leadPho_PToM_     = -999.;
         sublPho_PToM_     = -999.;
@@ -191,6 +197,7 @@ namespace flashgg {
             dijet_centrality_gg_ = -999.;
             dijet_centrality_j3_ = -999.;
             dijet_centrality_g_  = -999.;
+            cosThetaStar_     = -999.; 
             dipho_PToM_       = -999.;
             leadPho_PToM_     = -999.;
             sublPho_PToM_     = -999.;
@@ -386,6 +393,23 @@ namespace flashgg {
                 dijet_centrality_g_  = exp(-4*pow(fabs( diPhotonP4s[0].eta() - 0.5*(dijetP4s.first.eta()+dijetP4s.second.eta()) )/dijet_leadEta_,2));
                 dijet_Mjj_           = (dijetP4s.first + dijetP4s.second).M();
 
+                TLorentzVector diphoDijetSystem;
+                diphoDijetSystem.SetPxPyPzE( (diPhotonP4s[0] + diPhotonP4s[1] + dijetP4s.first + dijetP4s.second).Px(), 
+                                             (diPhotonP4s[0] + diPhotonP4s[1] + dijetP4s.first + dijetP4s.second).Py(),
+                                             (diPhotonP4s[0] + diPhotonP4s[1] + dijetP4s.first + dijetP4s.second).Pz(),
+                                             (diPhotonP4s[0] + diPhotonP4s[1] + dijetP4s.first + dijetP4s.second).E() );
+                TLorentzVector diphoSystem; 
+                diphoSystem.SetPxPyPzE( (diPhotonP4s[0] + diPhotonP4s[1]).Px(),
+                                        (diPhotonP4s[0] + diPhotonP4s[1]).Py(),
+                                        (diPhotonP4s[0] + diPhotonP4s[1]).Pz(),
+                                        (diPhotonP4s[0] + diPhotonP4s[1]).E() );
+                std::cout << "Dipho system pt, eta, phi = " << diphoSystem.Pt() << ", " << diphoSystem.Eta() << ", " << diphoSystem.Phi() << std::endl;
+                std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
+                diphoSystem.Boost( -diphoDijetSystem.BoostVector() );
+                std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
+                cosThetaStar_ = -1. * diphoSystem.CosTheta();
+                std::cout << "Dipho system cos theta star" << cosThetaStar_ << std::endl;
+
                 dipho_PToM_       = (diPhotonP4s[0] + diPhotonP4s[1]).Pt()/(diPhotonP4s[0] + diPhotonP4s[1]).M();
                 leadPho_PToM_     = diPhotonP4s[0].pt()/(diPhotonP4s[0] + diPhotonP4s[1]).M();
                 sublPho_PToM_     = diPhotonP4s[1].pt()/(diPhotonP4s[0] + diPhotonP4s[1]).M();
@@ -444,6 +468,7 @@ namespace flashgg {
             mvares.dijet_dphi        = dijet_dphi_ ;
             mvares.dijet_dipho_dphi  = dijet_dipho_dphi_ ;
             mvares.dijet_Mjj         = dijet_Mjj_ ;
+            mvares.cosThetaStar      = cosThetaStar_ ;
             mvares.dipho_PToM        = dipho_PToM_ ;
             mvares.sublPho_PToM      = sublPho_PToM_ ;
             mvares.leadPho_PToM      = leadPho_PToM_ ;

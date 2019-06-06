@@ -1,0 +1,1 @@
+fggRunJobs.py --load signal_2017.json -d Signal2017_6June19 --stage-to /eos/home-e/escott/Stage1STXS/VHstudies/Pass0/Signal -x cmsRun vbf_dumper_2017.py maxEvents=-1 runOnZee=False dumpJetSysTrees=False metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2017_RR-31Mar2018_v1.json -q testmatch useAAA=0 pujidWP=none -n 200 --no-copy-proxy
