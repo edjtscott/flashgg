@@ -19,10 +19,12 @@ namespace flashgg {
         void setGenPV( const Point genpv ) { genPV_ = genpv; }
         int HTXSstage0cat() const { return stage0cat_; }
         int HTXSstage1cat() const { return stage1cat_; }
+        int HTXSstage1_1_cat() const { return stage1_1_cat_; }
+        int HTXSstage1_1_fine_cat() const { return stage1_1_fine_cat_; }
         int HTXSnjets() const { return njets_; }
         float HTXSpTH() const { return pTH_; }
         float HTXSpTV() const { return pTV_; }
-        void setHTXSInfo( int stage0cat, int stage1cat, int njets, float pTH, float pTV );
+        void setHTXSInfo( int stage0cat, int stage1cat, int stage1_1_cat, int stage1_1_fine_cat, int njets, float pTH, float pTV );
         void copyBaseInfo( const TagTruthBase &b );
         virtual TagTruthBase *clone() const;
 
@@ -33,6 +35,8 @@ namespace flashgg {
         Point genPV_;
         int stage0cat_;
         int stage1cat_;
+        int stage1_1_cat_;
+        int stage1_1_fine_cat_;
         int njets_;
         float pTH_;
         float pTV_;
