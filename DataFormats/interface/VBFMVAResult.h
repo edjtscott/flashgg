@@ -61,6 +61,11 @@ namespace flashgg {
         float dijet_centrality_j3;
         float dijet_centrality_g ;
 
+        // some VH had variables
+        float ptV; 
+        float etaV; 
+        float phiV; 
+        float cosThetaStar; 
         
         float dipho_PToM;
         float leadPho_PToM;
