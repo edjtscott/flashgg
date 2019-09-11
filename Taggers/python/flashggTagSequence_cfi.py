@@ -24,7 +24,7 @@ def flashggPrepareTagSequence(options):
                                           + flashggVBFTag
                                           + flashggTTHDiLeptonTag
                                           + flashggTTHLeptonicTag
-					  + flashggTHQLeptonicTag
+					  #+ flashggTHQLeptonicTag
 #                                     + flashggTTHHadronicTTag                                      
 #                                     + flashggTTHHadronicLTag                                      
                                           + flashggTTHHadronicTag

@@ -57,6 +57,7 @@ customize.metaConditions = MetaConditionsReader(customize.metaConditions)
 
 ### Global Tag
 from Configuration.AlCa.GlobalTag import GlobalTag
+print 'ED DEBUG 1'
 if customize.processId == "Data": process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['data'])
 else: process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['MC'])
 
@@ -68,6 +69,7 @@ modifyTagSequenceForSystematics(process,jetSystematicsInputTags,2)
 #Using standard tools
 useEGMTools(process)
 
+print 'ED DEBUG 2'
 # Load tag sequence
 process.load("flashgg.Taggers.flashggTagSequence_cfi")
 process.load("flashgg.Taggers.flashggTagTester_cfi")
@@ -119,6 +121,7 @@ from flashgg.Taggers.flashggTags_cff import UnpackedJetCollectionVInputTag
 # load the correctors
 process.load("JetMETCorrections.Configuration.JetCorrectors_cff")
 
+print 'ED DEBUG 3'
 if customize.processId == "Data":
     print "Data, so turn of all shifts and systematics, with some exceptions"
     variablesToUse = minimalNonSignalVariables
@@ -143,6 +146,7 @@ else:
         print "Background MC, so store mgg and central only"
         customizeSystematicsForBackground(process)
 
+print 'ED DEBUG 4'
 print "--- Turning on central value for UnmatchedPUweight---"
 for i in range(len(jetSystematicsInputTags)):
     prodname = 'flashggJetSystematics%i'%i
@@ -170,12 +174,7 @@ from flashgg.MetaData.samples_utils import SamplesManager
 
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
-#"file:/afs/cern.ch/work/j/jlangfor/public/hgg/stxs/1p1/test_microAOD/vbf_2016_microAOD.root"
-#'root://xrootd-cms-redir-01.cr.cnaf.infn.it:1094//store/user/spigazzi/flashgg/Era2018_RR-17Sep2018_v1/legacyRun2TestV1/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/Era2018_RR-17Sep2018_v1-legacyRun2TestV1-v0-RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/190429_112341/0000/myMicroAODOutputFile_848.root'
-'root://xrootd.ba.infn.it:1094//store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v1/legacyRun2TestV1/VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8/Era2017_RR-31Mar2018_v1-legacyRun2TestV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/190425_150507/0000/myMicroAODOutputFile_1.root'
-#"file:uAOD_default.root"
-#"file:uAOD_updated.root"
-#"file:uAOD_ggHupdated.root"
+'/store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v2/legacyRun2FullV1/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa/Era2017_RR-31Mar2018_v2-legacyRun2FullV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/190716_170206/0000/myMicroAODOutputFile_912.root'
                              )
 )
 
@@ -185,7 +184,7 @@ process.TFileService = cms.Service("TFileService",
 import flashgg.Taggers.dumperConfigTools as cfgTools
 from   flashgg.Taggers.tagsDumpers_cfi   import createTagDumper
 
-process.vbfTagDumper = createTagDumper("VBFTag")
+process.vbfTagDumper = createTagDumper("GeneralDiphoTag")
 process.vbfTagDumper.dumpTrees     = True
 process.vbfTagDumper.dumpHistos    = True
 process.vbfTagDumper.dumpWorkspace = False
@@ -267,9 +266,9 @@ if customize.dumpJetSysTrees and customize.processId != "Data" :
     for syst in (jetsystlabels+phosystlabels):
         systcutstring = "hasSyst(\"%s\") "%syst
         cats += [
-            ("VBFDiJet_%s"%syst,"%s"%systcutstring,0)]#,
+            ("GeneralDipho_%s"%syst,"%s"%systcutstring,0)]#,
 cats += [
-    ("VBFDiJet","1",0)
+    ("GeneralDipho","1",0)
 ]
 
 cfgTools.addCategories(process.vbfTagDumper,
@@ -304,6 +303,20 @@ if (customize.processId.count("wh") or customize.processId.count("zh")) and not 
     process.VHFilter.chooseW = bool(customize.processId.count("wh"))
     process.VHFilter.chooseZ = bool(customize.processId.count("zh"))
 
+# Split out prompt-fake or fake-fake
+process.finalFilter = cms.Sequence()
+if (customize.processId.count("qcd") or customize.processId.count("gjet")) and customize.processId.count("fake"):
+    process.load("flashgg/Systematics/PromptFakeFilter_cfi")
+    process.finalFilter += process.PromptFakeFilter
+    if (customize.processId.count("promptfake")):
+        process.PromptFakeFilter.doPromptFake = cms.bool(True)
+        process.PromptFakeFilter.doFakeFake =cms.bool(False)
+    elif (customize.processId.count("fakefake")):
+        process.PromptFakeFilter.doPromptFake =cms.bool(False)
+        process.PromptFakeFilter.doFakeFake =cms.bool(True)
+    else:
+        raise Exception,"Mis-configuration of python for prompt-fake filter"
+
 process.p = cms.Path(process.dataRequirements
                      * process.genFilter
                      * process.flashggUpdatedIdMVADiPhotons
@@ -317,6 +330,7 @@ process.p = cms.Path(process.dataRequirements
                      * (process.flashggTagSequence
                         + process.systematicsTagSequences)
                      * process.flashggSystTagMerger
+                     * process.finalFilter
                      * process.vbfTagDumper
                      )
 
