@@ -57,7 +57,6 @@ customize.metaConditions = MetaConditionsReader(customize.metaConditions)
 
 ### Global Tag
 from Configuration.AlCa.GlobalTag import GlobalTag
-print 'ED DEBUG 1'
 if customize.processId == "Data": process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['data'])
 else: process.GlobalTag.globaltag = str(customize.metaConditions['globalTags']['MC'])
 
@@ -69,10 +68,17 @@ modifyTagSequenceForSystematics(process,jetSystematicsInputTags,2)
 #Using standard tools
 useEGMTools(process)
 
-print 'ED DEBUG 2'
 # Load tag sequence
 process.load("flashgg.Taggers.flashggTagSequence_cfi")
-process.load("flashgg.Taggers.flashggTagTester_cfi")
+process.flashggTagSequence.remove(process.flashggUntagged)
+process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
+process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
+process.flashggTagSequence.remove(process.flashggTTHHadronicTag)
+process.flashggTagSequence.remove(process.flashggVHMetTag)
+process.flashggTagSequence.remove(process.flashggWHLeptonicTag)
+process.flashggTagSequence.remove(process.flashggZHLeptonicTag)
+process.flashggTagSequence.remove(process.flashggVHLeptonicLooseTag)
+process.flashggTagSequence.remove(process.flashggVHHadronicTag)
 
 mva_wp = {
     "none"  : [
@@ -121,7 +127,6 @@ from flashgg.Taggers.flashggTags_cff import UnpackedJetCollectionVInputTag
 # load the correctors
 process.load("JetMETCorrections.Configuration.JetCorrectors_cff")
 
-print 'ED DEBUG 3'
 if customize.processId == "Data":
     print "Data, so turn of all shifts and systematics, with some exceptions"
     variablesToUse = minimalNonSignalVariables
@@ -146,7 +151,6 @@ else:
         print "Background MC, so store mgg and central only"
         customizeSystematicsForBackground(process)
 
-print 'ED DEBUG 4'
 print "--- Turning on central value for UnmatchedPUweight---"
 for i in range(len(jetSystematicsInputTags)):
     prodname = 'flashggJetSystematics%i'%i
@@ -184,7 +188,7 @@ process.TFileService = cms.Service("TFileService",
 import flashgg.Taggers.dumperConfigTools as cfgTools
 from   flashgg.Taggers.tagsDumpers_cfi   import createTagDumper
 
-process.vbfTagDumper = createTagDumper("GeneralDiphoTag")
+process.vbfTagDumper = createTagDumper("VBFTag")
 process.vbfTagDumper.dumpTrees     = True
 process.vbfTagDumper.dumpHistos    = True
 process.vbfTagDumper.dumpWorkspace = False

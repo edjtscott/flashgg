@@ -403,12 +403,12 @@ namespace flashgg {
                                         (diPhotonP4s[0] + diPhotonP4s[1]).Py(),
                                         (diPhotonP4s[0] + diPhotonP4s[1]).Pz(),
                                         (diPhotonP4s[0] + diPhotonP4s[1]).E() );
-                std::cout << "Dipho system pt, eta, phi = " << diphoSystem.Pt() << ", " << diphoSystem.Eta() << ", " << diphoSystem.Phi() << std::endl;
-                std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
+                //std::cout << "Dipho system pt, eta, phi = " << diphoSystem.Pt() << ", " << diphoSystem.Eta() << ", " << diphoSystem.Phi() << std::endl;
+                //std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
                 diphoSystem.Boost( -diphoDijetSystem.BoostVector() );
-                std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
+                //std::cout << "DiphoDijet system pt, eta, phi = " << diphoDijetSystem.Pt() << ", " << diphoDijetSystem.Eta() << ", " << diphoDijetSystem.Phi() << std::endl;
                 cosThetaStar_ = -1. * diphoSystem.CosTheta();
-                std::cout << "Dipho system cos theta star" << cosThetaStar_ << std::endl;
+                //std::cout << "Dipho system cos theta star" << cosThetaStar_ << std::endl;
 
                 dipho_PToM_       = (diPhotonP4s[0] + diPhotonP4s[1]).Pt()/(diPhotonP4s[0] + diPhotonP4s[1]).M();
                 leadPho_PToM_     = diPhotonP4s[0].pt()/(diPhotonP4s[0] + diPhotonP4s[1]).M();
