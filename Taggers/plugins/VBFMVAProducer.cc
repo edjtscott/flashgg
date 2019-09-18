@@ -435,7 +435,12 @@ namespace flashgg {
                 mvares.leadJet_ptr    = Jets[jetCollectionIndex]->ptrAt( dijet_indices.first );
                 mvares.subleadJet_ptr = Jets[jetCollectionIndex]->ptrAt( dijet_indices.second );
                 //mvares.diphoton       = *diPhotons->ptrAt( candIndex );
-            }else{
+            } else if (dijet_indices.first != -1) {
+                mvares.leadJet_ptr    = Jets[jetCollectionIndex]->ptrAt( dijet_indices.first );
+                mvares.subleadJet_ptr = edm::Ptr<flashgg::Jet>();
+                dijet_leadEta_         = Jets[jetCollectionIndex]->ptrAt( dijet_indices.first )->eta();
+                dijet_LeadJPt_         = Jets[jetCollectionIndex]->ptrAt( dijet_indices.first )->pt();
+            } else {
                 mvares.leadJet_ptr    = edm::Ptr<flashgg::Jet>();
                 mvares.subleadJet_ptr = edm::Ptr<flashgg::Jet>();
             }
