@@ -178,7 +178,9 @@ from flashgg.MetaData.samples_utils import SamplesManager
 
 process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
-'/store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v2/legacyRun2FullV1/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa/Era2017_RR-31Mar2018_v2-legacyRun2FullV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/190716_170206/0000/myMicroAODOutputFile_912.root'
+#'root://xrootd-cms.infn.it//store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v2/legacyRun2FullV1/DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa/Era2017_RR-31Mar2018_v2-legacyRun2FullV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/190716_170206/0000/myMicroAODOutputFile_912.root'
+'root://xrootd-cms.infn.it//store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v2/legacyRun2FullV1/VBFHToGG_M127_13TeV_amcatnlo_pythia8/Era2017_RR-31Mar2018_v2-legacyRun2FullV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/190703_112552/0000/myMicroAODOutputFile_15.root'
+#'root://xrootd-cms.infn.it//store/user/spigazzi/flashgg/Era2017_RR-31Mar2018_v2/legacyRun2FullV1/GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8/Era2017_RR-31Mar2018_v2-legacyRun2FullV1-v0-RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/190606_100408/0002/myMicroAODOutputFile_2357.root'
                              )
 )
 
@@ -314,10 +316,16 @@ if (customize.processId.count("qcd") or customize.processId.count("gjet")) and c
     process.finalFilter += process.PromptFakeFilter
     if (customize.processId.count("promptfake")):
         process.PromptFakeFilter.doPromptFake = cms.bool(True)
-        process.PromptFakeFilter.doFakeFake =cms.bool(False)
+        process.PromptFakeFilter.doFakeFake = cms.bool(False)
+        process.PromptFakeFilter.doBoth = cms.bool(False)
     elif (customize.processId.count("fakefake")):
-        process.PromptFakeFilter.doPromptFake =cms.bool(False)
-        process.PromptFakeFilter.doFakeFake =cms.bool(True)
+        process.PromptFakeFilter.doPromptFake = cms.bool(False)
+        process.PromptFakeFilter.doFakeFake = cms.bool(True)
+        process.PromptFakeFilter.doBoth = cms.bool(False)
+    elif (customize.processId.count("anyfake")):
+        process.PromptFakeFilter.doPromptFake = cms.bool(False)
+        process.PromptFakeFilter.doFakeFake = cms.bool(False)
+        process.PromptFakeFilter.doBoth = cms.bool(True)
     else:
         raise Exception,"Mis-configuration of python for prompt-fake filter"
 
