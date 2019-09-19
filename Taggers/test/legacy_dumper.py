@@ -331,7 +331,8 @@ if (customize.processId.count("qcd") or customize.processId.count("gjet")) and c
 
 process.p = cms.Path(process.dataRequirements
                      * process.genFilter
-                     * process.flashggUpdatedIdMVADiPhotons
+                     #* process.flashggUpdatedIdMVADiPhotons #replaced by version below now...
+                     * process.flashggDifferentialPhoIdInputsCorrection
                      * process.flashggDiPhotonSystematics
                      * process.flashggMetSystematics
                      * process.flashggMuonSystematics
