@@ -13,6 +13,12 @@ def flashggPrepareTagSequence(options):
             setattr(flashggUpdatedIdMVADiPhotons, opt, str(value))
         else:
             setattr(flashggUpdatedIdMVADiPhotons, opt, value)
+
+    if "flashggDiPhotonMVA" in options:
+        flashggDiPhotonMVA.diphotonMVAweightfile = cms.FileInPath(str(options["flashggDiPhotonMVA"]["weightFile"]))
+        flashggDiPhotonMVA.Version = cms.string(str(options["flashggDiPhotonMVA"]["version"]))
+    if "flashggVBFMVA" in options:
+        flashggVBFMVA.vbfMVAweightfile = cms.FileInPath(str(options["flashggVBFMVA"]["weightFile"]))
     
     flashggTagSequence = cms.Sequence(flashggUpdatedIdMVADiPhotons
                                       * flashggPreselectedDiPhotons
