@@ -77,7 +77,7 @@ def createStandardSystematicsProducers(process, options):
     diPhotons_syst.setupDiPhotonSystematics( process, options )
 
     import flashgg.Systematics.flashggMuonSystematics_cfi as muon_sf
-    muon_sf.SetupMuonScaleFactors( process , options.metaConditions["MUON_ID"], options.metaConditions["MUON_ISO"] )
+    muon_sf.SetupMuonScaleFactors( process ,  options.metaConditions["MUON_ID_JSON_FileName"],  options.metaConditions["MUON_ID_JSON_FileName_LowPt"], options.metaConditions["MUON_ISO_JSON_FileName"], options.metaConditions["MUON_ID"], options.metaConditions["MUON_ISO"], options.metaConditions["MUON_ID_RefTracks"],options.metaConditions["MUON_ID_RefTracks_LowPt"] )
    
     #scale factors for electron ID
     from   flashgg.Systematics.flashggElectronSystematics_cfi import EleSF_JSONReader
@@ -301,3 +301,24 @@ def runRivetSequence(process, options):
                                          signalParticlePdgIds = cms.vint32(25), ## for the Higgs analysis
                                      )
     process.p.insert(0, process.mergedGenParticles*process.myGenerator*process.rivetProducerHTXS)
+
+def recalculatePDFWeights(process, options):
+    print "Recalculating PDF weights"
+    process.load("flashgg/MicroAOD/flashggPDFWeightObject_cfi")
+    process.flashggPDFWeightObject = cms.EDProducer('FlashggPDFWeightProducer',
+                                                    LHEEventTag = cms.InputTag('externalLHEProducer'),
+                                                    GenTag      = cms.InputTag('generator'),
+                                                    tag = cms.untracked.string("initrwgt"),
+                                                    doScaleWeights  = cms.untracked.bool(True),
+                                                    nPdfEigWeights = cms.uint32(60),
+                                                    mc2hessianCSV = cms.untracked.string(options["mc2hessianCSV"].encode("ascii")),
+                                                    LHERunLabel = cms.string("externalLHEProducer"),
+                                                    Debug = cms.bool(False),
+                                                    PDFmap = cms.PSet(#see here https://lhapdf.hepforge.org/pdfsets.html to update the map if needed
+                                                        NNPDF30_lo_as_0130_nf_4 = cms.untracked.uint32(263400),
+                                                        NNPDF31_nnlo_as_0118_nf_4 = cms.untracked.uint32(320900)
+                                                    )
+                                                ) 
+    process.p.insert(0, process.flashggPDFWeightObject)
+
+    
