@@ -426,7 +426,6 @@ namespace flashgg {
                 
                 dijet_subleady_   = dijetP4s.second.Rapidity();
                 
-                mvares.n_rec_jets = n_jets_count;
                 //mvares.leadJet    = *Jets[jetCollectionIndex]->ptrAt( dijet_indices.first );
                 //mvares.subleadJet = *Jets[jetCollectionIndex]->ptrAt( dijet_indices.second );
                 mvares.leadJet        = dijetP4s.first;
@@ -473,6 +472,7 @@ namespace flashgg {
             mvares.dijet_dphi        = dijet_dphi_ ;
             mvares.dijet_dipho_dphi  = dijet_dipho_dphi_ ;
             mvares.dijet_Mjj         = dijet_Mjj_ ;
+            mvares.n_rec_jets        = n_jets_count;
             mvares.cosThetaStar      = cosThetaStar_ ;
             mvares.dipho_PToM        = dipho_PToM_ ;
             mvares.sublPho_PToM      = sublPho_PToM_ ;
