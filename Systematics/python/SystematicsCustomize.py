@@ -302,7 +302,7 @@ def runRivetSequence(process, options, processId):
                                      )
     # GGH and VBF not supported by AUTO in rivetProducedHTXS: use customize.processId
     if "ggh" in processId or "glugluh" in processId: process.rivetProducerHTXS.ProductionMode = "GGF"
-    elif "vbf" in processId: process.rivetProducedHTXS.ProductionMode = "VBF"
+    elif "vbf" in processId: process.rivetProducerHTXS.ProductionMode = "VBF"
     
     process.p.insert(0, process.mergedGenParticles*process.myGenerator*process.rivetProducerHTXS)
 
