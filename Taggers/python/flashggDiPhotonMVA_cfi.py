@@ -21,7 +21,8 @@ flashggDiPhotonMVA = cms.EDProducer('FlashggDiPhotonMVAProducer',
                                     BeamSpotTag=cms.InputTag('offlineBeamSpot'),
                                     BeamSpotSigma=cms.double(3.7),#value is average in data, set to <0 to use actual values from MC and data
                                     #diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/Flashgg_DiPhoton_80x.weights.xml"),
-                                    diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/Flashgg_DiPhoton_Moriond17.weights.xml"),
+                                    #diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/Flashgg_DiPhoton_Moriond17.weights.xml"),
+                                    diphotonMVAweightfile = cms.FileInPath("flashgg/Taggers/data/testingDiphoModelFromJoe.xml"),
                                     
                                     # xml 2015                                    
                                     #            VertexProbParamsConv=cms.vdouble(-0.049,-0.241,-0.505,-0.270),
@@ -32,5 +33,6 @@ flashggDiPhotonMVA = cms.EDProducer('FlashggDiPhotonMVAProducer',
                                     doSigmaMdecorr = cms.bool(True),
 #                                    sigmaMdecorrFile = cms.FileInPath("flashgg/Taggers/data/diphoMVA_sigmaMoMdecorr_split_80x_new.root"),
                                     sigmaMdecorrFile = cms.FileInPath("flashgg/Taggers/data/diphoMVA_sigmaMoMdecorr_split_Mgg40_180.root"),
-                                        Version=cms.string("new")
+                                    #Version=cms.string("new")
+                                    Version=cms.string("xgb")
 )
