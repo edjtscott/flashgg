@@ -344,8 +344,17 @@ if is_signal:
             elif os.environ["CMSSW_VERSION"].count("CMSSW_9_4"):
                 variablesToUse.append("MuonIDWeight%s01sigma[1,-999999.,999999.] := weight(\"Muon%sIDWeight%s01sigma\")" % (direction,MUON_ID,direction))
                 variablesToUse.append("MuonIsoWeight%s01sigma[1,-999999.,999999.] := weight(\"Muon%sISOWeight%s01sigma\")" % (direction,MUON_ISO,direction))
-	    variablesToUse.append("JetBTagCutWeight%s01sigma[1,-999999.,999999.] := weight(\"JetBTagCutWeight%s01sigma\")" % (direction,direction))
+            variablesToUse.append("JetBTagCutWeight%s01sigma[1,-999999.,999999.] := weight(\"JetBTagCutWeight%s01sigma\")" % (direction,direction))
             variablesToUse.append("JetBTagReshapeWeight%s01sigma[1,-999999.,999999.] := weight(\"JetBTagReshapeWeight%s01sigma\")" % (direction,direction))
+            variablesToUse.append("THU_ggH_Mu%s01sigma[1,-999999.,999999.]    := getTheoryWeight(\"THU_ggH_Mu%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_Res%s01sigma[1,-999999.,999999.]   := getTheoryWeight(\"THU_ggH_Res%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_Mig01%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_Mig01%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_Mig12%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_Mig12%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_VBF2j%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_VBF2j%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_VBF3j%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_VBF3j%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_PT60%s01sigma[1,-999999.,999999.]  := getTheoryWeight(\"THU_ggH_PT60%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_PT120%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_PT120%s01sigma\",true)" % (direction,direction))
+            variablesToUse.append("THU_ggH_qmtop%s01sigma[1,-999999.,999999.] := getTheoryWeight(\"THU_ggH_qmtop%s01sigma\",true)" % (direction,direction))
             for r9 in ["HighR9","LowR9"]:
                 for region in ["EB","EE"]:
                     phosystlabels.append("ShowerShape%s%s%s01sigma"%(r9,region,direction))
