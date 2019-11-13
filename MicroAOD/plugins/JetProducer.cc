@@ -45,6 +45,7 @@ namespace flashgg {
         EDGetTokenT<double> rhoToken_;
         EDGetTokenT<View<pat::Jet> > miniaodJetToken_;
         bool debug_;
+        bool includeConstituentInfo_;
         unsigned pudebug_matched_badrms_, pudebug_matched_;
         bool doPuJetID_;
         float minPtForEneSum_, maxEtaForEneSum_;
@@ -65,6 +66,7 @@ namespace flashgg {
         rhoToken_( consumes<double>(iConfig.getParameter<edm::InputTag>("rho") ) ),
         miniaodJetToken_( consumes<View<pat::Jet> >( iConfig.getParameter<InputTag> ( "MiniAodJetTag" ) ) ),
         debug_( iConfig.getUntrackedParameter<bool>( "Debug",false ) ),
+        includeConstituentInfo_( iConfig.getUntrackedParameter<bool>( "IncludeConstituentInfo",false ) ),
         doPuJetID_( iConfig.getParameter<bool>( "DoPuJetID") ),
         minPtForEneSum_( iConfig.getParameter<double>("MinPtForEneSum") ),
         maxEtaForEneSum_( iConfig.getParameter<double>("MaxEtaForEneSum") ),
@@ -190,7 +192,10 @@ namespace flashgg {
                     std::cout << "    bDiscriminator " << x->first << " has value " << x->second << std::endl;                                                                                         
                 }
             }
-
+            
+            if (includeConstituentInfo_){
+                fjet.setConstituentInfo(*pjet);
+            }
 
             //store btagging userfloats
             if (computeRegVars) {

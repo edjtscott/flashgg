@@ -44,6 +44,10 @@ namespace flashgg {
         bool passesJetID( JetIDLevel level = Loose ) const; 
 
         const bool hasGenMatch() const { return (genJet() != 0); }
+
+        bool hasConstituentInfo();
+        std::vector<float> getConstituentInfo();
+        void setConstituentInfo(const pat::Jet &jet);
         
         const std::vector<float>& chEnergies() const { return chEnergies_; }
         const std::vector<float>& emEnergies() const { return emEnergies_; } 
@@ -61,6 +65,7 @@ namespace flashgg {
         float simpleRMS_; // simpler storage for PFCHS where this is not vertex-dependent
         float simpleMVA_;
         std::vector<float> chEnergies_, emEnergies_, neEnergies_, muEnergies_;
+        std::vector<float> constituentInfo_; //Stores (eta,phi,charge,pt,E) of each jet constituent
     };
 }
 

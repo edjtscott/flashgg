@@ -32,7 +32,9 @@ namespace flashgg {
         dijet_centrality_gg    ( -9999. ),
         dijet_centrality_j3    ( -9999. ),
         dijet_centrality_g     ( -9999. ),
-        
+  
+        constit_energy         ( -9999. ),
+
         dipho_PToM             ( -9999. ),
         leadPho_PToM           ( -9999. ),
         sublPho_PToM           ( -9999. ),
@@ -73,6 +75,8 @@ namespace flashgg {
         dijet_dphi       = x->dijet_dphi ;
         dijet_dipho_pt   = x->dijet_dipho_pt   ;
         dijet_Mjj        = x->dijet_Mjj        ;
+
+        constit_energy   = x->constit_energy   ;
         
         dipho_PToM       = x->dipho_PToM     ;
         leadPho_PToM     = x->leadPho_PToM   ;

@@ -77,6 +77,9 @@ namespace flashgg {
 
         // some VH had variables
         float cosThetaStar_; 
+
+        // add constituent jet info as a test
+        float constit_energy_;
         
         float dipho_PToM_  ;
         float leadPho_PToM_;
@@ -116,6 +119,7 @@ namespace flashgg {
         dijet_Mjj_        = -999.;
         dijet_dy_         = -999.;
         cosThetaStar_     = -999.; 
+        constit_energy_   = -999.; 
         dipho_PToM_       = -999.;
         leadPho_PToM_     = -999.;
         sublPho_PToM_     = -999.;
@@ -198,6 +202,7 @@ namespace flashgg {
             dijet_centrality_j3_ = -999.;
             dijet_centrality_g_  = -999.;
             cosThetaStar_     = -999.; 
+            constit_energy_   = -999;
             dipho_PToM_       = -999.;
             leadPho_PToM_     = -999.;
             sublPho_PToM_     = -999.;
@@ -223,6 +228,9 @@ namespace flashgg {
                         
             for( UInt_t jetLoop = 0; jetLoop < Jets[jetCollectionIndex]->size() ; jetLoop++ ) {
                 Ptr<flashgg::Jet> jet  = Jets[jetCollectionIndex]->ptrAt( jetLoop );
+                flashgg::Jet fjet = flashgg::Jet( *jet );
+                Ptr<pat::Jet> patJet = Jets[jetCollectionIndex]->ptrAt( jetLoop );
+
                 //if (jet->puJetId(diPhotons[candIndex]) <  PuIDCutoff) {continue;}
                 if( _usePuJetID && !jet->passesPuJetId(diPhotons->ptrAt( candIndex ))){ continue;}
                 if( _useJetID ){
@@ -314,7 +322,13 @@ namespace flashgg {
                     jet_3_index = jetLoop;
                     jet_3_pt    = jet->pt();
                 }
-                if( jet->pt() > 30.0 ) n_jets_count++;
+                if( jet->pt() > 30.0 ){
+                  n_jets_count++;
+                  unsigned nConstituents = jet->numberOfSourceCandidatePtrs();
+                  std::cout << nConstituents << std::endl;
+                  fjet.setConstituentInfo(*patJet);
+                  std::cout << fjet.hasConstituentInfo() << std::endl;
+                }
                 // if the jet's pt is neither higher than the lead jet or sublead jet, then forget it!
                 if( dijet_indices.first != -1 && dijet_indices.second != -1 ) {hasValidVBFDiJet  = 1;}
                 if( hasValidVBFDiJet          && jet_3_index != -1          ) {hasValidVBFTriJet = 1;}
@@ -474,6 +488,7 @@ namespace flashgg {
             mvares.dijet_Mjj         = dijet_Mjj_ ;
             mvares.n_rec_jets        = n_jets_count;
             mvares.cosThetaStar      = cosThetaStar_ ;
+            mvares.constit_energy    = constit_energy_ ;
             mvares.dipho_PToM        = dipho_PToM_ ;
             mvares.sublPho_PToM      = sublPho_PToM_ ;
             mvares.leadPho_PToM      = leadPho_PToM_ ;

@@ -11,14 +11,14 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32( 1000 ) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32( 10 ) )
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32( 100 )
 
 import os
 ### 2016
 process.GlobalTag = GlobalTag(process.GlobalTag, '', '')
 process.source = cms.Source("PoolSource",
-                             fileNames=cms.untracked.vstring("/store/mc/RunIISummer16MiniAODv3/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/50000/38128C3C-892D-E911-AC8E-008CFA0087C4.root"))
+                             fileNames=cms.untracked.vstring("/store/mc/RunIISummer16MiniAODv3/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v2/270000/0A87CC73-BC63-E911-B47C-AC1F6B8AC09E.root"))
 #    process.GlobalTag = GlobalTag(process.GlobalTag,'80X_dataRun2_2016LegacyRepro_v4','')
 #    process.source = cms.Source("PoolSource",fileNames=cms.untracked.vstring("/store/data/Run2016B/SingleElectron/MINIAOD/07Aug17_ver1-v1/110000/0248293E-578B-E711-A639-44A842CFC9D9.root"))
 
@@ -82,7 +82,7 @@ process.load("flashgg/MicroAOD/flashggMicroAODSequence_cff")
 #process.weightsCount.pileupInfo = "addPileupInfo"
 
 from flashgg.MicroAOD.flashggMicroAODOutputCommands_cff import microAODDefaultOutputCommand
-process.out = cms.OutputModule("PoolOutputModule", fileName = cms.untracked.string('myMicroAODOutputFile.root'),
+process.out = cms.OutputModule("PoolOutputModule", fileName = cms.untracked.string('myMicroAODOutputFileTest.root'),
                                outputCommands = microAODDefaultOutputCommand
                                )
 
