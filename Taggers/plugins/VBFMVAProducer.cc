@@ -323,11 +323,16 @@ namespace flashgg {
                     jet_3_pt    = jet->pt();
                 }
                 if( jet->pt() > 30.0 ){
-                  n_jets_count++;
-                  unsigned nConstituents = jet->numberOfSourceCandidatePtrs();
-                  std::cout << nConstituents << std::endl;
-                  fjet.setConstituentInfo(*patJet);
-                  std::cout << fjet.hasConstituentInfo() << std::endl;
+                    n_jets_count++;
+                    //unsigned nConstituents = jet->numberOfSourceCandidatePtrs();
+                    //std::cout << nConstituents << std::endl;
+                    //fjet.setConstituentInfo(*patJet);
+                    //std::cout << fjet.hasConstituentInfo() << std::endl;
+                    if ( fjet.hasConstituentInfo() ) {
+                        std::vector<float> theConstitInfo = fjet.getConstituentInfo();
+                        std::cout << "ED DEBUG: found jet with constituent info" << std::endl;
+                        std::cout << "ED DEBUG: eta, phi, charge, pt, energy are " << theConstitInfo[0] << ", " << theConstitInfo[1] << ", " << theConstitInfo[2] << ", " << theConstitInfo[3] << ", " << theConstitInfo[4] << ", "    << std::endl;
+                    }
                 }
                 // if the jet's pt is neither higher than the lead jet or sublead jet, then forget it!
                 if( dijet_indices.first != -1 && dijet_indices.second != -1 ) {hasValidVBFDiJet  = 1;}
