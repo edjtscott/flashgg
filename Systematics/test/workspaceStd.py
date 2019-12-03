@@ -411,7 +411,10 @@ process.source = cms.Source ("PoolSource",
                              fileNames = cms.untracked.vstring(
                                  #"root://cms02.lcg.cscs.ch:1094//store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v2/190708_140500/0000/myMicroAODOutputFile_16.root"
                                  #"/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v2/190708_152712/0000/myMicroAODOutputFile_12.root"
-                                 "/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/190708_153159/0000/myMicroAODOutputFile_5.root"
+                                 #"/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/190708_153159/0000/myMicroAODOutputFile_5.root"
+                                 #"/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/190708_153159/0000/myMicroAODOutputFile_1.root"
+                                 #"/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v2/190708_152712/0000/myMicroAODOutputFile_2.root"
+                                 "/store/user/spigazzi/flashgg/Era2016_RR-17Jul2018_v2/legacyRun2FullV1/VBFHToGG_M125_13TeV_amcatnlo_pythia8/Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v2/190708_152712/0000/myMicroAODOutputFile_5.root"
                              ))
 
 process.TFileService = cms.Service("TFileService",
@@ -527,8 +530,8 @@ for tag in tagList:
                            nPdfWeights=nPdfWeights,
                            nAlphaSWeights=nAlphaSWeights,
                            nScaleWeights=nScaleWeights,
-                           splitPdfByStage0Cat=customize.doHTXS,
-                           splitPdfByStage1Cat=customize.doStageOne
+                           splitPdfByStage0bin=customize.doHTXS,
+                           splitPdfByStage1bin=customize.doStageOne
                            )
 
 # Require standard diphoton trigger
@@ -694,9 +697,9 @@ process.flashggTagSorter.BlindedSelectionPrintout = True
 
 ### Rerun microAOD sequence on top of microAODs using the parent dataset
 if customize.useParentDataset:
-    runRivetSequence(process, customize.metaConditions, customize.processId)
     if customize.recalculatePDFWeights and is_signal and not customize.processId.count("bbh"):
         recalculatePDFWeights(process, customize.metaConditions)
+    runRivetSequence(process, customize.metaConditions, customize.processId)
 
 #### BELOW HERE IS MOSTLY DEBUGGING STUFF
 

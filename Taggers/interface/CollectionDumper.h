@@ -137,11 +137,11 @@ namespace flashgg {
         int nPdfWeights_;
         int nAlphaSWeights_;
         int nScaleWeights_;
-        bool splitPdfByStage0Bin_;
+        bool splitPdfByStage0bin_;
         int stage0bin_;
         edm::InputTag stage0binTag_;
         edm::EDGetTokenT<int> stage0binToken_;
-        bool splitPdfByStage1Bin_;
+        bool splitPdfByStage1bin_;
         int stage1bin_;
         edm::InputTag stage1binTag_;
         edm::EDGetTokenT<int> stage1binToken_;
@@ -205,16 +205,8 @@ namespace flashgg {
         pdfWeightToken_( cc.consumes<std::vector<flashgg::PDFWeightObject> >( pdfWeight_ ) ),
         lheEventToken_( cc.consumes<LHEEventProduct>( lheEvent_ ) ),
         dumpGlobalVariables_( cfg.getUntrackedParameter<bool>( "dumpGlobalVariables", true ) ),
-        stage0binTag_( cfg.getUntrackedParameter<edm::InputTag>( "stage0binTag", edm::InputTag("rivetProducerHTXS","stage0bin") ) ),
-        stage0binToken_( cc.consumes<int>( stage0binTag_ ) ),
-        stage1binTag_( cfg.getUntrackedParameter<edm::InputTag>( "stage1binTag", edm::InputTag("rivetProducerHTXS","stage1bin") ) ),
-        stage1binToken_( cc.consumes<int>( stage1binTag_ ) ),
         newHTXSTag_( cfg.getUntrackedParameter<edm::InputTag>( "classificationObj", edm::InputTag("rivetProducerHTXS","HiggsClassification") ) ),
         newHTXSToken_( cc.consumes<HTXS::HiggsClassification>( newHTXSTag_ ) ),
-        stxsNJetTag_( cfg.getUntrackedParameter<edm::InputTag>( "stxsNJetTag", edm::InputTag("rivetProducerHTXS","njets") ) ),
-        stxsNJetToken_( cc.consumes<int>( stxsNJetTag_  ) ),
-        stxsPtHTag_( cfg.getUntrackedParameter<edm::InputTag>( "stxsPtHTag", edm::InputTag("rivetProducerHTXS","pTH") ) ),
-        stxsPtHToken_( cc.consumes<float>( stxsPtHTag_  ) ),
         globalVarsDumper_(0)
     {
         if( dumpGlobalVariables_ ) {
@@ -243,8 +235,8 @@ namespace flashgg {
         dumpHistos_          = cfg.getUntrackedParameter<bool>( "dumpHistos", false );
         classifier_          = cfg.getParameter<edm::ParameterSet>( "classifierCfg" );
         throwOnUnclassified_ = cfg.exists("throwOnUnclassified") ? cfg.getParameter<bool>("throwOnUnclassified") : false;
-        splitPdfByStage0Bin_ = cfg.getUntrackedParameter<bool>( "splitPdfByStage0Bin", false);
-        splitPdfByStage1Bin_ = cfg.getUntrackedParameter<bool>( "splitPdfByStage1Bin", false);
+        splitPdfByStage0bin_ = cfg.getUntrackedParameter<bool>( "splitPdfByStage0bin", false);
+        splitPdfByStage1bin_ = cfg.getUntrackedParameter<bool>( "splitPdfByStage1bin", false);
 
         reweighGGHforNNLOPS_ = cfg.getUntrackedParameter<bool>( "reweighGGHforNNLOPS", false);
         if (reweighGGHforNNLOPS_) {
@@ -341,7 +333,7 @@ namespace flashgg {
             dynamic_cast<RooRealVar *>( ws_->factory( "weight[1.]" ) )->setConstant( false );
             if (dumpPdfWeights_){
                 // Already on default list anyway
-                //                if (splitPdfByStage0Bin_ ) {
+                //                if (splitPdfByStage0bin_ ) {
                 //                    dynamic_cast<RooRealVar *>( ws_->factory( "stage0bin[1.]") )->setConstant( false );
                 //                }
                 for( int j=0; j<nPdfWeights_;j++ ) {
@@ -478,78 +470,53 @@ namespace flashgg {
     int CollectionDumper<C, T, U>::getStage0bin( const edm::EventBase &event ) {
         edm::Handle<int> stage0bin;
         const edm::Event * fullEvent = dynamic_cast<const edm::Event *>(&event);
+        edm::Handle<HTXS::HiggsClassification> htxsClassification;
         if (fullEvent != 0) {
-            fullEvent->getByToken(stage0binToken_, stage0bin);
+            fullEvent->getByToken(newHTXSToken_,htxsClassification);
         } else {
-            event.getByLabel(stage0binTag_, stage0bin);
+            event.getByLabel(newHTXSTag_,htxsClassification);
         }
-        if ( stage0bin.isValid() ) {
-            return (*(stage0bin.product() ) );
-        } else {
-            edm::Handle<HTXS::HiggsClassification> htxsClassification;
-            if (fullEvent != 0) {
-                fullEvent->getByToken(newHTXSToken_,htxsClassification);
-            } else {
-                event.getByLabel(newHTXSTag_,htxsClassification);
-            }
-            return( htxsClassification->stage0_cat );
-        }
+        return( htxsClassification->stage0_cat );
     }
 
     template<class C, class T, class U>
     int CollectionDumper<C, T, U>::getStage1bin( const edm::EventBase &event ) {
         edm::Handle<int> stage1bin;
         const edm::Event * fullEvent = dynamic_cast<const edm::Event *>(&event);
+        edm::Handle<HTXS::HiggsClassification> htxsClassification;
         if (fullEvent != 0) {
-            fullEvent->getByToken(stage1binToken_, stage1bin);
+            fullEvent->getByToken(newHTXSToken_,htxsClassification);
         } else {
-            event.getByLabel(stage1binTag_, stage1bin);
+            event.getByLabel(newHTXSTag_,htxsClassification);
         }
-        return (*(stage1bin.product() ) );
+        return( htxsClassification->stage1_1_cat_pTjet30GeV );
     }
 
     template<class C, class T, class U>
     int CollectionDumper<C, T, U>::getStxsNJet( const edm::EventBase &event ) {
         edm::Handle<int> stxsNJet;
         const edm::Event * fullEvent = dynamic_cast<const edm::Event *>(&event);
+        edm::Handle<HTXS::HiggsClassification> htxsClassification;
         if (fullEvent != 0) {
-            fullEvent->getByToken(stxsNJetToken_, stxsNJet);
+            fullEvent->getByToken(newHTXSToken_,htxsClassification);
         } else {
-            event.getByLabel(stxsNJetTag_, stxsNJet);
+            event.getByLabel(newHTXSTag_,htxsClassification);
         }
-        if (stxsNJet.isValid()) {
-            return (*(stxsNJet.product() ) );
-        } else {
-            edm::Handle<HTXS::HiggsClassification> htxsClassification;
-            if (fullEvent != 0) {
-                fullEvent->getByToken(newHTXSToken_,htxsClassification);
-            } else {
-                event.getByLabel(newHTXSTag_,htxsClassification);
-            }
-            return htxsClassification->jets30.size();
-        }
+        return htxsClassification->jets30.size();
     }
 
     template<class C, class T, class U>
     float CollectionDumper<C, T, U>::getStxsPtH( const edm::EventBase &event ) {
         edm::Handle<float> stxsPtH;
         const edm::Event * fullEvent = dynamic_cast<const edm::Event *>(&event);
+        edm::Handle<HTXS::HiggsClassification> htxsClassification;
         if (fullEvent != 0) {
-            fullEvent->getByToken(stxsPtHToken_, stxsPtH);
+            fullEvent->getByToken(newHTXSToken_,htxsClassification);
         } else {
-            event.getByLabel(stxsPtHTag_, stxsPtH);
+            event.getByLabel(newHTXSTag_,htxsClassification);
         }
-        if (stxsPtH.isValid()) {
-            return (*(stxsPtH.product() ) );
-        } else {
-            edm::Handle<HTXS::HiggsClassification> htxsClassification;
-            if (fullEvent != 0) {
-                fullEvent->getByToken(newHTXSToken_,htxsClassification);
-            } else {
-                event.getByLabel(newHTXSTag_,htxsClassification);
-            }
-            return htxsClassification->p4decay_higgs.pt();
-        }
+        return htxsClassification->p4decay_higgs.pt();
+        
     }
 
 
@@ -625,7 +592,7 @@ namespace flashgg {
                 for (unsigned int i = 0; i < pdfWeights_.size() ; i++){
                     pdfWeights_[i]= (pdfWeights_[i] )*(lumiWeight_/weight_); // ie pdfWeight/nominal MC weight
                 }
-                if ( splitPdfByStage0Bin_ || splitPdfByStage1Bin_ ) {
+                if ( splitPdfByStage0bin_ || splitPdfByStage1bin_ ) {
                     stage0bin_ = getStage0bin( event );
                     stage1bin_ = getStage1bin( event );
                     stxsNJet_ = getStxsNJet( event );
@@ -656,7 +623,7 @@ namespace flashgg {
 
                     fillWeight =fillWeight*(tag->centralWeight());
                     }
-                    which->second[isub].fill( cand, fillWeight, pdfWeights_, maxCandPerEvent_ - nfilled, splitPdfByStage0Bin_ ? stage0bin_ : stage1bin_ );
+                    which->second[isub].fill( cand, fillWeight, pdfWeights_, maxCandPerEvent_ - nfilled, splitPdfByStage0bin_ ? stage0bin_ : stage1bin_ );
                     --nfilled;
                 } else if( throwOnUnclassified_ ) {
                     throw cms::Exception( "Runtime error" ) << "could not find dumper for category [" << cat.first << "," << cat.second << "]"

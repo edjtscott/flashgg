@@ -166,8 +166,8 @@ namespace flashgg {
         int  nAlphaSWeights_;
         int nScaleWeights_;
         bool pdfVarsAdded_;
-        bool splitPdfByStage0Bin_;
-        bool splitPdfByStage1Bin_;
+        bool splitPdfByStage0bin_;
+        bool splitPdfByStage1bin_;
     };
 
     template<class F, class O>
@@ -182,8 +182,8 @@ namespace flashgg {
         nPdfWeights_ (0), 
         nAlphaSWeights_(0),
         nScaleWeights_(0),
-        splitPdfByStage0Bin_( false ),
-        splitPdfByStage1Bin_( false )
+        splitPdfByStage0bin_( false ),
+        splitPdfByStage1bin_( false )
     {
         using namespace std;
         name_ = name;
@@ -210,13 +210,13 @@ namespace flashgg {
         if( cfg.existsAs<int >( "nScaleWeights" ) ) {
             nScaleWeights_ = cfg.getParameter<int >( "nScaleWeights" );
         }
-        if ( cfg.existsAs<bool>( "splitPdfByStage0Bin") ) {
-            splitPdfByStage0Bin_ = cfg.getParameter<bool>( "splitPdfByStage0Bin" );
+        if ( cfg.existsAs<bool>( "splitPdfByStage0bin") ) {
+            splitPdfByStage0bin_ = cfg.getParameter<bool>( "splitPdfByStage0bin" );
         }
-        if ( cfg.existsAs<bool>( "splitPdfByStage1Bin") ) {
-            splitPdfByStage1Bin_ = cfg.getParameter<bool>( "splitPdfByStage1Bin" );
+        if ( cfg.existsAs<bool>( "splitPdfByStage1bin") ) {
+            splitPdfByStage1bin_ = cfg.getParameter<bool>( "splitPdfByStage1bin" );
         }
-        if ( splitPdfByStage0Bin_ && splitPdfByStage1Bin_ ) {
+        if ( splitPdfByStage0bin_ && splitPdfByStage1bin_ ) {
             throw cms::Exception( "Configuration" ) << " Set to split PDF by both stage 0 and stage 1 bin" << std::endl;
         }
         auto variables = cfg.getParameter<vector<edm::ParameterSet> >( "variables" );
@@ -391,7 +391,7 @@ namespace flashgg {
         if (dataset_pdfWeights_){
             bool hasCentralWeight = dataset_pdfWeights_->get()->find(weight_central) != 0;
             RooArgSet args; args.add( *(dataset_pdfWeights_->get()->selectByName("*Weight*")) );
-            if ( splitPdfByStage0Bin_ || splitPdfByStage1Bin_ ) {
+            if ( splitPdfByStage0bin_ || splitPdfByStage1bin_ ) {
                 map <int,double> sumwei;
                 map <int,double> sumn;
                 map <string,map<int,double> > avgwei;
@@ -399,8 +399,8 @@ namespace flashgg {
                     auto * ivars = dataset_pdfWeights_->get(i);
                     float w_nominal =dataset_pdfWeights_->weight();
                     int htxsBin; 
-                    if (splitPdfByStage1Bin_) {
-                        htxsBin = (int)( ivars->getRealValue("stage1bin") + 0.01 );
+                    if (splitPdfByStage1bin_) {
+                        htxsBin = (int)( ivars->getRealValue("stage1p1bin") + 0.01 );
                     } else {
                         htxsBin = (int)( ivars->getRealValue("stage0bin") + 0.01 );
                     }
@@ -438,10 +438,10 @@ namespace flashgg {
                     for ( auto it1 = avgwei.begin() ; it1 != avgwei.end() ; it1++ ) {
                         dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[it1->first.c_str()] ).setVal( avgwei[it1->first][it2->first] );
                     }
-                    if ( splitPdfByStage0Bin_ ) {
+                    if ( splitPdfByStage0bin_ ) {
                         dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage0bin"] ).setVal( it2->first );
                     } else {
-                        dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1bin"] ).setVal( it2->first );
+                        dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1p1bin"] ).setVal( it2->first );
                     }
                     newdset.add(rooVars_pdfWeights_,it2->second);
                 }
@@ -517,21 +517,21 @@ namespace flashgg {
             rooVars_.add( *ws.var( Form("scaleWeight_%d",i) ) ); // scale Weights need to be included in main dataset to be used correctly downstream. i think...
             rooVars_pdfWeights0.add( *ws.var( Form("scaleWeight_%d",i) ) ); // maybe do both and check we get same result ??
         }
-        if ( splitPdfByStage0Bin_ ) {
+        if ( splitPdfByStage0bin_ ) {
             rooVars_pdfWeights0.add( *ws.var( "stage0bin" ) );
         }
-        if ( splitPdfByStage1Bin_ ) {
-            rooVars_pdfWeights0.add( *ws.var( "stage1bin" ) );
+        if ( splitPdfByStage1bin_ ) {
+            rooVars_pdfWeights0.add( *ws.var( "stage1p1bin" ) );
         }
     }
 
     rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("central*")),true);
     rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("pdf*,scale*,alpha*")),true); // eveuntally could remove scale... as it might not be useful to collapse it like other pdf weights
-    if ( splitPdfByStage1Bin_ ) { 
-        rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("stage1bin")),true);
+    if ( splitPdfByStage1bin_ ) { 
+        rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("stage1p1bin")),true);
     }
     else { 
-        rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("stage1bin")),true);
+        rooVars_pdfWeights_.add(*((RooArgSet*) rooVars_pdfWeights0.selectByName("stage1p1bin")),true);
     }
     rooVars_pdfWeights_.add(*ws.var( weightVar ),true);
     
@@ -594,11 +594,11 @@ bool CategoryDumper<F, O>::isBinnedOnly( )
                 dynamic_cast<RooRealVar &>( rooVars_pdfWeights_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
                 dynamic_cast<RooRealVar &>( rooVars_[Form("scaleWeight_%d",i)] ).setVal( pdfWeights[i+nPdfWeights_+nAlphaSWeights_] ); // and scale weights stored after that!
             }
-            if ( splitPdfByStage0Bin_ && htxsBin > -1 ) {
+            if ( splitPdfByStage0bin_ && htxsBin > -1 ) {
                 dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage0bin"]).setVal( htxsBin );
             }
-            if ( splitPdfByStage1Bin_ && htxsBin > -1 ) {
-                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1bin"]).setVal( htxsBin );
+            if ( splitPdfByStage1bin_ && htxsBin > -1 ) {
+                dynamic_cast<RooRealVar &>( rooVars_pdfWeights_["stage1p1bin"]).setVal( htxsBin );
             }
         }
     }
