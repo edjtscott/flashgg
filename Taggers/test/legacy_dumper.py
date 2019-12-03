@@ -69,7 +69,7 @@ modifyTagSequenceForSystematics(process,jetSystematicsInputTags,2)
 useEGMTools(process)
 
 # Load tag sequence
-process.load("flashgg.Taggers.flashggTagSequence_cfi")
+#process.load("flashgg.Taggers.flashggTagSequence_cfi") #FIXME testing this
 process.flashggTagSequence.remove(process.flashggUntagged)
 process.flashggTagSequence.remove(process.flashggTTHDiLeptonTag)
 process.flashggTagSequence.remove(process.flashggTTHLeptonicTag)
@@ -285,11 +285,11 @@ cfgTools.addCategories(process.vbfTagDumper,
 )
 process.vbfTagDumper.nameTemplate = "$PROCESS_$SQRTS_$CLASSNAME_$SUBCAT_$LABEL"
 from HLTrigger.HLTfilters.hltHighLevel_cfi import hltHighLevel
-if customize.runOnZee:
-    if customize.processId == "Data":
-        process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v**") )
-else:
-    process.hltHighLevel = hltHighLevel.clone(HLTPaths = cms.vstring("HLT_Diphoton30_22_R9Id_OR_IsoCaloId_AND_HE_R9Id_Mass90_v*"))
+hlt_paths = []
+for dset in customize.metaConditions["TriggerPaths"]:
+    if dset in customize.datasetName():
+        hlt_paths.extend(customize.metaConditions["TriggerPaths"][dset])
+process.hltHighLevel= hltHighLevel.clone(HLTPaths = cms.vstring(hlt_paths))
 
 process.options      = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
