@@ -1,0 +1,1 @@
+fggRunJobs.py --load top_2017.json -d Top2017_7Feb20 --stage-to /eos/home-e/escott/HggLegacy/WorkspaceTest/Pass2/2017/Top/Raw/ -x cmsRun workspaceStd.py maxEvents=-1 -q tomorrow -n 200 --no-copy-proxy  dumpWorkspace=False doStageOne=True doSystematics=True useParentDataset=True dumpTrees=True
