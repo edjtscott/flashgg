@@ -1,1 +1,1 @@
-fggRunJobs.py --load data_2018.json -d Data2018_7Feb20 --stage-to /eos/home-e/escott/HggLegacy/WorkspaceTest/Pass2/2018/Data/Raw/ -x cmsRun workspaceStd.py maxEvents=-1 -q workday -n 50 --no-copy-proxy dumpWorkspace=True doStageOne=True
+fggRunJobs.py --load data_2018.json -d Data2018_13Feb20 --stage-to /eos/home-e/escott/HggLegacy/WorkspaceTest/Pass3/TagSetOne/2018/Data/Raw/ -x cmsRun workspaceStd.py maxEvents=-1 -q workday -n 50 --no-copy-proxy dumpWorkspace=True doStageOne=True

@@ -1,0 +1,8 @@
+{
+    "cmdLine"  : "campaign=Era2016_RR-17Jul2018_v2 metaConditions=$CMSSW_BASE/src/flashgg/MetaData/data/MetaConditions/Era2016_RR-17Jul2018_v1.json useAAA=True",
+    "processes": {
+	"tth_125"   : ["/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_v2"],
+	"thq_125"   : ["/THQ_ctcvcp_HToGG_M125_13TeV-madgraph-pythia8_TuneCUETP8M1_v2"],
+	"thw_125"   : ["/THW_ctcvcp_HToGG_M125_13TeV-madgraph-pythia8_TuneCUETP8M1_v2"]
+    }
+}
