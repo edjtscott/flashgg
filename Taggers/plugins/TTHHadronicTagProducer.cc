@@ -584,7 +584,7 @@ namespace flashgg {
         if (pT > STXSPtBoundaries_pt1[0] && pT < STXSPtBoundaries_pt1[1]) {
             for(int n = 0 ; n < ( int )boundaries_pt1.size() ; n++ ) {
                 if( ( double )tthmvavalue > boundaries_pt1[boundaries_pt1.size() - n - 1] ) {
-                    cout << "pT range: [" << STXSPtBoundaries_pt1[0] << ", " << STXSPtBoundaries_pt1[1] << "], Hadronic cat " << n << endl; return n; 
+                    return n; 
                 }
             }
         }
@@ -593,7 +593,6 @@ namespace flashgg {
         if (pT > STXSPtBoundaries_pt2[0] && pT < STXSPtBoundaries_pt2[1]) {
             for(int n = 0 ; n < ( int )boundaries_pt2.size() ; n++ ) {
                 if( ( double )tthmvavalue > boundaries_pt2[boundaries_pt2.size() - n - 1] ) {
-                    cout << "pT range: [" << STXSPtBoundaries_pt2[0] << ", " << STXSPtBoundaries_pt2[1] << "], Hadronic cat " << n + boundaries_pt1.size() << endl;
                     return (n + boundaries_pt1.size()); 
                 }
             }
@@ -607,7 +606,7 @@ namespace flashgg {
         int n;
         for( n = 0 ; n < ( int )boundaries.size() ; n++ ) {
             //if( ( double )tthmvavalue > boundaries[boundaries.size() - n - 1] ) { return n; }
-            if( ( double )tthmvavalue > boundaries[boundaries.size() - n - 1] ) { cout << "Hadronic cat " << n << endl; return n; }
+            if( ( double )tthmvavalue > boundaries[boundaries.size() - n - 1] ) { return n; }
         }
         return -1; // Does not pass, object will not be produced
     }

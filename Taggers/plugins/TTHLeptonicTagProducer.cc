@@ -657,7 +657,7 @@ namespace flashgg {
             for(int n = 0 ; n < ( int )MVAThreshold_pt1_.size() ; n++ ) {
                 //if( ( double )tthmvavalue > MVAThreshold_[MVAThreshold_.size() - n - 1] ) { return n; }
                 if( ( double )tthmvavalue > MVAThreshold_pt1_[MVAThreshold_pt1_.size() - n - 1] ) {
-                    cout << "pT range: [" << STXSPtBoundaries_pt1[0] << ", " << STXSPtBoundaries_pt1[1] << "], Leptonic cat " << n << endl; return n; 
+                    return n; 
                 }
             }
         }
@@ -666,7 +666,7 @@ namespace flashgg {
             for(int n = 0 ; n < ( int )MVAThreshold_pt2_.size() ; n++ ) {
                 //if( ( double )tthmvavalue > MVAThreshold_[MVAThreshold_.size() - n - 1] ) { return n; }
                 if( ( double )tthmvavalue > MVAThreshold_pt2_[MVAThreshold_pt2_.size() - n - 1] ) {
-                    cout << "pT range: [" << STXSPtBoundaries_pt2[0] << ", " << STXSPtBoundaries_pt2[1] << "], Leptonic cat " << n + MVAThreshold_pt1_.size() << endl; return n + MVAThreshold_pt1_.size(); 
+                    return n + MVAThreshold_pt1_.size(); 
                 }
             }
         }
@@ -678,7 +678,7 @@ namespace flashgg {
         // should return 0 if mva above all the numbers, 1 if below the first, ..., boundaries.size()-N if below the Nth, ...
         for(int n = 0 ; n < ( int )MVAThreshold_.size() ; n++ ) {
             //if( ( double )tthmvavalue > MVAThreshold_[MVAThreshold_.size() - n - 1] ) { return n; }
-            if( ( double )tthmvavalue > MVAThreshold_[MVAThreshold_.size() - n - 1] ) { cout << "Leptonic cat " << n; return n; }
+            if( ( double )tthmvavalue > MVAThreshold_[MVAThreshold_.size() - n - 1] ) { return n; }
         }
 
       if(debug_)
