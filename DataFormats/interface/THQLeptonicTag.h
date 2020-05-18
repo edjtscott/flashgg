@@ -492,9 +492,12 @@ namespace flashgg {
         void setthq_mvaresult_ForNonPeakingBkg( float thq_mvaresult_ForNonPeakingBkg ){
             thq_mvaresult_ForNonPeakingBkg_ = thq_mvaresult_ForNonPeakingBkg;
         }
+<<<<<<< HEAD
         void setMVAscore_ttHvstHDNN( float MVAscore_ttHvstHDNN ){
             MVAscore_ttHvstHDNN_ = MVAscore_ttHvstHDNN;
         }
+=======
+>>>>>>> thomas/dev_differentials_runII
         void setbDiscriminatorValue( std::vector<float> bDiscriminatorValue_bjets, std::vector<float> bDiscriminatorValue_jets, std::vector<float> bDiscriminatorValue_fwdjets ){
             bDiscriminatorValue_bjets_ = bDiscriminatorValue_bjets;
             bDiscriminatorValue_jets_ = bDiscriminatorValue_jets;
@@ -578,7 +581,10 @@ namespace flashgg {
         float mvaresult_;
         float thq_mvaresult_;
         float thq_mvaresult_ForNonPeakingBkg_;
+<<<<<<< HEAD
         float MVAscore_ttHvstHDNN_;
+=======
+>>>>>>> thomas/dev_differentials_runII
         double likelihood_result_;
         std::vector<float> bDiscriminatorValue_bjets_;
         std::vector<float> bDiscriminatorValue_jets_;
