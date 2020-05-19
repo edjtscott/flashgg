@@ -815,37 +815,37 @@ if customize.doFiducial:
         pdfWeights=(dumpPdfWeights,nPdfWeights,nAlphaSWeights,nScaleWeights),
         print pdfWeights
 
-# if customize.tthTagsOnly:
-#     process.p = cms.Path(process.dataRequirements*
-#                          process.genFilter*
-#                          process.flashggDiPhotons* # needed for 0th vertex from microAOD
-#                          process.flashggUpdatedIdMVADiPhotons*
-#                          process.flashggDiPhotonSystematics*
-#                          process.flashggMetSystematics*
-#                          process.flashggMuonSystematics*process.flashggElectronSystematics*
-#                          (process.flashggUnpackedJets*process.jetSystematicsSequence)*
-#                          (process.flashggTagSequence*process.systematicsTagSequences)*
-#                          process.flashggSystTagMerger*
-#                          process.penultimateFilter*
-#                          process.finalFilter*
-#                          process.tagsDumper)
-if not customize.processId=="Data" :
-    process.p = cms.Path(process.dataRequirements*
-                         process.flashggMetFilters*
-                         process.genFilter*
-                         process.flashggDiPhotons* # needed for 0th vertex from microAOD
-                         process.flashggDifferentialPhoIdInputsCorrection*
-                         process.flashggDiPhotonSystematics*
-                         process.flashggMetSystematics*
-                         process.flashggMuonSystematics*process.flashggElectronSystematics*
-                         (process.flashggUnpackedJets*process.jetSystematicsSequence)*
-                         (process.flashggTagSequence*process.systematicsTagSequences)*
-                         process.genSequence*
-                         process.genDiphotonDumper*
-                         process.flashggSystTagMerger*
-                         process.penultimateFilter*
-                         process.finalFilter*
-                         process.tagsDumper)
+#if not customize.processId=="Data" :
+#    process.p = cms.Path(process.dataRequirements*
+#                         process.flashggMetFilters*
+#                         process.genFilter*
+#                         process.flashggDiPhotons* # needed for 0th vertex from microAOD
+#                         process.flashggDifferentialPhoIdInputsCorrection*
+#                         process.flashggDiPhotonSystematics*
+#                         process.flashggMetSystematics*
+#                         process.flashggMuonSystematics*process.flashggElectronSystematics*
+#                         (process.flashggUnpackedJets*process.jetSystematicsSequence)*
+#                         (process.flashggTagSequence*process.systematicsTagSequences)*
+#                         process.genSequence*
+#                         process.genDiphotonDumper*
+#                         process.flashggSystTagMerger*
+#                         process.penultimateFilter*
+#                         process.finalFilter*
+#                         process.tagsDumper)
+if customize.tthTagsOnly:
+     process.p = cms.Path(process.dataRequirements*
+                          process.genFilter*
+                          process.flashggDiPhotons* # needed for 0th vertex from microAOD
+                          process.flashggUpdatedIdMVADiPhotons*
+                          process.flashggDiPhotonSystematics*
+                          process.flashggMetSystematics*
+                          process.flashggMuonSystematics*process.flashggElectronSystematics*
+                          (process.flashggUnpackedJets*process.jetSystematicsSequence)*
+                          (process.flashggTagSequence*process.systematicsTagSequences)*
+                          process.flashggSystTagMerger*
+                          process.penultimateFilter*
+                          process.finalFilter*
+                          process.tagsDumper)
 else:
     process.p = cms.Path(process.dataRequirements*
                          process.flashggMetFilters*
