@@ -239,6 +239,7 @@ new_variables = [
     "dijet_jet2_pujid_mva := subleading_pujidMVA()",
     "dipho_pt             := diPhoton.pt",
     "dijet_pt             := VBFMVA.dijet_pt",
+    "centralObjectWeight  := centralWeight",
 ]
 
 jet_vars = [
