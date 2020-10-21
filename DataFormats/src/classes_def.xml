@@ -93,6 +93,10 @@
 <class name="std::vector<flashgg::THQLeptonicTagTruth>"/>
 <class name="edm::Wrapper<std::vector<flashgg::THQLeptonicTagTruth> >"/>
 
+<class name="flashgg::THQHadronicTag"/>
+<class name="std::vector<flashgg::THQHadronicTag>"/>
+<class name="edm::Wrapper<std::vector<flashgg::THQHadronicTag> >"/>
+
 <class name="std::vector<pat::Muon>"/>
 <class name="flashgg::TTHDiLeptonTag" ClassVersion="15">
  <version ClassVersion="15" checksum="3263680181"/>

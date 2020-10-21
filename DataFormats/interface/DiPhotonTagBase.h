@@ -11,7 +11,7 @@ namespace flashgg {
     {
     public:
 
-        enum tag_t { kUndefined = 0, kUntagged, kVBF, kTTHHadronic, kTTHLeptonic, kTHQLeptonic, kTTHDiLepton, kVHTight, kVHLoose, kVHHadronic, kVHEt,  kZHLeptonic, kWHLeptonic, kVHLeptonicLoose, kVHMet, kStageOneCombined };
+        enum tag_t { kUndefined = 0, kUntagged, kVBF, kTTHHadronic, kTTHLeptonic, kTHQLeptonic, kTHQHadronic, kTTHDiLepton, kVHTight, kVHLoose, kVHHadronic, kVHEt,  kZHLeptonic, kWHLeptonic, kVHLeptonicLoose, kVHMet, kStageOneCombined };
 
         enum stage1recoTag { LOGICERROR = -1, NOTAG = 0, 
                              RECO_0J_PTH_0_10_Tag0, RECO_0J_PTH_0_10_Tag1, RECO_0J_PTH_0_10_Tag2, 
@@ -43,7 +43,7 @@ namespace flashgg {
                              RECO_TTH_HAD_PTH_60_120_Tag0, RECO_TTH_HAD_PTH_60_120_Tag1, RECO_TTH_HAD_PTH_60_120_Tag2, RECO_TTH_HAD_PTH_60_120_Tag3,
                              RECO_TTH_HAD_PTH_120_200_Tag0, RECO_TTH_HAD_PTH_120_200_Tag1, RECO_TTH_HAD_PTH_120_200_Tag2, RECO_TTH_HAD_PTH_120_200_Tag3,
                              RECO_TTH_HAD_PTH_GT200_Tag0, RECO_TTH_HAD_PTH_GT200_Tag1, RECO_TTH_HAD_PTH_GT200_Tag2, RECO_TTH_HAD_PTH_GT200_Tag3,
-                             RECO_THQ_LEP };
+                             RECO_THQ_LEP, RECO_THQ_HAD };
 
         DiPhotonTagBase();
         virtual ~DiPhotonTagBase(); 
