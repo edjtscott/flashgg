@@ -16,8 +16,13 @@
    cd CMSSW_10_6_8/src
    cmsenv
    git cms-init
-   cd $CMSSW_BASE/src 
    git clone -b dev_legacy_runII https://github.com/cms-analysis/flashgg 
+   cd flashgg
+   git remote add edjtscott git@github.com:edjtscott/flashgg.git 
+   git fetch edjtscott
+   git checkout edjtscott/dev_legacy_runII_ForShameena
+   git checkout -b dev_legacy_runII_ByShameena
+   cd ..
    source flashgg/setup_flashgg.sh
    #+END_EXAMPLE
 
