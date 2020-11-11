@@ -316,7 +316,7 @@ private:
     void topReco(std::vector<edm::Ptr<flashgg::Jet> >* jets, std::vector<edm::Ptr<flashgg::Jet> >* bjets, std::vector<edm::Ptr<flashgg::Jet> >* fwdjets) {
         topMass = -100.;
 
-        if ( bjets->size() < 1 || jets->size() < 2 || LeptonType == 0) {
+        if ( bjets->size() < 1 || jets->size() < 2/* || LeptonType == 0*/) {
             return ;
         }
         fwdJet = fwdjets->at(0);
@@ -328,6 +328,7 @@ private:
         flashgg::SemiLepTopQuark singletop(bL, metL, lead_lepL, fwdJL,fwdJL);
         metL = singletop.getMET() ;
         metW_check = singletop.neutrino_W () ;
+        topL = singletop.top();
         topMass = singletop.top().M() ;
     };
 
