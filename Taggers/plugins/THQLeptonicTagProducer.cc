@@ -1203,50 +1203,8 @@ void THQLeptonicTagProducer::produce( Event &evt, const EventSetup & )
 
 //Evaluate MVA-----------------------
         MVAscore_tHqVsttHBDT = thqLeptonicMva_tHqVsttHBDT->EvaluateMVA( MVAMethod_.c_str() );
-        std::cout << "ED DEBUG dipho_leadPtOvermass_ = " << dipho_leadPtOvermass_ << std::endl;
-        std::cout << "ED DEBUG dipho_subleadPtOvermass_ = " << dipho_subleadPtOvermass_ << std::endl;
-        std::cout << "ED DEBUG dipho_leadEta_ = " << dipho_leadEta_ << std::endl;
-        std::cout << "ED DEBUG dipho_subleadEta_ = " << dipho_subleadEta_ << std::endl;
-        std::cout << "ED DEBUG dipho_leadIDMVA_ = " << dipho_leadIDMVA_ << std::endl;
-        std::cout << "ED DEBUG dipho_subleadIDMVA_ = " << dipho_subleadIDMVA_ << std::endl;
-        std::cout << "ED DEBUG dipho_lead_haspixelseed_ = " << dipho_lead_haspixelseed_ << std::endl;
-        std::cout << "ED DEBUG dipho_sublead_haspixelseed_ = " << dipho_sublead_haspixelseed_ << std::endl;
-        std::cout << "ED DEBUG n_jets_ = " << n_jets_ << std::endl;
-        std::cout << "ED DEBUG n_bjets_ = " << n_bjets_ << std::endl;
-        std::cout << "ED DEBUG n_centraljets_ = " << n_centraljets_ << std::endl;
-        std::cout << "ED DEBUG lepton_ch_ = " << lepton_ch_ << std::endl;
-        std::cout << "ED DEBUG lepton_leadPt_ = " << lepton_leadPt_ << std::endl;
-        std::cout << "ED DEBUG lepton_leadEta_ = " << lepton_leadEta_ << std::endl;
-        std::cout << "ED DEBUG fwdJet1_pt_ = " << fwdJet1_pt_ << std::endl;
-        std::cout << "ED DEBUG fwdJet1_eta_ = " << fwdJet1_eta_ << std::endl;
-        std::cout << "ED DEBUG fwdJet1_discr_ = " << fwdJet1_discr_ << std::endl;
-        std::cout << "ED DEBUG top_mt11_ = " << top_mt11_ << std::endl;
-        std::cout << "ED DEBUG dRtHchainfwdjet_ = " << dRtHchainfwdjet_ << std::endl;
-        std::cout << "ED DEBUG dRleptonbjet_ = " << dRleptonbjet_ << std::endl;
-        std::cout << "ED DEBUG dRleptonfwdjet_ = " << dRleptonfwdjet_ << std::endl;
-        std::cout << "ED DEBUG dRbjetfwdjet_ = " << dRbjetfwdjet_ << std::endl;
-        std::cout << "ED DEBUG dRleadphofwdjet_ = " << dRleadphofwdjet_ << std::endl;
-        std::cout << "ED DEBUG dRsubleadphofwdjet_ = " << dRsubleadphofwdjet_ << std::endl;
-        std::cout << "ED DEBUG bjet1_pt_ = " << bjet1_pt_ << std::endl;
-        std::cout << "ED DEBUG bjet2_pt_ = " << bjet2_pt_ << std::endl;
-        std::cout << "ED DEBUG bjet3_pt_ = " << bjet3_pt_ << std::endl;
-        std::cout << "ED DEBUG bjet1_eta_ = " << bjet1_eta_ << std::endl;
-        std::cout << "ED DEBUG bjet2_eta_ = " << bjet2_eta_ << std::endl;
-        std::cout << "ED DEBUG bjet3_eta_ = " << bjet3_eta_ << std::endl;
-        std::cout << "ED DEBUG bjet1_discr_ = " << bjet1_discr_ << std::endl;
-        std::cout << "ED DEBUG bjet2_discr_ = " << bjet2_discr_ << std::endl;
-        std::cout << "ED DEBUG bjet3_discr_ = " << bjet3_discr_ << std::endl;
-        std::cout << "ED DEBUG jet1_pt_ = " << jet1_pt_ << std::endl;
-        std::cout << "ED DEBUG jet2_pt_ = " << jet2_pt_ << std::endl;
-        std::cout << "ED DEBUG jet3_pt_ = " << jet3_pt_ << std::endl;
-        std::cout << "ED DEBUG jet1_eta_ = " << jet1_eta_ << std::endl;
-        std::cout << "ED DEBUG jet2_eta_ = " << jet2_eta_ << std::endl;
-        std::cout << "ED DEBUG jet3_eta_ = " << jet3_eta_ << std::endl;
-        std::cout << "ED DEBUG jet1_discr_ = " << jet1_discr_ << std::endl;
-        std::cout << "ED DEBUG jet2_discr_ = " << jet2_discr_ << std::endl;
-        std::cout << "ED DEBUG jet3_discr_ = " << jet3_discr_ << std::endl;
         MVAscore_tHqVsNonHiggsBkg = thqLeptonicMva_tHqVsNonHiggsBkg->EvaluateMVA( MVAMethod_.c_str() );
-        std::cout << "ED DEBUG final BDT score = " << MVAscore_tHqVsNonHiggsBkg << std::endl;
+        //std::cout << "ED DEBUG final BDT score = " << MVAscore_tHqVsNonHiggsBkg << std::endl;
 //DNN input variables--------------------------------
         std::vector<double> global_features_ttH_vs_tH;
         global_features_ttH_vs_tH.resize(23);        
@@ -1277,16 +1235,11 @@ void THQLeptonicTagProducer::produce( Event &evt, const EventSetup & )
         global_features_ttH_vs_tH[20] = lep2_charge;
         global_features_ttH_vs_tH[21] = std::abs(fwdJet1_eta_);
         global_features_ttH_vs_tH[22] = log(fwdJet1_pt_);
-    
-        for(uint edDebug=0; edDebug<23; edDebug++) {
-            std::cout << "ED DEBUG DNN feature " << edDebug << "has value " << global_features_ttH_vs_tH[edDebug] << std::endl;
-        }
-
 
         dnn_ttH_vs_tH->SetInputs(SelJetVect, goodMuons, goodElectrons, global_features_ttH_vs_tH);
 //Evaluate DNN------------------------
         MVAscore_tHqVsttHDNN = dnn_ttH_vs_tH->EvaluateDNN();
-        std::cout << "ED DEBUG final DNN score = " << MVAscore_tHqVsttHDNN << std::endl;
+        //std::cout << "ED DEBUG final DNN score = " << MVAscore_tHqVsttHDNN << std::endl;
 //cout<<"ttH_vs_tH_dnn_score=  "<<MVAscore_tHqVsttHDNN<<endl;
 //Tagger with MVAs--------------------
      if(use_MVAs_){
@@ -1897,7 +1850,6 @@ void THQLeptonicTagProducer::produce( Event &evt, const EventSetup & )
                         }
 
                     }
-                    std::cout << "ED DEBUG adding the tHq tag object" << std::endl;
                     thqltags_obj.setStage1recoTag( DiPhotonTagBase::stage1recoTag::RECO_THQ_LEP );
                     thqltags->push_back( thqltags_obj );
                     //truths->push_back( truth_obj );
