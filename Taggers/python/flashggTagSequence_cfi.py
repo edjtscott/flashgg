@@ -42,6 +42,7 @@ def flashggPrepareTagSequence(process, options):
                                           + flashggTTHDiLeptonTag
                                           + flashggTTHLeptonicTag
                       + flashggTHQLeptonicTag
+                      + flashggTHQHadronicTag
 #                                     + flashggTTHHadronicTTag                                      
 #                                     + flashggTTHHadronicLTag                                      
                                           + flashggTTHHadronicTag

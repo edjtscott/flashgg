@@ -263,6 +263,8 @@ string DiPhotonTagBase::stage1KinematicLabel() const {
         return string("RECO_TTH_HAD_PTH_GT200_Tag3");
     case stage1recoTag::RECO_THQ_LEP:
         return string("RECO_THQ_LEP");
+    case stage1recoTag::RECO_THQ_HAD:
+        return string("RECO_THQ_HAD");
     default:
         break;
     }

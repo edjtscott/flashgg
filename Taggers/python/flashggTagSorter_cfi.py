@@ -18,6 +18,7 @@ flashggTagSorter = cms.EDProducer('FlashggTagSorter',
 	cms.PSet(TagName = cms.InputTag('flashggTHQLeptonicTag')),
         cms.PSet(TagName = cms.InputTag('flashggZHLeptonicTag')),
         cms.PSet(TagName = cms.InputTag('flashggWHLeptonicTag')),
+        cms.PSet(TagName = cms.InputTag('flashggTHQHadronicTag')),   
         cms.PSet(TagName = cms.InputTag('flashggTTHHadronicTag')),   
 #        cms.PSet(TagName = cms.InputTag('flashggDoubleHTag')), # hint priority for double H tag w/ ttH veto
         cms.PSet(TagName = cms.InputTag('flashggVBFTag')),     
