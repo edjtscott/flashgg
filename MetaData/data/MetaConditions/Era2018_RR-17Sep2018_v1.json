@@ -88,7 +88,7 @@
     {  
         "doHEMuncertainty" : true,
         "doGranular" : true,
-        "textFileName" : "flashgg/Systematics/data/JEC/Regrouped_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt",
+        "textFileName" : "flashgg/Systematics/data/JEC/RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt",
         "listOfSources" : [
                            "Absolute",
                            "Absolute2018",
