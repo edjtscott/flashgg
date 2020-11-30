@@ -51,11 +51,18 @@ customize.options.register('analysisType',
                            'analysisType'
                            )
 
-customize.options.register('dumpJetSysTrees',
+customize.options.register('doSystematics',
                            False,
                            VarParsing.VarParsing.multiplicity.singleton,
                            VarParsing.VarParsing.varType.bool,
-                           'dumpJetSysTrees')
+                           'doSystematics')
+
+customize.options.register('ignoreNegR9',
+                           True,
+                           VarParsing.VarParsing.multiplicity.singleton,
+                           VarParsing.VarParsing.varType.bool,
+                           'ignoreNegR9')
+
 # set default options if needed
 customize.setDefault("maxEvents",-1)
 customize.setDefault("targetLumi",1.00e+3)
@@ -134,7 +141,7 @@ else:
     print "Background MC, so store mgg and central only"
     variablesToUse = minimalNonSignalVariables
 
-    if customize.dumpJetSysTrees:
+    if customize.doSystematics:
         print "Running jet systematics and putting them in ntuples because doJetSystTrees is set"
         for direction in ["Up","Down"]:
             jetsystlabels.append("JEC%s01sigma" % direction)
@@ -320,7 +327,7 @@ if customize.processId != "Data":
 
 cats = []
 
-if customize.dumpJetSysTrees and customize.processId != "Data" :
+if customize.doSystematics and customize.processId != "Data" :
     for syst in (jetsystlabels+phosystlabels):
         systcutstring = "hasSyst(\"%s\") "%syst
         cats += [
