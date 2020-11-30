@@ -266,6 +266,7 @@
     "VBFHToGG_M125_13TeV_amcatnlo_pythia8_DownPS"                          : { "xs" : 3.7820,   "br" : 0.00227, "kf" : 1.06, "itype":-125100 },
     "VBFHToGG_M125_13TeV_amcatnlo_pythia8_CP5Up"                          : { "xs" : 3.7820,   "br" : 0.00227, "kf" : 1.06, "itype":-125100 },
     "VBFHToGG_M125_13TeV_amcatnlo_pythia8_CP5Down"                          : { "xs" : 3.7820,   "br" : 0.00227, "kf" : 1.06, "itype":-125100 },
+    "VBFHToGG_M-125_TuneCP5_13TeV_powheg_pythia8_withDipoleRecoil"  : { "xs" : 3.7820,   "br" : 0.00227, "kf" : 1.06, "itype":-125100 },
     "VBFHToGG_M126_13TeV_amcatnlo_pythia8"                          : { "xs" : 3.7520,   "br" : 0.00227, "kf" : 1.06, "itype":-126100 },
     "VBFHToGG_M-126_13TeV_powheg_pythia8"                          : { "xs" : 3.7520,   "br" : 0.00227, "kf" : 1.06, "itype":-126100 },
     "VBFHToGG_M127_13TeV_amcatnlo_pythia8"                          : { "xs" : 3.7230,   "br" : 0.002267, "kf" : 1.06, "itype":-127100 },
