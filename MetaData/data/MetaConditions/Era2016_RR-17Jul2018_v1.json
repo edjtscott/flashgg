@@ -289,7 +289,7 @@
     {
         "MVAweights_VsAllBkg" : "flashgg/Taggers/data/TMVA_THQLeptonicTag_tHq_Vs_NonPeakingBkg_BDT_16_v2.weights.xml",
         "MVAweights_VsttH" : "flashgg/Taggers/data/TMVA_THQLeptonicTag_tHq_Vs_ttH_BDT.weights.xml",
-        "MVAThreshold_VsAllBkg" : 0.08,
+        "MVAThreshold_VsAllBkg" : 0.04,
         "MVAThreshold_VsttH" : 0.01
     }
 }
