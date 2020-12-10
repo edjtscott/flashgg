@@ -32,7 +32,8 @@ class StageOneCustomize():
             ["RECO_TTH_HAD_PTH_0_60_Tag0",0], ["RECO_TTH_HAD_PTH_0_60_Tag1",0], ["RECO_TTH_HAD_PTH_0_60_Tag2",0], ["RECO_TTH_HAD_PTH_0_60_Tag3",0],
             ["RECO_TTH_HAD_PTH_60_120_Tag0",0], ["RECO_TTH_HAD_PTH_60_120_Tag1",0], ["RECO_TTH_HAD_PTH_60_120_Tag2",0], ["RECO_TTH_HAD_PTH_60_120_Tag3",0],
             ["RECO_TTH_HAD_PTH_120_200_Tag0",0], ["RECO_TTH_HAD_PTH_120_200_Tag1",0], ["RECO_TTH_HAD_PTH_120_200_Tag2",0], ["RECO_TTH_HAD_PTH_120_200_Tag3",0],
-            ["RECO_TTH_HAD_PTH_GT200_Tag0",0], ["RECO_TTH_HAD_PTH_GT200_Tag1",0], ["RECO_TTH_HAD_PTH_GT200_Tag2",0], ["RECO_TTH_HAD_PTH_GT200_Tag3",0],
+            ["RECO_TTH_HAD_PTH_200_300_Tag0",0], ["RECO_TTH_HAD_PTH_200_300_Tag1",0], ["RECO_TTH_HAD_PTH_200_300_Tag2",0], ["RECO_TTH_HAD_PTH_200_300_Tag3",0],
+            ["RECO_TTH_HAD_PTH_GT300_Tag0",0], ["RECO_TTH_HAD_PTH_GT300_Tag1",0], ["RECO_TTH_HAD_PTH_GT300_Tag2",0], ["RECO_TTH_HAD_PTH_GT300_Tag3",0],
             ["RECO_WH_LEP_PTV_0_75_Tag0",0], ["RECO_WH_LEP_PTV_0_75_Tag1",0],
             ["RECO_WH_LEP_PTV_75_150_Tag0",0], ["RECO_WH_LEP_PTV_75_150_Tag1",0],
             ["RECO_WH_LEP_PTV_GT150_Tag0",0],
@@ -41,7 +42,8 @@ class StageOneCustomize():
             ["RECO_TTH_LEP_PTH_0_60_Tag0",0], ["RECO_TTH_LEP_PTH_0_60_Tag1",0], ["RECO_TTH_LEP_PTH_0_60_Tag2",0], ["RECO_TTH_LEP_PTH_0_60_Tag3",0],
             ["RECO_TTH_LEP_PTH_60_120_Tag0",0], ["RECO_TTH_LEP_PTH_60_120_Tag1",0],
             ["RECO_TTH_LEP_PTH_120_200_Tag0",0], ["RECO_TTH_LEP_PTH_120_200_Tag1",0],
-            ["RECO_TTH_LEP_PTH_GT200_Tag0",0], ["RECO_TTH_LEP_PTH_GT200_Tag1",0],
+            ["RECO_TTH_LEP_PTH_200_300_Tag0",0], ["RECO_TTH_LEP_PTH_200_300_Tag1",0],
+            ["RECO_TTH_LEP_PTH_GT300_Tag0",0], ["RECO_TTH_LEP_PTH_GT300_Tag1",0],
             ["RECO_THQ_LEP",0]
         ]
         if self.customize.processId == "Data": 
