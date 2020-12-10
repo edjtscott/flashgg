@@ -39,11 +39,13 @@ namespace flashgg {
                              RECO_TTH_LEP_PTH_0_60_Tag0, RECO_TTH_LEP_PTH_0_60_Tag1, RECO_TTH_LEP_PTH_0_60_Tag2, RECO_TTH_LEP_PTH_0_60_Tag3, 
                              RECO_TTH_LEP_PTH_60_120_Tag0, RECO_TTH_LEP_PTH_60_120_Tag1,
                              RECO_TTH_LEP_PTH_120_200_Tag0, RECO_TTH_LEP_PTH_120_200_Tag1,
-                             RECO_TTH_LEP_PTH_GT200_Tag0, RECO_TTH_LEP_PTH_GT200_Tag1,
+                             RECO_TTH_LEP_PTH_200_300_Tag0, RECO_TTH_LEP_PTH_200_300_Tag1,
+                             RECO_TTH_LEP_PTH_GT300_Tag0, RECO_TTH_LEP_PTH_GT300_Tag1,
                              RECO_TTH_HAD_PTH_0_60_Tag0, RECO_TTH_HAD_PTH_0_60_Tag1, RECO_TTH_HAD_PTH_0_60_Tag2, RECO_TTH_HAD_PTH_0_60_Tag3, 
                              RECO_TTH_HAD_PTH_60_120_Tag0, RECO_TTH_HAD_PTH_60_120_Tag1, RECO_TTH_HAD_PTH_60_120_Tag2, RECO_TTH_HAD_PTH_60_120_Tag3,
                              RECO_TTH_HAD_PTH_120_200_Tag0, RECO_TTH_HAD_PTH_120_200_Tag1, RECO_TTH_HAD_PTH_120_200_Tag2, RECO_TTH_HAD_PTH_120_200_Tag3,
-                             RECO_TTH_HAD_PTH_GT200_Tag0, RECO_TTH_HAD_PTH_GT200_Tag1, RECO_TTH_HAD_PTH_GT200_Tag2, RECO_TTH_HAD_PTH_GT200_Tag3,
+                             RECO_TTH_HAD_PTH_200_300_Tag0, RECO_TTH_HAD_PTH_200_300_Tag1, RECO_TTH_HAD_PTH_200_300_Tag2, RECO_TTH_HAD_PTH_200_300_Tag3,
+                             RECO_TTH_HAD_PTH_GT300_Tag0, RECO_TTH_HAD_PTH_GT300_Tag1, RECO_TTH_HAD_PTH_GT300_Tag2, RECO_TTH_HAD_PTH_GT300_Tag3,
                              RECO_THQ_LEP };
 
         DiPhotonTagBase();
