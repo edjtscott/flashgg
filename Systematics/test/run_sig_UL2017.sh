@@ -1,0 +1,1 @@
+fggRunJobs.py --load sig_UL2017.json -d Sig2017_10Dec20 --stage-to /eos/home-e/escott/HggLegacy/WorkspaceTest/Pass11/2017/Sig/Raw/ -x cmsRun workspaceStd.py maxEvents=-1 -q testmatch -n 100 --no-copy-proxy  dumpWorkspace=False dumpTrees=True doStageOne=True doSystematics=True useParentDataset=True 
