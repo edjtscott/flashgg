@@ -118,7 +118,7 @@ flashggTTHHadronicTag = cms.EDProducer("FlashggTTHHadronicTagProducer",
                                        ElePhotonDrCut = cms.double(0.),
                                        ElePhotonZMassCut = cms.double(5),
                                        DeltaRTrkEle = cms.double(0.),
-                                       debug = cms.bool(True)
+                                       debug = cms.bool(False)
                                        )
 
 
@@ -222,7 +222,8 @@ flashggTTHLeptonicTag = cms.EDProducer("FlashggTTHLeptonicTagProducer",
                                        tthMVA_RunII_weightfile = cms.FileInPath("flashgg/Taggers/data/Leptonic_legacy_v1.1_27Nov2020_bdt.xml"),
                                        leadPhoOverMassThreshold = cms.double(0.33),
                                        subleadPhoOverMassThreshold = cms.double(0.25),
-                                       tthVstHThreshold = cms.double(0.13699667), # 97% ttH eff
+                                       #tthVstHThreshold = cms.double(0.13699667), # 97% ttH eff
+                                       tthVstHThreshold = cms.double(0.15), #ad hoc
 
                                        #MVAThreshold = cms.vdouble(0.8435, 0.9346, 0.9625, 0.9890),
                                        MVAThreshold = cms.vdouble(0.8997816, 0.95635754, 0.9725133, 0.9870608),
@@ -264,7 +265,7 @@ flashggTTHLeptonicTag = cms.EDProducer("FlashggTTHLeptonicTagProducer",
                                        DeltaRTrkEle = cms.double(0.35),
                                        UseCutBasedDiphoId = cms.bool(False),
                                        SplitDiLeptEv = cms.bool(True),
-                                       debug = cms.bool(True),
+                                       debug = cms.bool(False),
                                        CutBasedDiphoId = cms.vdouble(0.4,0.3,0.0,-0.5,2.0,2.5)    # pT/m lead, pT/m sublead, leadIdMVA, subleadIdMVA, DeltaEta, DeltaPhi
 )
 
@@ -313,11 +314,11 @@ flashggTHQLeptonicTag = cms.EDProducer("FlashggTHQLeptonicTagProducer",
                                        tthVstHDNN_global_stddev = ttHLeptonic_ttH_vs_tH_DNN_preprocess_scheme["global_stddev"],
                                        tthVstHDNN_object_mean = ttHLeptonic_ttH_vs_tH_DNN_preprocess_scheme["object_mean"],
                                        tthVstHDNN_object_stddev = ttHLeptonic_ttH_vs_tH_DNN_preprocess_scheme["object_stddev"],
-				       debug = cms.bool(True),
+				       debug = cms.bool(False),
 				       use_MVAs = cms.bool(True),
 				       use_tthVstHDNN = cms.bool(True),
 				       use_tthVstHBDT = cms.bool(False),
-				       MVAThreshold_tHqVsttHDNN = cms.double(0.2),
+				       MVAThreshold_tHqVsttHDNN = cms.double(0.25),
 )
 
 
