@@ -1353,27 +1353,42 @@ namespace flashgg {
             chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_0_60_Tag1;
         }
         else if ( catNum == 2 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_60_120_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_0_60_Tag2;
         }
         else if ( catNum == 3 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_60_120_Tag1;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_60_120_Tag0;
         }
         else if ( catNum == 4 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_60_120_Tag1;
         }
         else if ( catNum == 5 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag1;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_60_120_Tag2;
         }
         else if ( catNum == 6 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_200_300_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag0;
         }
         else if ( catNum == 7 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_200_300_Tag1;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag1;
         }
         else if ( catNum == 8 ) {
-            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_GT300_Tag0;
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag2;
         }
         else if ( catNum == 9 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_120_200_Tag3;
+        }
+        else if ( catNum == 10 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_200_300_Tag0;
+        }
+        else if ( catNum == 11 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_200_300_Tag1;
+        }
+        else if ( catNum == 12 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_200_300_Tag2;
+        }
+        else if ( catNum == 13 ) {
+            chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_GT300_Tag0;
+        }
+        else if ( catNum == 14 ) {
             chosenTag_ = DiPhotonTagBase::stage1recoTag::RECO_TTH_HAD_PTH_GT300_Tag1;
         }
 
