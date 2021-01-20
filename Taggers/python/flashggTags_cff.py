@@ -316,8 +316,6 @@ flashggTHQLeptonicTag = cms.EDProducer("FlashggTHQLeptonicTagProducer",
 )
 
 flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
-                                       DiPhotonName=cms.string('flashggPreselectedDiPhotons'),
-                                       DiPhotonSuffixes = cms.vstring(''), # nominal and systematic variations
                                        JetsName=cms.string('flashggUnpackedJets'),
                                        SystematicsJetsName=cms.string('flashggJetSystematics'),
                                        JetsCollSize = cms.uint32(maxJetCollections),
@@ -325,7 +323,6 @@ flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
                                        MetName=cms.string('flashggMets'),
                                        SystematicsMetName=cms.string('flashggMetSystematics'),
                                        MetSuffixes = cms.vstring(''), # nominal and systematic variations
-                                       MVAResultName=cms.string('flashggDiPhotonMVA'),
                                        DiPhotonTag=cms.InputTag('flashggPreselectedDiPhotons'),
                                        SystLabel=cms.string(""),
                                        MVAResultTag=cms.InputTag('flashggDiPhotonMVA'),
@@ -372,6 +369,8 @@ flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
                                        ElePhotonDrCut = cms.double(0.),
                                        ElePhotonZMassCut = cms.double(5),
                                        DeltaRTrkEle = cms.double(0.),
+                                       thqVsBkgMvaThreshold = cms.double(-1.),
+                                       thqVsTTHMvaThreshold = cms.double(-1.),
                                        debug = cms.bool(False)
                                        )
 
