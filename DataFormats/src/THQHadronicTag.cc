@@ -1,23 +1,17 @@
 #include "flashgg/DataFormats/interface/THQHadronicTag.h"
-#include "flashgg/DataFormats/interface/Jet.h"
+#include <algorithm>
 
 using namespace flashgg;
 
-THQHadronicTag::THQHadronicTag() : DiPhotonTagBase::DiPhotonTagBase() {}
+THQHadronicTag::THQHadronicTag() : DiPhotonTagBase::DiPhotonTagBase()
+{}
 
-THQHadronicTag::~THQHadronicTag() {}
+THQHadronicTag::~THQHadronicTag()
+{}
 
-THQHadronicTag::THQHadronicTag( edm::Ptr<flashgg::DiPhotonCandidate> diPho, edm::Ptr<DiPhotonMVAResult> mvaRes,
-                                std::vector<edm::Ptr<flashgg::Jet> > theJetVec , std::vector<edm::Ptr<flashgg::Jet> > theBJetVec ) :
-    THQHadronicTag::THQHadronicTag( diPho, *mvaRes, theJetVec, theBJetVec ) {}
 
-THQHadronicTag::THQHadronicTag( edm::Ptr<DiPhotonCandidate> dipho, DiPhotonMVAResult mvares,
-                                std::vector<edm::Ptr<flashgg::Jet> > theJetVec , std::vector<edm::Ptr<flashgg::Jet> > theBJetVec ) :
-    DiPhotonTagBase::DiPhotonTagBase( dipho, mvares )
-{
-    theJetVec_ = std::vector<edm::Ptr<flashgg::Jet> >( theJetVec );
-    theBJetVec_ = std::vector<edm::Ptr<flashgg::Jet> >( theBJetVec );
-}
+THQHadronicTag::THQHadronicTag( edm::Ptr<DiPhotonCandidate> diPho, edm::Ptr<DiPhotonMVAResult> mvares ) : DiPhotonTagBase::DiPhotonTagBase( diPho, *mvares ) {}
+THQHadronicTag::THQHadronicTag( edm::Ptr<DiPhotonCandidate> dipho, DiPhotonMVAResult mvares ) : DiPhotonTagBase::DiPhotonTagBase( dipho, mvares ) {}
 
 // Local Variables:
 // mode:c++
