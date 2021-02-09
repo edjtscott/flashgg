@@ -328,8 +328,9 @@ flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
                                     rhoTag                      = cms.InputTag('fixedGridRhoFastjetAll'),
                                     MVAResultTag                = cms.InputTag('flashggDiPhotonMVA'),
                                     GenParticleTag              = cms.InputTag( "flashggPrunedGenParticles" ),
-                                    TTHMVAweightfile            = cms.FileInPath("flashgg/Taggers/data/TMVA_WHLeptonicTag_BDT_16Dec2019.weights.xml"),
-                                    BkgMVAweightfile            = cms.FileInPath("flashgg/Taggers/data/TMVA_WHLeptonicTag_BDT_16Dec2019.weights.xml"),
+                                    TTHMVAweightfile            = cms.FileInPath("flashgg/Taggers/data/ShameenaTHQhadronic/tHqvsttHModel.xml"),
+                                    BkgMVAweightfile            = cms.FileInPath("flashgg/Taggers/data/ShameenaTHQhadronic/tHqvsnonHModel.xml"),
+                                    bDiscriminator              = bDiscriminator94X,
                                     leadPhoOverMassThreshold    = cms.double(0.),
                                     subleadPhoOverMassThreshold = cms.double(0.),
                                     PhoMVAThreshold             = cms.double(-0.4),
@@ -350,7 +351,9 @@ flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
                                     deltaRPhoLeadJet            = cms.double(0.4),
                                     deltaRPhoSubLeadJet         = cms.double(0.4),
                                     deltaRJetMuonThreshold      = cms.double(0.4),
-                                    METThreshold                = cms.double(0.)
+                                    METThreshold                = cms.double(0.), 
+                                    tthMvaThreshold             = cms.double(0.1), 
+                                    bkgMvaThreshold             = cms.double(0.9)
                                     )
 
 
