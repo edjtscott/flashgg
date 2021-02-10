@@ -353,9 +353,6 @@ namespace flashgg {
         double idmva1 = 0.;
         double idmva2 = 0.;
 
-        bool hasGoodElec  = false;
-        bool hasGoodMuons = false;
-        
         for( unsigned int diphoIndex = 0; diphoIndex < diPhotons->size(); diphoIndex++ ) {
 
             edm::Ptr<flashgg::DiPhotonCandidate> dipho = diPhotons->ptrAt( diphoIndex );
@@ -397,17 +394,6 @@ namespace flashgg {
                                                                                 evt.isRealData() 
                                                                                 );
 
-            hasGoodElec  = ( goodElectrons.size() > 0 );
-            hasGoodMuons = ( goodMuons.size() > 0 );
-                        
-            if( !hasGoodElec && !hasGoodMuons ) { continue; }
-            //including SFs for leading muon or electron 
-            if( goodMuons.size() > 0 ) {
-                thqHadronicTags_obj.includeWeights( *goodMuons.at(0) );
-            } else if ( goodElectrons.size() > 0 ) {
-                thqHadronicTags_obj.includeWeights( *goodElectrons.at(0) );
-            }
-
             //Jets
             std::vector<edm::Ptr<Jet> > tagJets;
             std::vector<edm::Ptr<Jet> > bJets;
@@ -426,18 +412,6 @@ namespace flashgg {
                                                 dipho->subLeadingPhoton()->superCluster()->phi() );
                 
                 if( dRPhoLeadJet < deltaRPhoLeadJet_ || dRPhoSubLeadJet < deltaRPhoSubLeadJet_ ) { keepJet = false; }
-                if( hasGoodElec ) 
-                    for( unsigned int electronIndex = 0; electronIndex < goodElectrons.size(); electronIndex++ ) {
-                            Ptr<flashgg::Electron> electron = goodElectrons[electronIndex];
-                            float dRJetElectron = deltaR( thejet->eta(), thejet->phi(), electron->eta(), electron->phi() ) ;
-                            if( dRJetElectron < deltaRJetMuonThreshold_ ) { keepJet = false; }
-                    }
-                if( hasGoodMuons ) 
-                    for( unsigned int muonIndex = 0; muonIndex < goodMuons.size(); muonIndex++ ) {
-                            Ptr<flashgg::Muon> muon = goodMuons[muonIndex];
-                            float dRJetMuon = deltaR( thejet->eta(), thejet->phi(), muon->eta(), muon->phi() ) ;
-                            if( dRJetMuon < deltaRJetMuonThreshold_ ) { keepJet = false; }
-                    }
                 if(keepJet) { 
                     tagJets.push_back( thejet );
                     if (thejet->bDiscriminator("pfDeepCSVJetTags:probb") + thejet->bDiscriminator("pfDeepCSVJetTags:probbb") > bDiscriminator_[0]) bJets.push_back( thejet );
