@@ -353,7 +353,7 @@ flashggTHQHadronicTag = cms.EDProducer("FlashggTHQHadronicTagProducer",
                                     deltaRJetMuonThreshold      = cms.double(0.4),
                                     METThreshold                = cms.double(0.), 
                                     tthMvaThreshold             = cms.double(0.1), 
-                                    bkgMvaThreshold             = cms.double(0.9)
+                                    bkgMvaThreshold             = cms.double(0.94)
                                     )
 
 
